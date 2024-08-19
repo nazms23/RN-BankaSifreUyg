@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import MobilBanka from './src/sayfalar/MobilBanka';
+import KrediKart from './src/sayfalar/KrediKart';
+import Ayarlar from './src/sayfalar/Ayarlar';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator 
+      initialRouteName='MobilBanka'
+      screenOptions={{headerShown:false}}>
+        
+        <Stack.Screen
+        name='MobilBanka'
+        component={MobilBanka}
+        options={{title:"Mobil Bankacılık"}}
+        />
+        <Stack.Screen
+        name='KrediBanka'
+        component={KrediKart}
+        options={{title:"Kredi/Banka Kartıı"}}
+        />
+        <Stack.Screen
+        name='Ayarlar'
+        component={Ayarlar}
+        options={{title:"Ayarlar"}}
+        />
+
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
