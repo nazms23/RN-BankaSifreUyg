@@ -1,11 +1,28 @@
 import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView } from 'react-native'
 import React, {useState} from 'react'
 
-const MbEkle = ({resimmi}) => {
+const MbEkle = ({resimmi, bankalar,eklefonk}) => {
+
+    const eklemefonk = eklefonk;
 
     const [eklebas, setEklebas] = useState(true)
 
     const [bankalarbas, setBankalarbas] = useState(true)
+
+
+    const [defisim, setDefisim] = useState(bankalar[0].isim)
+    const [defresim, setDefresim] = useState(bankalar[0].resim)
+
+    const [bankaId, setBankaId] = useState(0)
+    const [sifre, setSifre] = useState("")
+
+    const bankaustubas = (id) =>{
+        setDefisim(bankalar.find(i => i.id == id).isim)
+        setDefresim(bankalar.find(i => i.id == id).resim)
+        setBankaId(id)
+    }
+
+
 
   return (
     <View style={[styles.disdiv]}>
@@ -16,17 +33,13 @@ const MbEkle = ({resimmi}) => {
             <Text style={{fontSize:30}}>+</Text>
         </Pressable>
         <View style={[styles.eklemedis, {display: eklebas? 'flex': 'none'}]} >
-            <Pressable style={[styles.bankadisdiv]} onPress={()=>setBankalarbas(!bankalarbas)} >
+            <Pressable style={[styles.bankadisdiv]} onPress={()=>setBankalarbas(!bankalarbas)}>
                 
                 {resimmi ? 
-                <Image style={styles.bankaresim} source={require('../../assets/bankalar/Akbank.png')}/> : 
-            
-                <Text>Akbank</Text> 
-            
-            
-                }
+                <Image style={styles.bankaresim} source={defresim}/> : 
 
-            
+                <Text>{defisim}</Text> 
+                }
             </Pressable>
 
             <View style={styles.sifredisdiv}>
@@ -35,28 +48,37 @@ const MbEkle = ({resimmi}) => {
                     inputMode='numeric'
                     placeholder='Şifreniz'
                     maxLength={10}
+
+                    value={sifre}
+                    onChangeText={setSifre}
                 />
             </View>
-            <Pressable style={styles.eklebuton}>
+            <Pressable style={styles.eklebuton} onPress={()=>{
+                if(sifre != "")
+                {
+                    eklemefonk(bankaId,sifre)
+                    setSifre("")
+                    console.log("çalıştı")    
+                }
+                }}>
                 <Text>Ekle</Text>
             </Pressable>
         </View>
         <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
             <ScrollView horizontal={true} style={styles.bankalarscrollview}>
 
-            <Pressable style={[styles.bankalarviewbuton]} >
+            {
+                bankalar.map((i)=>{
+                    return(
+                <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankaustubas(i.id)} >
                 {resimmi ? 
-                <Image style={styles.bankaresim} source={require('../../assets/bankalar/Akbank.png')}/> : 
-                <Text>Akbank</Text> 
+                <Image style={styles.bankaresim} source={i.resim}/> : 
+                <Text>{i.isim}</Text> 
                 }
             </Pressable>
-            
-            <Pressable style={[styles.bankalarviewbuton]} >
-                {resimmi ? 
-                <Image style={styles.bankaresim} source={require('../../assets/bankalar/Ziraat.jpg')}/> : 
-                <Text>Ziraat</Text> 
-                }
-            </Pressable>
+                    )
+                })
+            }
 
             </ScrollView>
         </View>

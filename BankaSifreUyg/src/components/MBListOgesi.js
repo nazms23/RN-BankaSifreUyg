@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View,Image } from 'react-native'
 import React from 'react'
 
-const MBListOgesi = ({resimmi}) => {
+const MBListOgesi = ({resimmi, resim, bankaad,sifre}) => {
   return (
     <View style={styles.disdiv}>
         <View style={styles.bankadisdiv}>
             {resimmi ? 
-            <Image style={styles.bankaresim} source={require('../../assets/bankalar/Akbank.png')}/> : 
+            <Image style={styles.bankaresim} source={resim}/> : 
 
-            <Text>Akbank</Text> 
+            <Text>{bankaad}</Text> 
             
             
             }
@@ -17,7 +17,7 @@ const MBListOgesi = ({resimmi}) => {
 
         </View>
         <View style={styles.sifredisdiv}>
-            <Text>123456</Text>
+            <Text>{sifre}</Text>
         </View>
     </View>
   )
@@ -39,12 +39,15 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        borderWidth:1
+        borderWidth:1,
+        backgroundColor:'white',
+        width:'100%',
+        height:'100%'
     },
     bankaresim:{
         width:'100%',
         height:'100%',
-        resizeMode:'stretch'
+        resizeMode:'center'
     },
     sifredisdiv:{
         flex:5,

@@ -9,7 +9,64 @@ import MbEkle from '../components/MbEkle'
 const MobilBanka = ({navigation}) => {
   
   const [resimmi, setResimmi] = useState(false)
+
+  const [yenileme, Setyenileme] = useState("")
   
+
+  const [bankalar, setBankalar] = useState([
+    {
+      id:0,
+      isim:"Akbank",
+      resim:require('../../assets/bankalar/Akbank.png')
+    },
+    {
+      id:1,
+      isim:"Ziraat",
+      resim:require('../../assets/bankalar/Ziraat.png')
+    },
+    {
+      id:2,
+      isim:"Halkbank",
+      resim:require('../../assets/bankalar/Halkbank.png')
+    },
+    {
+      id:3,
+      isim:"VakıfBank",
+      resim:require('../../assets/bankalar/Vakif.png')
+    },
+    {
+      id:4,
+      isim:"İş Bankası",
+      resim:require('../../assets/bankalar/isbankasi.png')
+    },
+    {
+      id:5,
+      isim:"Yapı Kredi",
+      resim:require('../../assets/bankalar/yapikredi.png')
+    },
+    {
+      id:6,
+      isim:"DenizBank",
+      resim:require('../../assets/bankalar/denizbank.png')
+    },
+    {
+      id:7,
+      isim:"Garanti BBVA",
+      resim:require('../../assets/bankalar/garanti.png')
+    },
+    {
+      id:8,
+      isim:"ING",
+      resim:require('../../assets/bankalar/ingbank.png')
+    },
+    {
+      id:9,
+      isim:"QNB FinansBank",
+      resim:require('../../assets/bankalar/finansbank.png')
+    }
+  ])
+
+  const [mbsifreler, setMbsifreler] = useState({sifreler:[]})
   
   const fonksiyonlar = {
     mobilbankgecisfonk: ()=>{
@@ -23,11 +80,21 @@ const MobilBanka = ({navigation}) => {
     },
     MBresimyazigecisfonk: ()=>{
       setResimmi(!resimmi)
+    },
+    MBSifreEkle: (bId,sifre)=>{
+      let id = mbsifreler.sifreler.length > 0 ? mbsifreler.sifreler[mbsifreler.sifreler.length-1].id+1 : 1
+
+      mbsifreler.sifreler.push({id:id,bankaId:bId,sifre:sifre})
+
+      Setyenileme("dsfsdfsdf"+Math.floor(Math.random() * 10) == yenileme ? "dsfsdfsdf"+Math.floor(Math.random() * 10 +20): "dsfsdfsdf"+Math.floor(Math.random() * 10))
+      
     }
 
   }
 
 
+
+  
 
 
   
@@ -37,11 +104,16 @@ const MobilBanka = ({navigation}) => {
         <Header flexx={1} title={"Mobil Bankacılık"} ayarlarfonk={fonksiyonlar.ayarlargecisfonk} resimisimfonk={fonksiyonlar.MBresimyazigecisfonk}/>
         <View style={styles.contdis}>
           <ScrollView style={styles.contscrollvw}>
-          <MBListOgesi resimmi={resimmi}/>
-          <MBListOgesi resimmi={resimmi}/>
-          <MBListOgesi resimmi={resimmi}/>
-          <MBListOgesi resimmi={resimmi}/>
-          <MbEkle resimmi={resimmi}/>
+          {
+
+            mbsifreler.sifreler.map(i => {
+              return(
+                <MBListOgesi resimmi={resimmi} key={i.id} resim={bankalar.find(v=> v.id == i.bankaId).resim} bankaad={bankalar.find(v=> v.id == i.bankaId).isim} sifre={i.sifre}/>
+              )
+            })
+          }
+          {console.log(yenileme)}
+          <MbEkle resimmi={resimmi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle}/>
           </ScrollView>
         </View>
       
