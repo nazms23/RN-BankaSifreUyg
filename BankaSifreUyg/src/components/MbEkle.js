@@ -5,9 +5,9 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
 
     const eklemefonk = eklefonk;
 
-    const [eklebas, setEklebas] = useState(true)
+    const [eklebas, setEklebas] = useState(false)
 
-    const [bankalarbas, setBankalarbas] = useState(true)
+    const [bankalarbas, setBankalarbas] = useState(false)
 
 
     const [defisim, setDefisim] = useState(bankalar[0].isim)
@@ -58,7 +58,6 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
                 {
                     eklemefonk(bankaId,sifre)
                     setSifre("")
-                    console.log("çalıştı")    
                 }
                 }}>
                 <Text>Ekle</Text>

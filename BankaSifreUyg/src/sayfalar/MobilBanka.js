@@ -8,7 +8,7 @@ import MbEkle from '../components/MbEkle'
 
 const MobilBanka = ({navigation}) => {
   
-  const [resimmi, setResimmi] = useState(false)
+  const [resimmi, setResimmi] = useState(true)
 
   const [yenileme, Setyenileme] = useState("")
   
@@ -81,13 +81,31 @@ const MobilBanka = ({navigation}) => {
     MBresimyazigecisfonk: ()=>{
       setResimmi(!resimmi)
     },
-    MBSifreEkle: (bId,sifre)=>{
+    MBSifreEkle: async (bId,sifre)=>{
       let id = mbsifreler.sifreler.length > 0 ? mbsifreler.sifreler[mbsifreler.sifreler.length-1].id+1 : 1
 
       mbsifreler.sifreler.push({id:id,bankaId:bId,sifre:sifre})
 
+      setMbsifreler(mbsifreler)
+
       Setyenileme("dsfsdfsdf"+Math.floor(Math.random() * 10) == yenileme ? "dsfsdfsdf"+Math.floor(Math.random() * 10 +20): "dsfsdfsdf"+Math.floor(Math.random() * 10))
       
+    },
+    MBSifreSil: (bId)=>{
+      mbsifreler.sifreler.splice(mbsifreler.sifreler.findIndex(i=>i.id==bId),1)
+      setMbsifreler(mbsifreler)
+
+      Setyenileme("dsfsdfsdf"+Math.floor(Math.random() * 10) == yenileme ? "dsfsdfsdf"+Math.floor(Math.random() * 10 +20): "dsfsdfsdf"+Math.floor(Math.random() * 10))
+    },
+    MBSifreDegistir: (id,text)=>{
+      mbsifreler.sifreler.find(i=>i.id == id).sifre = text
+      setMbsifreler(mbsifreler)
+    },
+    MBBankaDegistir: (id,bId)=>{
+      console.log(id,bId)
+      mbsifreler.sifreler.find(i=>i.id == id).bankaId = bId
+      setMbsifreler(mbsifreler)
+
     }
 
   }
@@ -108,11 +126,11 @@ const MobilBanka = ({navigation}) => {
 
             mbsifreler.sifreler.map(i => {
               return(
-                <MBListOgesi resimmi={resimmi} key={i.id} resim={bankalar.find(v=> v.id == i.bankaId).resim} bankaad={bankalar.find(v=> v.id == i.bankaId).isim} sifre={i.sifre}/>
+                <MBListOgesi resimmi={resimmi} key={i.id} sifreidsi={i.id} resim={bankalar.find(v=> v.id == i.bankaId).resim} bankaad={bankalar.find(v=> v.id == i.bankaId).isim} sifre={i.sifre} bId={bankalar.find(v=> v.id == i.bankaId).id} silfonk={fonksiyonlar.MBSifreSil} sifredegisfonk={fonksiyonlar.MBSifreDegistir} bankadegisfonk={fonksiyonlar.MBBankaDegistir} bankalar={bankalar} />
               )
             })
           }
-          {console.log(yenileme)}
+          {console.log(mbsifreler.sifreler)}
           <MbEkle resimmi={resimmi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle}/>
           </ScrollView>
         </View>
