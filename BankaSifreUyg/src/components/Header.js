@@ -1,18 +1,18 @@
 import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Header = ({flexx,title,ayarlarfonk,resimisimfonk}) => {
+const Header = ({flexx,title,ayarlarfonk,resimisimfonk, logoyazi}) => {
   return (
     <SafeAreaView style={[styles.disdiv, {flex:flexx}]}>
       
-      <View style={styles.butondiv}>
+      <View style={[styles.butondiv, {display: logoyazi? 'flex':'none'}]}>
         <Pressable style={styles.butondis} onPress={resimisimfonk}>
           <Text style={[styles.textler, {borderBottomWidth:1,borderColor:'white'}]}>Logo</Text>
           <Text>Yazı</Text>
         </Pressable>
       </View>
 
-      <View style={styles.yazidiv}>
+      <View style={[styles.yazidiv, {flex: logoyazi? 3:4}]}>
         <Text>{title}</Text>
       </View>
       
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     flexDirection:'row'
   },
   yazidiv:{
-    flex:3,
     width:"100%",
     height:"100%",
     justifyContent:'center',

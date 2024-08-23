@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View,SafeAreaView, ScrollView } from 'react-native'
-import React, {useState} from 'react'
-import { StatusBar } from 'expo-status-bar'
+import React, {useState, useEffect} from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import MBListOgesi from '../components/MBListOgesi'
 import MbEkle from '../components/MbEkle'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const MobilBanka = ({navigation}) => {
   
@@ -81,12 +82,16 @@ const MobilBanka = ({navigation}) => {
     MBresimyazigecisfonk: ()=>{
       setResimmi(!resimmi)
     },
+    SifreGuncelle: async ()=>{
+      await AsyncStorage.setItem('mobilbanka',JSON.stringify(mbsifreler))
+    },
     MBSifreEkle: async (bId,sifre)=>{
       let id = mbsifreler.sifreler.length > 0 ? mbsifreler.sifreler[mbsifreler.sifreler.length-1].id+1 : 1
 
       mbsifreler.sifreler.push({id:id,bankaId:bId,sifre:sifre})
 
       setMbsifreler(mbsifreler)
+      fonksiyonlar.SifreGuncelle();
 
       Setyenileme("dsfsdfsdf"+Math.floor(Math.random() * 10) == yenileme ? "dsfsdfsdf"+Math.floor(Math.random() * 10 +20): "dsfsdfsdf"+Math.floor(Math.random() * 10))
       
@@ -95,23 +100,39 @@ const MobilBanka = ({navigation}) => {
       mbsifreler.sifreler.splice(mbsifreler.sifreler.findIndex(i=>i.id==bId),1)
       setMbsifreler(mbsifreler)
 
+      fonksiyonlar.SifreGuncelle();
+      
       Setyenileme("dsfsdfsdf"+Math.floor(Math.random() * 10) == yenileme ? "dsfsdfsdf"+Math.floor(Math.random() * 10 +20): "dsfsdfsdf"+Math.floor(Math.random() * 10))
     },
     MBSifreDegistir: (id,text)=>{
       mbsifreler.sifreler.find(i=>i.id == id).sifre = text
       setMbsifreler(mbsifreler)
+
+      fonksiyonlar.SifreGuncelle();
     },
     MBBankaDegistir: (id,bId)=>{
-      console.log(id,bId)
       mbsifreler.sifreler.find(i=>i.id == id).bankaId = bId
       setMbsifreler(mbsifreler)
 
+      fonksiyonlar.SifreGuncelle();
     }
-
   }
 
 
-
+  useEffect(()=>{
+    (async()=>{
+      const sifreler = await AsyncStorage.getItem('mobilbanka').then(async (v)=>{
+        if(v != null)
+        {
+          setMbsifreler(JSON.parse(v))
+        }
+        else
+        {
+          await AsyncStorage.setItem('mobilbanka',JSON.stringify({sifreler:[]}))
+        }
+      })
+    })();
+  },[])
   
 
 
@@ -119,7 +140,8 @@ const MobilBanka = ({navigation}) => {
   
   return (
     <SafeAreaView style={styles.disdiv}>
-        <Header flexx={1} title={"Mobil Bankacılık"} ayarlarfonk={fonksiyonlar.ayarlargecisfonk} resimisimfonk={fonksiyonlar.MBresimyazigecisfonk}/>
+      
+        <Header flexx={1} title={"Mobil Bankacılık"} logoyazi={true}  ayarlarfonk={fonksiyonlar.ayarlargecisfonk} resimisimfonk={fonksiyonlar.MBresimyazigecisfonk}/>
         <View style={styles.contdis}>
           <ScrollView style={styles.contscrollvw}>
           {
@@ -130,7 +152,6 @@ const MobilBanka = ({navigation}) => {
               )
             })
           }
-          {console.log(mbsifreler.sifreler)}
           <MbEkle resimmi={resimmi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle}/>
           </ScrollView>
         </View>
@@ -138,7 +159,7 @@ const MobilBanka = ({navigation}) => {
       
       
       
-    <StatusBar style='auto'/>
+    
 
     <Footer flexx={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
     </SafeAreaView>
