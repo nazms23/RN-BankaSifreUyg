@@ -40,13 +40,8 @@ const Parmakizi = () => {
             }).then((sonuc)=>{
                 if(sonuc)
                 {
-                    console.log("Doğrulandı")
                     dispacth(setParmakizi(false))
                     dispacth(setSifresor(false))
-                }
-                else
-                {
-                    console.log("Doğrulanmadı")
                 }
             })
 

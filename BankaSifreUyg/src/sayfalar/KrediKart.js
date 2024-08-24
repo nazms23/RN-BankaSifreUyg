@@ -104,7 +104,15 @@ const KrediKart = ({navigation}) => {
     KBSifreEkle: async (bId,sifre,ktur)=>{
       let id = kbsifreler.sifreler.length > 0 ? kbsifreler.sifreler[kbsifreler.sifreler.length-1].id+1 : 1
 
-      kbsifreler.sifreler.push({id:id,bankaId:bId,ktur:ktur,sifre:sifre})
+      kbsifreler.sifreler.push({
+        id:id,
+        bankaId:bId,
+        ktur:ktur,
+        sifre:sifre,
+        kartnumara:'',
+        karttarih:'',
+        kartcvc:''
+      })
 
       setKbsifreler(kbsifreler)
 
@@ -140,7 +148,16 @@ const KrediKart = ({navigation}) => {
 
       fonksiyonlar.SifreGuncelle();
 
+    },
+    KBBilgiDegistir:(id,no,tarih,cvc) =>{
+      kbsifreler.sifreler.find(i=>i.id == id).kartnumara = no
+      kbsifreler.sifreler.find(i=>i.id == id).karttarih = tarih
+      kbsifreler.sifreler.find(i=>i.id == id).kartcvc = cvc
+      setKbsifreler(kbsifreler)
+
+      fonksiyonlar.SifreGuncelle();
     }
+
   }
 
   useEffect(()=>{
@@ -166,7 +183,26 @@ const KrediKart = ({navigation}) => {
         {
           kbsifreler.sifreler.map(i => {
             return(
-              <KBListOgesi resimmi={resimmi} key={i.id} sifreidsi={i.id} resim={bankalar.find(v=> v.id == i.bankaId).resim} bankaad={bankalar.find(v=> v.id == i.bankaId).isim} kartturu={kartturu.find(v=> v.id == i.ktur).isim} sifre={i.sifre} bId={bankalar.find(v=> v.id == i.bankaId).id} silfonk={fonksiyonlar.KBSifreSil} sifredegisfonk={fonksiyonlar.KBSifreDegistir} bankadegisfonk={fonksiyonlar.KBBankaDegistir} turdegisfonk={fonksiyonlar.KBTurDegistir} bankalar={bankalar} kartturler={kartturu} />
+              <KBListOgesi 
+                resimmi={resimmi} key={i.id} 
+                sifreidsi={i.id} resim={bankalar.find(v=> v.id == i.bankaId).resim} 
+                bankaad={bankalar.find(v=> v.id == i.bankaId).isim} 
+                kartturu={kartturu.find(v=> v.id == i.ktur).isim} 
+                sifre={i.sifre} bId={bankalar.find(v=> v.id == i.bankaId).id} 
+                kartbilgileriobj={{
+                  kartno: i.kartnumara ,
+                  tarih: i.karttarih,
+                  cvc: i.kartcvc,
+                  degisfonk: fonksiyonlar.KBBilgiDegistir
+                }}
+                silfonk={fonksiyonlar.KBSifreSil} 
+                sifredegisfonk={fonksiyonlar.KBSifreDegistir} 
+                bankadegisfonk={fonksiyonlar.KBBankaDegistir} 
+                turdegisfonk={fonksiyonlar.KBTurDegistir} 
+                bankalar={bankalar} 
+                kartturler={kartturu} 
+                
+                />
             )
           })
 

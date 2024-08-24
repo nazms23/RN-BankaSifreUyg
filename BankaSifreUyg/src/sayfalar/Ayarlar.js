@@ -29,7 +29,7 @@ const Ayarlar = ({navigation}) => {
       await fonksiyonlar.Ayardegisti();
     },
     AyarSifreDegis:async (t) =>{
-      t.length!=0 ? setGirisSifresi(parseInt(t)) : setGirisSifresi(t)
+      t.length!=0 ? setGirisSifresi(t) : setGirisSifresi(t)
       if(t.length == 4)
       {
         ayarlarstate.girissifre = t
@@ -52,16 +52,16 @@ const Ayarlar = ({navigation}) => {
 
   const [sifresor, setSifresor] = useState(true)
 
-  const [girisSifresi, setGirisSifresi] = useState(1111)
+  const [girisSifresi, setGirisSifresi] = useState('1111')
 
-  const [normalsifre, setNormalsifre] = useState(1111)
+  const [normalsifre, setNormalsifre] = useState('1111')
 
 
   const [parmakizi, setParmakizi] = useState(false)
 
   const [ayarlarstate, setAyarlarstate] = useState({
     sifresor:false,
-    girissifre:1111,
+    girissifre:'1111',
     parmaksor:false})
 
 
@@ -103,7 +103,7 @@ const Ayarlar = ({navigation}) => {
 
           <Text style={[styles.yazilar, styles.sifresoryazi]} >Uygulama Açılışında Şifre</Text>
 
-          <Pressable style={[styles.butonlar]} onPress={()=> !parmakizi && fonksiyonlar.AyarSifresec()}>
+          <Pressable style={[styles.butonlar]} onPress={()=> fonksiyonlar.AyarSifresec()}>
             <Image 
               source={sifresor ? require('../../assets/iconlar/checkdolu.png'):require('../../assets/iconlar/checkbos.png')} 
               resizeMode='center'

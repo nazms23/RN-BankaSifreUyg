@@ -1,23 +1,30 @@
 import { StyleSheet, Text, View,Image,Pressable,ScrollView,TextInput } from 'react-native'
 import React, {useState} from 'react'
 import {Swipeable,GestureHandlerRootView} from 'react-native-gesture-handler'
+import {setStringAsync} from 'expo-clipboard';
 
 
-const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, silfonk, sifredegisfonk , bankadegisfonk , turdegisfonk , bankalar, kartturler , sifreidsi}) => {
+const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgileriobj , silfonk, sifredegisfonk , bankadegisfonk , turdegisfonk , bankalar, kartturler , sifreidsi}) => {
 
     const silmefonk = silfonk;
     const sifredegis = sifredegisfonk
     const bankadegis = bankadegisfonk
     const turdegis = turdegisfonk
+    const kartbilgisidegistir = kartbilgileriobj.degisfonk
 
     const [bankalarbas, setBankalarbas] = useState(false)
     const [kartturbas, setKartturbas] = useState(false)
+    const [kartbilgibas, setKartbilgibas] = useState(false)
     const [editmod, setEditmod] = useState(false)
 
     const [bankaresim, setBankaresim] = useState(resim)
     const [bankaadi, setBankaadi] = useState(bankaad)
 
     const [kartturisim, setKartturisim] = useState(kartturu)
+
+    const [kartno, setKartno] = useState(kartbilgileriobj.kartno)
+    const [tarih, setTarih] = useState(kartbilgileriobj.tarih)
+    const [CVC, setCVC] = useState(kartbilgileriobj.cvc)
 
 
     const [textboxgorunurluk, settextboxgorunurluk] = useState("none")
@@ -51,15 +58,37 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, silfonk, sif
     const bankadegisti = (id) =>{
         setBankaadi(bankalar.find(i=>i.id == id).isim)
         setBankaresim(bankalar.find(i=>i.id == id).resim)
-
+        setBankalarbas(false)
         bankadegis(sifreidsi,id)
     }
 
     const turdegisti = (id) =>{
         setKartturisim(kartturler.find(i=>i.id == id).isim)
-
+        setKartturbas(false)
         turdegis(sifreidsi,id)
     }
+
+    const kartnobilgidegisti = (t)=>{
+        setKartno(t)
+        kartbilgisidegistir(sifreidsi,t,tarih,CVC)
+    }
+
+    const karttarihbilgidegisti = (t)=>{
+        if(t.length > 2)
+        {
+            t = t.slice(0,2)+'/'+t.slice(3)
+        }
+        setTarih(t)
+        kartbilgisidegistir(sifreidsi,kartno,t,CVC)
+
+    }
+
+    const kartcvcbilgidegisti = (t)=>{
+        setCVC(t)
+        kartbilgisidegistir(sifreidsi,kartno,tarih,t)
+
+    }
+
 
     renderLeftActions = (progress, dragX) => {
         const trans = dragX.interpolate({
@@ -98,6 +127,10 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, silfonk, sif
       };
 
 
+    const kopyala = async (t)=>{
+        await setStringAsync(t)
+    }
+
   return (
     <GestureHandlerRootView>
         <Swipeable renderLeftActions={renderLeftActions} renderRightActions={renderRightActions}>
@@ -131,6 +164,11 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, silfonk, sif
                     style={styles.sifreinput}  
                     />
                 </View>
+                <Pressable style={[styles.bankadisdiv,{flex:1.2}]} onPress={()=>setKartbilgibas(!kartbilgibas)} >
+
+                    <Text>{'Kart\nBilgileri'}</Text> 
+
+                </Pressable>
             </View>
 
            
@@ -170,6 +208,65 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, silfonk, sif
             }
             </View>
         </View>
+        
+        <View style={[styles.kartbilgileridisdiv,{display: kartbilgibas?'flex':'none'}]}>
+            <View style={styles.kartbilgileritemdiv}>
+                <Text style={styles.kartbilgileritext} >No: </Text>
+                <TextInput 
+                    style={[styles.kartbilgitextinput, {display:editmod?'flex':'none'}]}
+                    inputMode='numeric'
+                    placeholder='Kart Numaranız'
+                    maxLength={16}
+                    value={kartno}
+                    onChangeText={kartnobilgidegisti}
+                />
+
+                <Text style={[styles.kartbilgikisimtext,{display: editmod?'none':'flex'}]}>{kartno}</Text>
+
+
+                <Pressable style={styles.kopyalabuton} onPress={()=>{kopyala(kartno)}} >
+                    <Text>Kopyala</Text>    
+                </Pressable>
+            </View>
+
+            <View style={styles.kartbilgileritemdiv}>
+                <Text style={styles.kartbilgileritext}>Tarih: </Text>
+                <TextInput
+                style={[styles.kartbilgitextinput, {display:editmod?'flex':'none'}]}
+                inputMode='numeric'
+                placeholder='Kart Numaranız'
+                maxLength={5}
+                value={tarih}
+                onChangeText={karttarihbilgidegisti}
+                />
+
+                <Text style={[styles.kartbilgikisimtext,{display: editmod?'none':'flex'}]}>{tarih}</Text>
+
+                <Pressable style={styles.kopyalabuton} onPress={()=>{kopyala(tarih)}} >
+                    <Text>Kopyala</Text>    
+                </Pressable>
+            </View>
+
+            <View style={styles.kartbilgileritemdiv}>
+                <Text style={styles.kartbilgileritext}>CVC: </Text>
+                <TextInput
+                style={[styles.kartbilgitextinput, {display:editmod?'flex':'none'}]}
+                inputMode='numeric'
+                placeholder="Kart CVC'niz"
+                maxLength={3}
+                value={CVC}
+                onChangeText={kartcvcbilgidegisti}
+                />
+
+                <Text style={[styles.kartbilgikisimtext,{display: editmod?'none':'flex'}]}>{CVC}</Text>
+
+                <Pressable style={styles.kopyalabuton} onPress={()=>{kopyala(CVC)}} >
+                    <Text>Kopyala</Text>    
+                </Pressable>
+            </View>
+
+        </View>
+
     </GestureHandlerRootView>
   )
 }
@@ -251,4 +348,42 @@ const styles = StyleSheet.create({
         width:'100%',
         flexDirection:'row'
     },
+    kartbilgileridisdiv:{
+        width:'100%',
+        backgroundColor:'#85ffd0'
+    },
+    kartbilgileritemdiv:{
+        width:'100%',
+        justifyContent:'space-between',
+        flexDirection:'row',
+        height:40,
+        alignItems:'center',
+        marginVertical:5
+
+    },
+    kartbilgileritext:{
+        width:'100%',
+        flex:1,
+        fontSize:17,
+        textAlign:'center'
+    },
+    kartbilgitextinput:{
+        width:'100%',
+        flex:3,
+        fontSize:17
+    },
+    kopyalabuton:{
+        flex:1,
+        width:'100%',
+        height:'100%',
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'#a7eb7a'
+    },
+    kartbilgikisimtext:{
+        width:'100%',
+        flex:3,
+        fontSize:17,
+        textAlign:'center'
+    }
 })

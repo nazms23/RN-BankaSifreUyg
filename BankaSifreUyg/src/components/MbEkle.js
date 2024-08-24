@@ -20,6 +20,7 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
         setDefisim(bankalar.find(i => i.id == id).isim)
         setDefresim(bankalar.find(i => i.id == id).resim)
         setBankaId(id)
+        setBankalarbas(false)
     }
 
 
@@ -47,7 +48,7 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
                     style={styles.sifreinput}  
                     inputMode='numeric'
                     placeholder='Şifreniz'
-                    maxLength={10}
+                    maxLength={6}
 
                     value={sifre}
                     onChangeText={setSifre}
@@ -58,6 +59,7 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
                 {
                     eklemefonk(bankaId,sifre)
                     setSifre("")
+                    setEklebas(false)
                 }
                 }}>
                 <Text>Ekle</Text>

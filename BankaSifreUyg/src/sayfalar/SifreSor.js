@@ -21,12 +21,29 @@ const SifreSor = () => {
     },[])
 
     const girisebasti= ()=>{
-        if(girisSifresi == sifre)
+        sifrekontrol(girisSifresi)
+    }
+
+
+    const sifrekontrol = (t)=>{
+        if(t == sifre)
         {
             dispacth(setParmakizi(false))
             dispacth(setSifresor(false))
         }
     }
+
+
+    const textgirisi = (t)=>{
+        setGirisSifresi(t)
+        if(t.length == 4)
+        {
+            sifrekontrol(t)
+        }
+    }
+
+
+
 
     const [girisSifresi, setGirisSifresi] = useState('')
 
@@ -40,11 +57,11 @@ const SifreSor = () => {
         maxLength={4}
 
         value={girisSifresi}
-        onChangeText={setGirisSifresi}
+        onChangeText={textgirisi}
         secureTextEntry={true}
       />
     <Pressable style={styles.buton} onPress={girisebasti}>
-        <Text style={{fontSize:30,color:'white'}}>Tıkla</Text>
+        <Text style={{fontSize:30,color:'white'}}>Giriş</Text>
     </Pressable>
     </View>
   )

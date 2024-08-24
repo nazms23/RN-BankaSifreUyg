@@ -45,7 +45,7 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
     const bankadegisti = (id) =>{
         setBankaadi(bankalar.find(i=>i.id == id).isim)
         setBankaresim(bankalar.find(i=>i.id == id).resim)
-
+        setBankalarbas(false)
         bankadegis(sifreidsi,id)
     }
 
@@ -110,7 +110,7 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
                     <TextInput 
                     inputMode='numeric'
                     placeholder='Şifreniz'
-                    maxLength={10}
+                    maxLength={6}
                     value={textboxyazi}
                     onChangeText={textdegisti}
 

@@ -29,7 +29,7 @@ const Hepsi = () => {
                 {
                     await AsyncStorage.setItem('ayarlar', JSON.stringify({
                         sifresor:false,
-                        girissifre:1111,
+                        girissifre:'1111',
                         parmaksor:false
 
                     }))

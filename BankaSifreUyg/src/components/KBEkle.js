@@ -26,10 +26,12 @@ const KBEkle = ({resimmi, bankalar,eklefonk,karttur}) => {
         setDefisim(bankalar.find(i => i.id == id).isim)
         setDefresim(bankalar.find(i => i.id == id).resim)
         setBankaId(id)
+        setBankalarbas(false)
     }
     const kartturustubas = (id) =>{
         setDefkartturisim(karttur.find(i => i.id == id).isim)
         setKartturId(id)
+        setKartturbas(false)
     }
 
 
@@ -69,11 +71,12 @@ const KBEkle = ({resimmi, bankalar,eklefonk,karttur}) => {
                     onChangeText={setSifre}
                 />
             </View>
-            <Pressable style={styles.eklebuton} onPress={()=>{
+            <Pressable style={styles.eklebuton} onPress={async ()=>{
                 if(sifre != "")
                 {
-                    eklemefonk(bankaId,sifre,kartturId)
+                    await eklemefonk(bankaId,sifre,kartturId)
                     setSifre("")
+                    setEklebas(false)
                 }
                 }}>
                 <Text>Ekle</Text>
