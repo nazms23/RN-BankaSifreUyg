@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput,Pressable } from 'react-native'
+import { StyleSheet, Text, View, TextInput,Pressable,Alert } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -30,6 +30,24 @@ const SifreSor = () => {
         {
             dispacth(setParmakizi(false))
             dispacth(setSifresor(false))
+        }
+        else if(t.length == 0)
+        {
+            Alert.alert('Başarısız', 'Şifre kısmı boş bırakılamaz.', [
+                {text: 'Tamam', onPress: () => {return} },
+              ]);
+        }
+        else if(t.length < 4)
+        {
+            Alert.alert('Başarısız', 'Şifre kısmı 4 rakamdan az olamaz.', [
+                {text: 'Tamam', onPress: () => {return}},
+              ]);
+        }
+        else if(t != sifre)
+        {
+            Alert.alert('Başarısız', 'Şifre yanlış.', [
+                {text: 'Tamam', onPress: () => {return}},
+              ]);
         }
     }
 

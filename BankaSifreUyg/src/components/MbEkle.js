@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView, Alert } from 'react-native'
 import React, {useState} from 'react'
 
 const MbEkle = ({resimmi, bankalar,eklefonk}) => {
@@ -60,6 +60,11 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
                     eklemefonk(bankaId,sifre)
                     setSifre("")
                     setEklebas(false)
+                }else
+                {
+                    Alert.alert('Başarısız', 'Şifre kısmı boş bırakılamaz.', [
+                        {text: 'Tamam', onPress: () => {return}},
+                      ]);
                 }
                 }}>
                 <Text>Ekle</Text>
