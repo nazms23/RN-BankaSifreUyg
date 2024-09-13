@@ -25,6 +25,7 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgiler
     const [kartno, setKartno] = useState(kartbilgileriobj.kartno)
     const [tarih, setTarih] = useState(kartbilgileriobj.tarih)
     const [CVC, setCVC] = useState(kartbilgileriobj.cvc)
+    const [kartnot, setKartnot] = useState(kartbilgileriobj.kartnot)
 
 
     const [textboxgorunurluk, settextboxgorunurluk] = useState("none")
@@ -66,6 +67,11 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgiler
         setKartturisim(kartturler.find(i=>i.id == id).isim)
         setKartturbas(false)
         turdegis(sifreidsi,id)
+    }
+
+    const kartnotbilgidegisti = (t)=>{
+        setKartnot(t)
+        kartbilgisidegistir(sifreidsi,kartno,tarih,CVC,t)
     }
 
     const kartnobilgidegisti = (t)=>{
@@ -137,7 +143,7 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgiler
 
             <View style={styles.disdiv}>
                 <Pressable style={styles.bankadisdiv} onPress={()=> editmod && setBankalarbas(!bankalarbas)} >
-                    {resimmi ? 
+                    {resimmi & bankaresim != undefined ? 
                     <Image style={styles.bankaresim} source={bankaresim}/> : 
 
                     <Text>{bankaadi}</Text> 
@@ -179,14 +185,16 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgiler
 
             {
                 bankalar.map((i)=>{
-                    return(
-                <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankadegisti(i.id)} >
-                {resimmi ? 
-                <Image style={styles.bankaresim} source={i.resim}/> : 
-                <Text>{i.isim}</Text> 
-                }
-            </Pressable>
-                    )
+                    if(i.id != 0)
+                    {
+                        return(
+                        <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankadegisti(i.id)} >
+                        {resimmi & i.resim != undefined ? 
+                        <Image style={styles.bankaresim} source={i.resim}/> : 
+                        <Text>{i.isim}</Text> 
+                        }
+                        </Pressable>)
+                    }
                 })
             }
 
@@ -210,6 +218,21 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgiler
         </View>
         
         <View style={[styles.kartbilgileridisdiv,{display: kartbilgibas?'flex':'none'}]}>
+
+            <View style={styles.kartbilgileritemdiv}>
+                <Text style={styles.kartbilgileritext} >Not: </Text>
+                <TextInput 
+                    style={[styles.kartbilgitextinput, {display:editmod?'flex':'none'}]}
+                    inputMode='text'
+                    placeholder='Kart ile ilgile notunuz (16)'
+                    maxLength={16}
+                    value={kartnot}
+                    onChangeText={kartnotbilgidegisti}
+                />
+
+                <Text style={[styles.kartbilgikisimtext,{display: editmod?'none':'flex'}]}>{kartnot}</Text>
+            </View>
+
             <View style={styles.kartbilgileritemdiv}>
                 <Text style={styles.kartbilgileritext} >No: </Text>
                 <TextInput 

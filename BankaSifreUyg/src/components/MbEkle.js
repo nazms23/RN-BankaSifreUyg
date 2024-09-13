@@ -36,7 +36,7 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
         <View style={[styles.eklemedis, {display: eklebas? 'flex': 'none'}]} >
             <Pressable style={[styles.bankadisdiv]} onPress={()=>setBankalarbas(!bankalarbas)}>
                 
-                {resimmi ? 
+                {resimmi & defresim != undefined ? 
                 <Image style={styles.bankaresim} source={defresim}/> : 
 
                 <Text>{defisim}</Text> 
@@ -57,6 +57,13 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
             <Pressable style={styles.eklebuton} onPress={()=>{
                 if(sifre != "")
                 {
+                    if(bankaId == 0)
+                    {
+                        Alert.alert('Başarısız', 'Banka Seçmelisiniz.', [
+                            {text: 'Tamam', onPress: () => {return}},
+                            ]);
+                        return;
+                    }
                     eklemefonk(bankaId,sifre)
                     setSifre("")
                     setEklebas(false)
@@ -75,14 +82,16 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
 
             {
                 bankalar.map((i)=>{
-                    return(
-                <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankaustubas(i.id)} >
-                {resimmi ? 
-                <Image style={styles.bankaresim} source={i.resim}/> : 
-                <Text>{i.isim}</Text> 
-                }
-            </Pressable>
-                    )
+                    if(i.id != 0)
+                    {
+                        return(
+                        <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankaustubas(i.id)} >
+                        {resimmi & i.resim != undefined ? 
+                        <Image style={styles.bankaresim} source={i.resim}/> : 
+                        <Text>{i.isim}</Text> 
+                        }
+                        </Pressable>)
+                    }
                 })
             }
 

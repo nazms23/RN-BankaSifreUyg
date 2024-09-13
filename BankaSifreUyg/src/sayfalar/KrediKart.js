@@ -17,53 +17,63 @@ const KrediKart = ({navigation}) => {
   const [bankalar, setBankalar] = useState([
     {
       id:0,
+      isim:"Seç",
+      resim:undefined
+    },
+    {
+      id:1,
       isim:"Akbank",
       resim:require('../../assets/bankalar/Akbank.png')
     },
     {
-      id:1,
+      id:2,
       isim:"Ziraat",
       resim:require('../../assets/bankalar/Ziraat.png')
     },
     {
-      id:2,
+      id:3,
       isim:"Halkbank",
       resim:require('../../assets/bankalar/Halkbank.png')
     },
     {
-      id:3,
+      id:4,
       isim:"VakıfBank",
       resim:require('../../assets/bankalar/Vakif.png')
     },
     {
-      id:4,
+      id:5,
       isim:"İş Bankası",
       resim:require('../../assets/bankalar/isbankasi.png')
     },
     {
-      id:5,
+      id:6,
       isim:"Yapı Kredi",
       resim:require('../../assets/bankalar/yapikredi.png')
     },
     {
-      id:6,
+      id:7,
       isim:"DenizBank",
       resim:require('../../assets/bankalar/denizbank.png')
     },
     {
-      id:7,
+      id:8,
       isim:"Garanti BBVA",
       resim:require('../../assets/bankalar/garanti.png')
     },
     {
-      id:8,
+      id:9,
       isim:"ING",
       resim:require('../../assets/bankalar/ingbank.png')
     },
     {
-      id:9,
+      id:10,
       isim:"QNB FinansBank",
       resim:require('../../assets/bankalar/finansbank.png')
+    },
+    {
+      id:11,
+      isim:"Diğer",
+      resim:undefined
     }
   ])
 
@@ -111,7 +121,8 @@ const KrediKart = ({navigation}) => {
         sifre:sifre,
         kartnumara:'',
         karttarih:'',
-        kartcvc:''
+        kartcvc:'',
+        kartnot: ''
       })
 
       setKbsifreler(kbsifreler)
@@ -149,10 +160,11 @@ const KrediKart = ({navigation}) => {
       fonksiyonlar.SifreGuncelle();
 
     },
-    KBBilgiDegistir:(id,no,tarih,cvc) =>{
+    KBBilgiDegistir:(id,no,tarih,cvc,not) =>{
       kbsifreler.sifreler.find(i=>i.id == id).kartnumara = no
       kbsifreler.sifreler.find(i=>i.id == id).karttarih = tarih
       kbsifreler.sifreler.find(i=>i.id == id).kartcvc = cvc
+      kbsifreler.sifreler.find(i=>i.id == id).kartnot = not
       setKbsifreler(kbsifreler)
 
       fonksiyonlar.SifreGuncelle();
@@ -193,6 +205,7 @@ const KrediKart = ({navigation}) => {
                   kartno: i.kartnumara ,
                   tarih: i.karttarih,
                   cvc: i.kartcvc,
+                  kartnot: i.kartnot,
                   degisfonk: fonksiyonlar.KBBilgiDegistir
                 }}
                 silfonk={fonksiyonlar.KBSifreSil} 

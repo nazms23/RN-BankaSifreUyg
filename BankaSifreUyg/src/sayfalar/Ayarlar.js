@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View,SafeAreaView, Image,Pressable, TextInput } from 'react-native'
+import { StyleSheet, Text, View,SafeAreaView, Image,Pressable, TextInput,ActivityIndicator } from 'react-native'
 import React, {useState,useEffect} from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import * as LocalAuthentication from 'expo-local-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Gorunum from '../ayarsayfa/Gorunum';
+import Guvenlik from '../ayarsayfa/Guvenlik';
+import { reloadAppAsync } from 'expo';
 
 const Ayarlar = ({navigation}) => {
   const fonksiyonlar = {
@@ -21,52 +23,33 @@ const Ayarlar = ({navigation}) => {
       await AsyncStorage.setItem('ayarlar',JSON.stringify(ayarlarstate))
     },
     AyarParmakizisecfonk: async ()=>{
-      ayarlarstate.parmaksor = !parmakizi
+      ayarlarstate.parmaksor = !ayarlarstate.parmaksor
       ayarlarstate.sifresor = false
-      setParmakizi(!parmakizi)
-      setSifresor(false)
-
+      
       await fonksiyonlar.Ayardegisti();
     },
     AyarSifreDegis:async (t) =>{
-      t.length!=0 ? setGirisSifresi(t) : setGirisSifresi(t)
       if(t.length == 4)
       {
         ayarlarstate.girissifre = t
-        setNormalsifre(t)
         await fonksiyonlar.Ayardegisti();
       }
     },
     AyarSifresec: async ()=>{
       ayarlarstate.parmaksor = false
-      ayarlarstate.sifresor = !sifresor
-      setParmakizi(false)
-      setSifresor(!sifresor)
+      ayarlarstate.sifresor = !ayarlarstate.sifresor
 
       await fonksiyonlar.Ayardegisti();
     }
   }
 
-
-
-
-  const [sifresor, setSifresor] = useState(true)
-
-  const [girisSifresi, setGirisSifresi] = useState('1111')
-
-  const [normalsifre, setNormalsifre] = useState('1111')
-
-
-  const [parmakizi, setParmakizi] = useState(false)
-
-  const [ayarlarstate, setAyarlarstate] = useState({
-    sifresor:false,
-    girissifre:'1111',
-    parmaksor:false})
-
+  const [yukleniyor, setYukleniyor] = useState(true)
 
 
   const [parmakizivarmi, setParmakizivarmi] = useState(false)
+
+  const [ayarlarstate, setAyarlarstate] = useState(undefined)
+
 
   useEffect(()=>{
     (async ()=>{
@@ -77,74 +60,54 @@ const Ayarlar = ({navigation}) => {
         if(veri != null || veri == '')
         {
           const ayar = JSON.parse(veri)
-          setSifresor(ayar.sifresor)
-          setGirisSifresi(ayar.girissifre)
-          setNormalsifre(ayar.girissifre)
-          setParmakizi(ayar.parmaksor)
           setAyarlarstate(ayar)
-
-
+          setYukleniyor(false);
         }
       })
 
     })();
   },[]);
-
   
 
 
   return (
     <SafeAreaView style={styles.disdiv}>
       <Header flexx={1} title={"Ayarlar"} logoyazi={false} ayarlarfonk={fonksiyonlar.ayarlargecisfonk} />
+      <View style={styles.secenekler}>
+
+
+      <Pressable style={styles.secenekitem}>
+        <Text style={styles.secenektext}>
+          Görünüm
+        </Text>
+      </Pressable>
+
+      <Pressable style={styles.secenekitem}>
+        <Text style={styles.secenektext}>
+          Güvenlik
+        </Text>
+      </Pressable>
+      
+      </View>
+
 
       <View style={styles.contdis}>
 
-        <View style={styles.itemdisdiv} >
-
-          <Text style={[styles.yazilar, styles.sifresoryazi]} >Uygulama Açılışında Şifre</Text>
-
-          <Pressable style={[styles.butonlar]} onPress={()=> fonksiyonlar.AyarSifresec()}>
-            <Image 
-              source={sifresor ? require('../../assets/iconlar/checkdolu.png'):require('../../assets/iconlar/checkbos.png')} 
-              resizeMode='center'
-              style={[styles.resimler,styles.sifresorresim]}
-            />
-          </Pressable>
-          
+        <View style={[styles.yukleniyor,{display:yukleniyor ? 'flex':'none'}]}>
+        <ActivityIndicator size="large" color={'white'}/>
         </View>
-
-        <View style={[styles.itemdisdiv, {display: sifresor? 'flex':'none'}]} > 
-
-          <Text style={[styles.yazilar, styles.sifresoryazi]} >Uygulamaya Giriş Şifreniz</Text>
-
-          <TextInput 
-            style={styles.inputlar}
-
-            inputMode='numeric'
-            placeholder='Şifreniz'
-            maxLength={4}
-
-            value={girisSifresi.toString()}
-            onChangeText={fonksiyonlar.AyarSifreDegis}
-          
-          />
-          
-        </View>
-
-        <View style={[styles.itemdisdiv,{display: parmakizivarmi? 'flex':'none'}]} >
-
-          <Text style={[styles.yazilar, styles.sifresoryazi]} >Parmak İziyle Giriş</Text>
-
-          <Pressable style={[styles.butonlar]} onPress={fonksiyonlar.AyarParmakizisecfonk}>
-            <Image 
-              source={parmakizi ? require('../../assets/iconlar/checkdolu.png'):require('../../assets/iconlar/checkbos.png')} 
-              resizeMode='center'
-              style={[styles.resimler,styles.sifresorresim]}
-            />
-          </Pressable>
-          
-        </View>
-
+        {
+          ayarlarstate != undefined && 
+          <Guvenlik style={{display: yukleniyor? 'none': 'flex'}} fonksiyonlar={fonksiyonlar} gbilgiler={
+            {
+              sifresor:ayarlarstate.sifresor,
+              girisSifresi:ayarlarstate.girissifre,
+              parmakizi:ayarlarstate.parmaksor,
+              parmakizivarmi:parmakizivarmi
+            }
+          }/>
+        }
+        
 
       </View>
 
@@ -162,14 +125,59 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center'
   },
+
+
   contdis:{
     width:'100%',
     height:'100%',
-    justifyContent:'center',
+    justifyContent:'flex-start',
     alignItems:'center',
     flex:10,
     backgroundColor:'lightred'
   },
+
+
+  yukleniyor:{
+    width:'100%',
+    height:'100%',
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor:'tomato'
+  },
+
+
+
+
+  secenekler:{
+    width:'100%',
+    height:'100%',
+    justifyContent:'flex-start',
+    alignItems:'center',
+    flex:1,
+    backgroundColor:'lightred',
+    borderWidth:2,
+    flexDirection:'row'
+  },
+  secenekitem:{
+    backgroundColor:'#3b84a1',
+    width:'30%',
+    height:'90%',
+    justifyContent:'center',
+    alignItems:'center',
+    marginVertical:10,
+    borderRadius:20,
+    marginRight:10
+  },
+  secenektext:{
+    color:'white',
+    fontSize:17
+  },
+
+
+
+
+
   itemdisdiv:{
     backgroundColor:'#f0679e',
     width:'100%',
@@ -179,6 +187,10 @@ const styles = StyleSheet.create({
     alignItems:'center',
     marginVertical:10
   },
+
+
+
+
   resimler:{
     width:'100%',
     height:'100%',

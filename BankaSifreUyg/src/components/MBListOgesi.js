@@ -92,7 +92,7 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
 
             <View style={styles.disdiv}>
                 <Pressable style={styles.bankadisdiv} onPress={()=> editmod && setBankalarbas(!bankalarbas)} >
-                    {resimmi ? 
+                    {resimmi & bankaresim != undefined ? 
                     <Image style={styles.bankaresim} source={bankaresim}/> : 
 
                     <Text>{bankaadi}</Text> 
@@ -127,14 +127,16 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
 
             {
                 bankalar.map((i)=>{
+                  if(i.id != 0)
+                  {
                     return(
-                <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankadegisti(i.id)} >
-                {resimmi ? 
-                <Image style={styles.bankaresim} source={i.resim}/> : 
-                <Text>{i.isim}</Text> 
-                }
-            </Pressable>
-                    )
+                    <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankadegisti(i.id)} >
+                    {resimmi & i.resim != undefined ? 
+                    <Image style={styles.bankaresim} source={i.resim}/> : 
+                    <Text>{i.isim}</Text> 
+                    }
+                    </Pressable>)
+                  }
                 })
             }
 
