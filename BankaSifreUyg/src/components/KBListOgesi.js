@@ -4,13 +4,17 @@ import {Swipeable,GestureHandlerRootView} from 'react-native-gesture-handler'
 import {setStringAsync} from 'expo-clipboard';
 
 
-const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgileriobj , silfonk, sifredegisfonk , bankadegisfonk , turdegisfonk , bankalar, kartturler , sifreidsi}) => {
+const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilgileriobj , silfonk, sifredegisfonk , bankadegisfonk , turdegisfonk , bankalar, kartturler , sifreidsi}) => {
 
     const silmefonk = silfonk;
     const sifredegis = sifredegisfonk
     const bankadegis = bankadegisfonk
     const turdegis = turdegisfonk
-    const kartbilgisidegistir = kartbilgileriobj.degisfonk
+
+    const kartnodegis = kartbilgileriobj.degisfonklar.nodegis
+    const karttarihdegis = kartbilgileriobj.degisfonklar.tarihdegis
+    const kartcvcdegis = kartbilgileriobj.degisfonklar.cvcdegis
+    const kartnotdegis = kartbilgileriobj.degisfonklar.notdegis
 
     const [bankalarbas, setBankalarbas] = useState(false)
     const [kartturbas, setKartturbas] = useState(false)
@@ -71,12 +75,12 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgiler
 
     const kartnotbilgidegisti = (t)=>{
         setKartnot(t)
-        kartbilgisidegistir(sifreidsi,kartno,tarih,CVC,t)
+        kartnotdegis(sifreidsi,t)
     }
 
     const kartnobilgidegisti = (t)=>{
         setKartno(t)
-        kartbilgisidegistir(sifreidsi,t,tarih,CVC)
+        kartnodegis(sifreidsi,t)
     }
 
     const karttarihbilgidegisti = (t)=>{
@@ -85,14 +89,12 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgiler
             t = t.slice(0,2)+'/'+t.slice(3)
         }
         setTarih(t)
-        kartbilgisidegistir(sifreidsi,kartno,t,CVC)
-
+        karttarihdegis(sifreidsi,t)
     }
 
     const kartcvcbilgidegisti = (t)=>{
         setCVC(t)
-        kartbilgisidegistir(sifreidsi,kartno,tarih,t)
-
+        kartcvcdegis(sifreidsi,t)
     }
 
 
@@ -217,7 +219,7 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgiler
             </View>
         </View>
         
-        <View style={[styles.kartbilgileridisdiv,{display: kartbilgibas?'flex':'none'}]}>
+        <View style={[styles.kartbilgileridisdiv,{display: not ? 'flex' : kartbilgibas?'flex':'none'}]}>
 
             <View style={styles.kartbilgileritemdiv}>
                 <Text style={styles.kartbilgileritext} >Not: </Text>
@@ -233,7 +235,7 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgiler
                 <Text style={[styles.kartbilgikisimtext,{display: editmod?'none':'flex'}]}>{kartnot}</Text>
             </View>
 
-            <View style={styles.kartbilgileritemdiv}>
+            <View style={[styles.kartbilgileritemdiv,{display:kartbilgibas?'flex':'none'}]}>
                 <Text style={styles.kartbilgileritext} >No: </Text>
                 <TextInput 
                     style={[styles.kartbilgitextinput, {display:editmod?'flex':'none'}]}
@@ -252,7 +254,7 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgiler
                 </Pressable>
             </View>
 
-            <View style={styles.kartbilgileritemdiv}>
+            <View style={[styles.kartbilgileritemdiv,{display:kartbilgibas?'flex':'none'}]}>
                 <Text style={styles.kartbilgileritext}>Tarih: </Text>
                 <TextInput
                 style={[styles.kartbilgitextinput, {display:editmod?'flex':'none'}]}
@@ -270,7 +272,7 @@ const KBListOgesi = ({resimmi, resim, bankaad, kartturu ,sifre,bId, kartbilgiler
                 </Pressable>
             </View>
 
-            <View style={styles.kartbilgileritemdiv}>
+            <View style={[styles.kartbilgileritemdiv,{display:kartbilgibas?'flex':'none'}]}>
                 <Text style={styles.kartbilgileritext}>CVC: </Text>
                 <TextInput
                 style={[styles.kartbilgitextinput, {display:editmod?'flex':'none'}]}

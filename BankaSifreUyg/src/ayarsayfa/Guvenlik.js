@@ -31,7 +31,6 @@ const Guvenlik = ({fonksiyonlar, gbilgiler}) => {
 
 
 
-
   return (
     <ScrollView style={styles.contdis}>
         <View style={styles.itemdisdiv} >

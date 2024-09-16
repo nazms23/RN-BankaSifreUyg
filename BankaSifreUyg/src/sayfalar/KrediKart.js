@@ -1,17 +1,21 @@
-import { StyleSheet, Text, View,SafeAreaView, ScrollView } from 'react-native'
-import React, {useState,useEffect} from 'react'
+import { StyleSheet, View,SafeAreaView, ScrollView } from 'react-native'
+import React, {useState} from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import KBListOgesi from '../components/KBListOgesi'
 import KBEkle from '../components/KBEkle'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {useSelector,useDispatch} from 'react-redux';
+import {KBEkleSlice,KBSil,KBSifreDegis,KBBankaDegis,KBTurDegis, KBNoDegis, KBTarihDegis, KBCvcDegis, KBNotDegis} from '../redux/bilgilerSlice'
 
 
 const KrediKart = ({navigation}) => {
+  const dispacth = useDispatch()
 
-  const [resimmi, setResimmi] = useState(true)
+  const {logoyazi,not} = useSelector(s=> s.ayar)
 
-  const [yenileme, Setyenileme] = useState("")
+  const {kredikart} = useSelector(s=>s.bilgi)
+
   
 
   const [bankalar, setBankalar] = useState([
@@ -92,9 +96,6 @@ const KrediKart = ({navigation}) => {
     }
   ])
 
-  const [kbsifreler, setKbsifreler] = useState({sifreler:[]})
-
-
   const fonksiyonlar = {
     mobilbankgecisfonk: ()=>{
       navigation.navigate('MobilBanka')
@@ -105,16 +106,10 @@ const KrediKart = ({navigation}) => {
     ayarlargecisfonk: ()=>{
       navigation.navigate('Ayarlar')
     },
-    KBresimyazigecisfonk: ()=>{
-      setResimmi(!resimmi)
-    },
-    SifreGuncelle: async ()=>{
-      await AsyncStorage.setItem('kredikart',JSON.stringify(kbsifreler))
-    },
-    KBSifreEkle: async (bId,sifre,ktur)=>{
-      let id = kbsifreler.sifreler.length > 0 ? kbsifreler.sifreler[kbsifreler.sifreler.length-1].id+1 : 1
 
-      kbsifreler.sifreler.push({
+    KBSifreEkle: async (bId,sifre,ktur)=>{
+      let id = kredikart.length > 0 ? kredikart[kredikart.length-1].id+1 : 1
+      dispacth(KBEkleSlice({
         id:id,
         bankaId:bId,
         ktur:ktur,
@@ -123,80 +118,52 @@ const KrediKart = ({navigation}) => {
         karttarih:'',
         kartcvc:'',
         kartnot: ''
-      })
-
-      setKbsifreler(kbsifreler)
-
-      fonksiyonlar.SifreGuncelle();
-
-      Setyenileme("dsfsdfsdf"+Math.floor(Math.random() * 10) == yenileme ? "dsfsdfsdf"+Math.floor(Math.random() * 10 +20): "dsfsdfsdf"+Math.floor(Math.random() * 10))
-      
+      }))
     },
     KBSifreSil: (bId)=>{
-      kbsifreler.sifreler.splice(kbsifreler.sifreler.findIndex(i=>i.id==bId),1)
-      setKbsifreler(kbsifreler)
-
-      fonksiyonlar.SifreGuncelle();
-
-      Setyenileme("dsfsdfsdf"+Math.floor(Math.random() * 10) == yenileme ? "dsfsdfsdf"+Math.floor(Math.random() * 10 +20): "dsfsdfsdf"+Math.floor(Math.random() * 10))
+      dispacth(KBSil(bId))
     },
     KBSifreDegistir: (id,text)=>{
-      kbsifreler.sifreler.find(i=>i.id == id).sifre = text
-      setKbsifreler(kbsifreler)
-
-      fonksiyonlar.SifreGuncelle();
+      if(text.length == 4)
+      {
+        dispacth(KBSifreDegis({id:id,text:text}))
+      }
     },
     KBBankaDegistir: (id,bId)=>{
-      kbsifreler.sifreler.find(i=>i.id == id).bankaId = bId
-      setKbsifreler(kbsifreler)
-
-      fonksiyonlar.SifreGuncelle();
-
+      dispacth(KBBankaDegis({id:id,bId,bId}))
     },
     KBTurDegistir: (id,turId)=>{
-      kbsifreler.sifreler.find(i=>i.id == id).ktur = turId
-      setKbsifreler(kbsifreler)
+      dispacth(KBTurDegis({id:id,turId:turId}))
+    },
 
-      fonksiyonlar.SifreGuncelle();
+
+
+    KBNoDegistir:(id,no)=>{
+      dispacth(KBNoDegis({id:id,no:no}))
+    },
+    KBTarihDegistir:(id,tarih)=>{
+      dispacth(KBTarihDegis({id:id,tarih:tarih}))
 
     },
-    KBBilgiDegistir:(id,no,tarih,cvc,not) =>{
-      kbsifreler.sifreler.find(i=>i.id == id).kartnumara = no
-      kbsifreler.sifreler.find(i=>i.id == id).karttarih = tarih
-      kbsifreler.sifreler.find(i=>i.id == id).kartcvc = cvc
-      kbsifreler.sifreler.find(i=>i.id == id).kartnot = not
-      setKbsifreler(kbsifreler)
+    KBCvcDegistir:(id,cvc)=>{
+      dispacth(KBCvcDegis({id:id,cvc:cvc}))
 
-      fonksiyonlar.SifreGuncelle();
-    }
-
+    },
+    KBNotDegistir:(id,not)=>{
+      dispacth(KBNotDegis({id:id,not:not}))
+    },
   }
-
-  useEffect(()=>{
-    (async()=>{
-      const sifreler = await AsyncStorage.getItem('kredikart').then(async (v)=>{
-        if(v != null)
-        {
-          setKbsifreler(JSON.parse(v))
-        }
-        else
-        {
-          await AsyncStorage.setItem('kredikart',JSON.stringify({sifreler:[]}))
-        }
-      })
-    })();
-  },[])
 
   return (
     <SafeAreaView style={styles.disdiv}>
-      <Header flexx={1} title={"Kredi/Banka Kartı"} logoyazi={true} ayarlarfonk={fonksiyonlar.ayarlargecisfonk} resimisimfonk={fonksiyonlar.KBresimyazigecisfonk}/>
+      <Header flexx={1} title={"Kredi/Banka Kartı"} ayarlarfonk={fonksiyonlar.ayarlargecisfonk}/>
       <View style={styles.contdis}>
         <ScrollView style={styles.contscrollvw}>
         {
-          kbsifreler.sifreler.map(i => {
+          kredikart.map(i => {
             return(
               <KBListOgesi 
-                resimmi={resimmi} key={i.id} 
+                resimmi={logoyazi} key={i.id} not={not} 
                 sifreidsi={i.id} resim={bankalar.find(v=> v.id == i.bankaId).resim} 
                 bankaad={bankalar.find(v=> v.id == i.bankaId).isim} 
                 kartturu={kartturu.find(v=> v.id == i.ktur).isim} 
@@ -206,7 +173,12 @@ const KrediKart = ({navigation}) => {
                   tarih: i.karttarih,
                   cvc: i.kartcvc,
                   kartnot: i.kartnot,
-                  degisfonk: fonksiyonlar.KBBilgiDegistir
+                  degisfonklar: {
+                    nodegis:fonksiyonlar.KBNoDegistir,
+                    tarihdegis:fonksiyonlar.KBTarihDegistir,
+                    cvcdegis:fonksiyonlar.KBCvcDegistir,
+                    notdegis:fonksiyonlar.KBNotDegistir
+                  }
                 }}
                 silfonk={fonksiyonlar.KBSifreSil} 
                 sifredegisfonk={fonksiyonlar.KBSifreDegistir} 
@@ -220,7 +192,7 @@ const KrediKart = ({navigation}) => {
           })
 
         }
-          <KBEkle resimmi={resimmi} bankalar={bankalar} eklefonk={fonksiyonlar.KBSifreEkle} karttur={kartturu} />
+          <KBEkle resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.KBSifreEkle} karttur={kartturu} />
         </ScrollView>
       </View>
 

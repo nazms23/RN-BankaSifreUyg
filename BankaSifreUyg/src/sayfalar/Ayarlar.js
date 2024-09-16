@@ -6,9 +6,15 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Gorunum from '../ayarsayfa/Gorunum';
 import Guvenlik from '../ayarsayfa/Guvenlik';
-import { reloadAppAsync } from 'expo';
+import Bilgilendirme from '../ayarsayfa/Bilgilendirme';
+
+import {useSelector,useDispatch} from 'react-redux';
+import {setLogoyazi,setNot} from '../redux/ayarlarSlice';
+
 
 const Ayarlar = ({navigation}) => {
+  const dispacth = useDispatch()
+
   const fonksiyonlar = {
     mobilbankgecisfonk: ()=>{
       navigation.navigate('MobilBanka')
@@ -40,8 +46,29 @@ const Ayarlar = ({navigation}) => {
       ayarlarstate.sifresor = !ayarlarstate.sifresor
 
       await fonksiyonlar.Ayardegisti();
+    },
+
+    Logoyazidegis: async(d) =>{
+      ayarlarstate.logoyazi = d
+      dispacth(setLogoyazi(d))
+      await fonksiyonlar.Ayardegisti();
+    },
+
+    Notgordegis: async(d) =>{
+      ayarlarstate.not = d
+      dispacth(setNot(d))
+      await fonksiyonlar.Ayardegisti();
     }
+
   }
+
+  const [bolumler, Setbolumler] = useState(1)
+
+  /*
+  !1 güvenlik
+  !2 görünüm
+  !3 bilgilendirme
+  */
 
   const [yukleniyor, setYukleniyor] = useState(true)
 
@@ -50,12 +77,27 @@ const Ayarlar = ({navigation}) => {
 
   const [ayarlarstate, setAyarlarstate] = useState(undefined)
 
+  const {nsifresor,nparmakizi,girissifre,not,logoyazi} = useSelector(s=> s.ayar)
 
   useEffect(()=>{
     (async ()=>{
       const parmak = await LocalAuthentication.hasHardwareAsync();
       setParmakizivarmi(parmak)
 
+      
+
+      setAyarlarstate({
+        sifresor:nsifresor,
+        girissifre:girissifre,
+        parmaksor:nparmakizi,
+        not:not,
+        logoyazi:logoyazi
+      })
+      setYukleniyor(false);
+
+
+      //! Eskisi
+      /*
       const ayarlar = await AsyncStorage.getItem('ayarlar').then(async (veri)=>{
         if(veri != null || veri == '')
         {
@@ -64,6 +106,7 @@ const Ayarlar = ({navigation}) => {
           setYukleniyor(false);
         }
       })
+      */
 
     })();
   },[]);
@@ -75,18 +118,24 @@ const Ayarlar = ({navigation}) => {
       <Header flexx={1} title={"Ayarlar"} logoyazi={false} ayarlarfonk={fonksiyonlar.ayarlargecisfonk} />
       <View style={styles.secenekler}>
 
+      <Pressable style={styles.secenekitem} onPress={()=>{Setbolumler(1)}}>
+        <Text style={styles.secenektext}>
+          Güvenlik
+        </Text>
+      </Pressable>
 
-      <Pressable style={styles.secenekitem}>
+      <Pressable style={styles.secenekitem} onPress={()=>{Setbolumler(2)}}>
         <Text style={styles.secenektext}>
           Görünüm
         </Text>
       </Pressable>
 
-      <Pressable style={styles.secenekitem}>
+      <Pressable style={styles.secenekitem} onPress={()=>{Setbolumler(3)}}>
         <Text style={styles.secenektext}>
-          Güvenlik
+          Bilgilendirme
         </Text>
       </Pressable>
+      
       
       </View>
 
@@ -96,9 +145,11 @@ const Ayarlar = ({navigation}) => {
         <View style={[styles.yukleniyor,{display:yukleniyor ? 'flex':'none'}]}>
         <ActivityIndicator size="large" color={'white'}/>
         </View>
+
         {
           ayarlarstate != undefined && 
-          <Guvenlik style={{display: yukleniyor? 'none': 'flex'}} fonksiyonlar={fonksiyonlar} gbilgiler={
+          bolumler == 1 ?
+            <Guvenlik style={{display: yukleniyor? 'none': 'flex'}} fonksiyonlar={fonksiyonlar} gbilgiler={
             {
               sifresor:ayarlarstate.sifresor,
               girisSifresi:ayarlarstate.girissifre,
@@ -106,7 +157,20 @@ const Ayarlar = ({navigation}) => {
               parmakizivarmi:parmakizivarmi
             }
           }/>
+          :
+          bolumler == 2?
+          <Gorunum hersey={{
+            not:ayarlarstate.not,
+            logoyazi:ayarlarstate.logoyazi,
+            lysec:fonksiyonlar.Logoyazidegis,
+            ndegis:fonksiyonlar.Notgordegis
+          }}/>
+          :
+          <Bilgilendirme/>
+          
+          
         }
+        
         
 
       </View>

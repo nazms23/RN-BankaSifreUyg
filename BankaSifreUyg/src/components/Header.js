@@ -1,18 +1,11 @@
 import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Header = ({flexx,title,ayarlarfonk,resimisimfonk, logoyazi}) => {
+const Header = ({flexx,title,ayarlarfonk}) => {
   return (
     <SafeAreaView style={[styles.disdiv, {flex:flexx}]}>
-      
-      <View style={[styles.butondiv, {display: logoyazi? 'flex':'none'}]}>
-        <Pressable style={styles.butondis} onPress={resimisimfonk}>
-          <Text style={[styles.textler, {borderBottomWidth:1,borderColor:'white'}]}>Logo</Text>
-          <Text>Yazı</Text>
-        </Pressable>
-      </View>
-
-      <View style={[styles.yazidiv, {flex: logoyazi? 3:4}]}>
+  
+      <View style={[styles.yazidiv, {flex: 4}]}>
         <Text>{title}</Text>
       </View>
       

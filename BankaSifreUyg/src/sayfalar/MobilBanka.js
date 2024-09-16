@@ -1,18 +1,22 @@
-import { StyleSheet, Text, View,SafeAreaView, ScrollView } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import { StyleSheet, View,SafeAreaView, ScrollView } from 'react-native'
+import React, {useState} from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import MBListOgesi from '../components/MBListOgesi'
 import MbEkle from '../components/MbEkle'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import {useSelector,useDispatch} from 'react-redux';
+import {MBEkleSlice,MBSil,MBSifreDegis,MBBankaDegis} from '../redux/bilgilerSlice'
+
+
 
 const MobilBanka = ({navigation}) => {
+  const dispacth = useDispatch()
   
-  const [resimmi, setResimmi] = useState(true)
+  const {logoyazi} = useSelector(s=> s.ayar)
 
-  const [yenileme, Setyenileme] = useState("")
-  
+  const {mobilbanka} = useSelector(s=>s.bilgi)
 
   const [bankalar, setBankalar] = useState([
     {
@@ -76,8 +80,6 @@ const MobilBanka = ({navigation}) => {
       resim:undefined
     }
   ])
-
-  const [mbsifreler, setMbsifreler] = useState({sifreler:[]})
   
   const fonksiyonlar = {
     mobilbankgecisfonk: ()=>{
@@ -89,80 +91,41 @@ const MobilBanka = ({navigation}) => {
     ayarlargecisfonk: ()=>{
       navigation.navigate('Ayarlar')
     },
-    MBresimyazigecisfonk: ()=>{
-      setResimmi(!resimmi)
-    },
-    SifreGuncelle: async ()=>{
-      await AsyncStorage.setItem('mobilbanka',JSON.stringify(mbsifreler))
-    },
+
     MBSifreEkle: async (bId,sifre)=>{
-      let id = mbsifreler.sifreler.length > 0 ? mbsifreler.sifreler[mbsifreler.sifreler.length-1].id+1 : 1
-
-      mbsifreler.sifreler.push({id:id,bankaId:bId,sifre:sifre})
-
-      setMbsifreler(mbsifreler)
-      fonksiyonlar.SifreGuncelle();
-
-      Setyenileme("dsfsdfsdf"+Math.floor(Math.random() * 10) == yenileme ? "dsfsdfsdf"+Math.floor(Math.random() * 10 +20): "dsfsdfsdf"+Math.floor(Math.random() * 10))
-      
+      let id = mobilbanka.length > 0 ? mobilbanka[mobilbanka.length-1].id+1 : 1
+      dispacth(MBEkleSlice({id:id,bankaId:bId,sifre:sifre}))
     },
     MBSifreSil: (bId)=>{
-      mbsifreler.sifreler.splice(mbsifreler.sifreler.findIndex(i=>i.id==bId),1)
-      setMbsifreler(mbsifreler)
-
-      fonksiyonlar.SifreGuncelle();
-      
-      Setyenileme("dsfsdfsdf"+Math.floor(Math.random() * 10) == yenileme ? "dsfsdfsdf"+Math.floor(Math.random() * 10 +20): "dsfsdfsdf"+Math.floor(Math.random() * 10))
+      dispacth(MBSil({bId}))
     },
     MBSifreDegistir: (id,text)=>{
-      mbsifreler.sifreler.find(i=>i.id == id).sifre = text
-      setMbsifreler(mbsifreler)
+      if(text.length == 6)
+      {
+        dispacth(MBSifreDegis({id:id,text:text}))
+      }
 
-      fonksiyonlar.SifreGuncelle();
     },
     MBBankaDegistir: (id,bId)=>{
-      mbsifreler.sifreler.find(i=>i.id == id).bankaId = bId
-      setMbsifreler(mbsifreler)
-
-      fonksiyonlar.SifreGuncelle();
+      dispacth(MBBankaDegis({id:id,bId:bId}))
     }
   }
-
-
-  useEffect(()=>{
-    (async()=>{
-      const sifreler = await AsyncStorage.getItem('mobilbanka').then(async (v)=>{
-        if(v != null)
-        {
-          setMbsifreler(JSON.parse(v))
-        }
-        else
-        {
-          await AsyncStorage.setItem('mobilbanka',JSON.stringify({sifreler:[]}))
-        }
-      })
-    })();
-  },[])
-  
-
-
-  
   
   return (
     <SafeAreaView style={styles.disdiv}>
       
-        <Header flexx={1} title={"Mobil Bankacılık"} logoyazi={true}  ayarlarfonk={fonksiyonlar.ayarlargecisfonk} resimisimfonk={fonksiyonlar.MBresimyazigecisfonk}/>
+        <Header flexx={1} title={"Mobil Bankacılık"} ayarlarfonk={fonksiyonlar.ayarlargecisfonk}/>
         <View style={styles.contdis}>
           <ScrollView style={styles.contscrollvw}>
           {
-
-            mbsifreler.sifreler.map(i => {
+            mobilbanka != undefined &&
+            mobilbanka.map(i => {
               return(
-                <MBListOgesi resimmi={resimmi} key={i.id} sifreidsi={i.id} resim={bankalar.find(v=> v.id == i.bankaId).resim} bankaad={bankalar.find(v=> v.id == i.bankaId).isim} sifre={i.sifre} bId={bankalar.find(v=> v.id == i.bankaId).id} silfonk={fonksiyonlar.MBSifreSil} sifredegisfonk={fonksiyonlar.MBSifreDegistir} bankadegisfonk={fonksiyonlar.MBBankaDegistir} bankalar={bankalar} />
+                <MBListOgesi resimmi={logoyazi} key={i.id} sifreidsi={i.id} resim={bankalar.find(v=> v.id == i.bankaId).resim} bankaad={bankalar.find(v=> v.id == i.bankaId).isim} sifre={i.sifre} bId={bankalar.find(v=> v.id == i.bankaId).id} silfonk={fonksiyonlar.MBSifreSil} sifredegisfonk={fonksiyonlar.MBSifreDegistir} bankadegisfonk={fonksiyonlar.MBBankaDegistir} bankalar={bankalar} />
               )
             })
           }
-          <MbEkle resimmi={resimmi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle}/>
+          <MbEkle resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle}/>
           </ScrollView>
         </View>
       
