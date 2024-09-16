@@ -3,13 +3,16 @@ import { act } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
-  mobilbanka: [],
-  kredikart:[]
+  mobilbanka: [], // mobil bankacılık şifre bilgileri
+  kredikart:[] //kart bilgisi şifre bilgileri
 }
 
+//Mobil bankacılık yapılan değişiklikleri asyncstorage'ye kaydetme
 const MBkaydet = async (d) =>{
   await AsyncStorage.setItem('mobilbanka',JSON.stringify({sifreler:d}))
 }
+
+//Kart bilgileri yapılan değişiklikleri asyncstorage'ye kaydetme
 const KBkaydet = async (d) =>{
   await AsyncStorage.setItem('kredikart',JSON.stringify({sifreler:d}))
 }

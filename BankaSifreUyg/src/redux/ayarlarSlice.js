@@ -1,20 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState ={
-    sifresor:false,
-    parmakizi:false,
-    girissifre:'1111',
-    not:false,
-    logoyazi:true,
-    nsifresor:false,
-    nparmakizi:false
+    sifresor:false, //uygulamanın girişte şifre sorma sayfasını kontrol eden şey
+    parmakizi:false, //uygulamanın girişte parmak izi sayfasını kontrol eden şey
+    girissifre:'1111', //uygulama giriş şifresi (4 hane)
+    not:false, //kart bilgileri kısmında notun sürekli gözüküp gözükmeyeceği
+    logoyazi:true, //bankaların logosunun mu yoksa isminin mi gözükmesi
+    nsifresor:false, //genel şifre sorma ayarı 
+    nparmakizi:false //genel parmak izi ayarı
 }
-
-//sifresor ======= uygulamanın girişte şifre sorma sayfasını kontrol eden şey
-
-//nsifresor ====== genel şifre sorma ayarı 
-
-//parmak izi için de aynısı geçerli
 
 export const ayarlarSlice = createSlice({
     name:'ayarlar',

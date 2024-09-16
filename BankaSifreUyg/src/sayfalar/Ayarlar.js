@@ -15,45 +15,68 @@ import {setLogoyazi,setNot} from '../redux/ayarlarSlice';
 const Ayarlar = ({navigation}) => {
   const dispacth = useDispatch()
 
+  // Kullanılan tüm fonksiyonlar
   const fonksiyonlar = {
+    //Mobil bankacılık sayfasına geçiş
     mobilbankgecisfonk: ()=>{
       navigation.navigate('MobilBanka')
     },
+    //Kart bilgileri sayfasına geçiş
     kredikartgecisfonk: ()=>{
       navigation.navigate('KrediBanka')
     },
+    //Ayarlar sayfasına geçiş
     ayarlargecisfonk: ()=>{
       navigation.navigate('Ayarlar')
     },
+    //Değişen ayarların kaydedilmesi
+    //-> Ayarlardaki sistemle mobilbankacılık ve kart bilgileri kısmının sistemi aynı değil
     Ayardegisti:async ()=>{
       await AsyncStorage.setItem('ayarlar',JSON.stringify(ayarlarstate))
     },
+
+    //Parmak izi seçme butonuna basıldığında çalışan fonk
     AyarParmakizisecfonk: async ()=>{
       ayarlarstate.parmaksor = !ayarlarstate.parmaksor
       ayarlarstate.sifresor = false
-      
+      //Hem parmak izi hemde şifre olsun istemiyorum ondan şifresoru kapatıyorum
+
       await fonksiyonlar.Ayardegisti();
     },
+    //Şifre seçme butonuna basıldığında çalışan fonk
+    AyarSifresec: async ()=>{
+      ayarlarstate.parmaksor = false
+      //Hem parmak izi hemde şifre olsun istemiyorum ondan parmak izini kapatıyorum
+      ayarlarstate.sifresor = !ayarlarstate.sifresor
+
+      await fonksiyonlar.Ayardegisti();
+    },
+
+    //Şifre değişirken çalışan fonk
     AyarSifreDegis:async (t) =>{
+      //4 rakam olduğunda kaydediyor sadece
       if(t.length == 4)
       {
         ayarlarstate.girissifre = t
         await fonksiyonlar.Ayardegisti();
       }
     },
-    AyarSifresec: async ()=>{
-      ayarlarstate.parmaksor = false
-      ayarlarstate.sifresor = !ayarlarstate.sifresor
 
-      await fonksiyonlar.Ayardegisti();
-    },
-
+    //Logo veya yazıya tıklandığında çalışan fonk
     Logoyazidegis: async(d) =>{
+      /*
+        Logoya tıklandığında
+        d-> true
+
+        Yazıya tıklandığında
+        d-> false
+      */
       ayarlarstate.logoyazi = d
       dispacth(setLogoyazi(d))
       await fonksiyonlar.Ayardegisti();
     },
 
+    //Not seçme butonuna basıldığında çalışan fonk
     Notgordegis: async(d) =>{
       ayarlarstate.not = d
       dispacth(setNot(d))
@@ -62,30 +85,33 @@ const Ayarlar = ({navigation}) => {
 
   }
 
+  //Ayarların navigasyonunu sağlayan kısım
   const [bolumler, Setbolumler] = useState(1)
-
   /*
   !1 güvenlik
   !2 görünüm
   !3 bilgilendirme
   */
 
+  //Ayarlar yüklenirken yükleniyor sayfası var
   const [yukleniyor, setYukleniyor] = useState(true)
 
-
+  //Telefonun parmak izi destekleyip desteklemediği
   const [parmakizivarmi, setParmakizivarmi] = useState(false)
 
+  //Ayarlar bilgisi
   const [ayarlarstate, setAyarlarstate] = useState(undefined)
+
 
   const {nsifresor,nparmakizi,girissifre,not,logoyazi} = useSelector(s=> s.ayar)
 
   useEffect(()=>{
     (async ()=>{
+      //Telefonun parmak izi destekleyip desteklemediği kontrolü
       const parmak = await LocalAuthentication.hasHardwareAsync();
       setParmakizivarmi(parmak)
 
-      
-
+      //Ayarların reduxtan gelen bilgilerle doldurulması
       setAyarlarstate({
         sifresor:nsifresor,
         girissifre:girissifre,
@@ -93,21 +119,9 @@ const Ayarlar = ({navigation}) => {
         not:not,
         logoyazi:logoyazi
       })
+
+      //Yükleniyor sayfasının kapanması
       setYukleniyor(false);
-
-
-      //! Eskisi
-      /*
-      const ayarlar = await AsyncStorage.getItem('ayarlar').then(async (veri)=>{
-        if(veri != null || veri == '')
-        {
-          const ayar = JSON.parse(veri)
-          setAyarlarstate(ayar)
-          setYukleniyor(false);
-        }
-      })
-      */
-
     })();
   },[]);
   

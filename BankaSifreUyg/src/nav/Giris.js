@@ -12,14 +12,13 @@ import Parmakizi from '../sayfalar/Parmakizi';
 const Stack = createNativeStackNavigator();
 
 const Giris = () => {
-
-    
-
     const {parmakizi} = useSelector(s=> s.ayar)
 
     return (
     <Stack.Navigator
-        initialRouteName={parmakizi ? 'Parmakizi' : 'Sifre'}
+        initialRouteName={parmakizi ? 'Parmakizi' : 'Sifre'} 
+        // Parmak izi seçildiyse parmakizi sayfasına seçilmediyse şifre girme sayfasına yönlendirme 
+        
         screenOptions={{headerShown:false}}>
             <Stack.Screen
             name='Sifre'

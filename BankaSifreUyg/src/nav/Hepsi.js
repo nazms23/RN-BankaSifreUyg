@@ -15,44 +15,13 @@ const Hepsi = () => {
     const [yukleniyor, setYukleniyor] = useState(true)
 
     useEffect(()=>{
-        /*(async()=>{
-            await AsyncStorage.setItem('ayarlar','')
-            //? AYARLAR SIFIRLAMA
-        })();*/
         (async()=>{
-            /*const ayarlar = await AsyncStorage.getItem('ayarlar').then(async (veri)=>{
-                if(veri != null || veri == '')
-                {
-                    const ayar = JSON.parse(veri)
-                    dispacth(setSifresor(ayar.sifresor))
-                    dispacth(setParmakizi(ayar.parmaksor))
-                    dispacth(setnSifresor(ayar.sifresor))
-                    dispacth(setnParmakizi(ayar.parmaksor))
-                    dispacth(setGirissifre(ayar.girissifre))
-                    dispacth(setLogoyazi(ayar.logoyazi))
-                    dispacth(setNot(ayar.not))
-                    setYukleniyor(false)
-                }
-                else
-                {
-                    await AsyncStorage.setItem('ayarlar', JSON.stringify({
-                        sifresor:false,
-                        girissifre:'1111',
-                        parmaksor:false,
-                        not:false,
-                        logoyazi:true
-
-                    }))
-                    setYukleniyor(false)
-                }
-            })*/
-
-
+            // ayarlar,mobil bankacılık ve kredi kart bilgileri geliyor
             const [ayarlar,mobilbanka,kredikart] = await Promise.all([
                 AsyncStorage.getItem('ayarlar'),AsyncStorage.getItem('mobilbanka'),AsyncStorage.getItem('kredikart')
             ])
 
-
+            // Gelen bilgilerin varsa reduxa atılması
             if(ayarlar != null || ayarlar == '')
             {
                 const ayar = JSON.parse(ayarlar)
@@ -75,7 +44,6 @@ const Hepsi = () => {
 
                 }))
             }
-
             if(mobilbanka != null || mobilbanka == '')
             {
                 const mob = JSON.parse(mobilbanka)
@@ -85,7 +53,6 @@ const Hepsi = () => {
             {
                 await AsyncStorage.setItem('mobilbanka',JSON.stringify({sifreler:[]}))
             }
-
             if(kredikart != null || kredikart == '')
             {
                 const kre = JSON.parse(kredikart)
@@ -96,6 +63,7 @@ const Hepsi = () => {
                 await AsyncStorage.setItem('kredikart',JSON.stringify({sifreler:[]}))
             }
             
+            // Tüm işlemler bitince yükleniyor sayfasnın kalkması
             setYukleniyor(false)
         })();
 
@@ -111,6 +79,7 @@ const Hepsi = () => {
         {
             !yukleniyor ?
             sifresor | parmakizi ?  
+            //Ayarlarda şifre veya parmak izi seçildiyse giriş yapma sayfasına - seçilmediyse direkt uygulamaya yönlendirilmesi
             <Giris />
             :
             <Uyg />

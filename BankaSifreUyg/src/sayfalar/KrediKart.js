@@ -11,12 +11,8 @@ import {KBEkleSlice,KBSil,KBSifreDegis,KBBankaDegis,KBTurDegis, KBNoDegis, KBTar
 
 const KrediKart = ({navigation}) => {
   const dispacth = useDispatch()
-
   const {logoyazi,not} = useSelector(s=> s.ayar)
-
   const {kredikart} = useSelector(s=>s.bilgi)
-
-  
 
   const [bankalar, setBankalar] = useState([
     {
@@ -80,7 +76,6 @@ const KrediKart = ({navigation}) => {
       resim:undefined
     }
   ])
-
   const [kartturu, setKartturu] = useState([
     {
       id:0,
