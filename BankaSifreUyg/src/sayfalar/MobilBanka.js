@@ -121,7 +121,17 @@ const MobilBanka = ({navigation}) => {
             mobilbanka != undefined &&
             mobilbanka.map(i => {
               return(
-                <MBListOgesi resimmi={logoyazi} key={i.id} sifreidsi={i.id} resim={bankalar.find(v=> v.id == i.bankaId).resim} bankaad={bankalar.find(v=> v.id == i.bankaId).isim} sifre={i.sifre} bId={bankalar.find(v=> v.id == i.bankaId).id} silfonk={fonksiyonlar.MBSifreSil} sifredegisfonk={fonksiyonlar.MBSifreDegistir} bankadegisfonk={fonksiyonlar.MBBankaDegistir} bankalar={bankalar} />
+                <MBListOgesi 
+                  resimmi={logoyazi} 
+                  key={i.id} 
+                  sifreidsi={i.id} 
+                  resim={bankalar.find(v=> v.id == i.bankaId).resim} 
+                  bankaad={bankalar.find(v=> v.id == i.bankaId).isim} 
+                  sifre={i.sifre} bId={bankalar.find(v=> v.id == i.bankaId).id} 
+                  silfonk={fonksiyonlar.MBSifreSil} sifredegisfonk={fonksiyonlar.MBSifreDegistir} 
+                  bankadegisfonk={fonksiyonlar.MBBankaDegistir} 
+                  bankalar={bankalar} 
+                />
               )
             })
           }

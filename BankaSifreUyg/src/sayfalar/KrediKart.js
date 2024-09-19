@@ -14,6 +14,7 @@ const KrediKart = ({navigation}) => {
   const {logoyazi,not} = useSelector(s=> s.ayar)
   const {kredikart} = useSelector(s=>s.bilgi)
 
+  // Banka ve kart türleri
   const [bankalar, setBankalar] = useState([
     {
       id:0,
@@ -91,6 +92,8 @@ const KrediKart = ({navigation}) => {
     }
   ])
 
+
+  
   const fonksiyonlar = {
     mobilbankgecisfonk: ()=>{
       navigation.navigate('MobilBanka')
