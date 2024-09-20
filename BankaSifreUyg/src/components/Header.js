@@ -6,7 +6,7 @@ const Header = ({flexx,title,ayarlarfonk}) => {
     <SafeAreaView style={[styles.disdiv, {flex:flexx}]}>
   
       <View style={[styles.yazidiv, {flex: 4}]}>
-        <Text>{title}</Text>
+        <Text style={styles.yazi}>{title}</Text>
       </View>
       
       <View style={styles.butondiv}>
@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
   disdiv:{
     width:'100%',
     height:'100%',
-    backgroundColor:'lightgreen',
     justifyContent:'center',
     alignItems:'center',
     flexDirection:'row'
@@ -35,7 +34,9 @@ const styles = StyleSheet.create({
     height:"100%",
     justifyContent:'center',
     alignItems:'center',
-    borderWidth:1
+    backgroundColor:'#555',
+    borderRadius:12,
+    padding:5
   },
   butondiv:{
     flex:1,
@@ -55,6 +56,10 @@ const styles = StyleSheet.create({
   textler:{
     width:'95%',
     textAlign:'center'
+  },
+  yazi:{
+    fontSize:20,
+    
   }
 
 
