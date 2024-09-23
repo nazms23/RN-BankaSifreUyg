@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View,StatusBar } from 'react-native'
 import React,{useState, useEffect} from 'react'
 import {useSelector,useDispatch} from 'react-redux';
 import { setSifresor,setParmakizi,setnSifresor,setnParmakizi,setGirissifre,setLogoyazi,setNot } from '../redux/ayarlarSlice';
@@ -8,7 +8,6 @@ import Uyg from './Uyg'
 import Giris from './Giris'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Yukle from './Yukle';
-
 
 const Hepsi = () => {
     const dispacth = useDispatch()
@@ -76,6 +75,7 @@ const Hepsi = () => {
 
   return (
     <NavigationContainer>
+        <StatusBar style='auto'/>
         {
             !yukleniyor ?
             sifresor | parmakizi ?  
