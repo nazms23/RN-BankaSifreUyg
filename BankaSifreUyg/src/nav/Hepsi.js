@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { StyleSheet, Text, View,StatusBar } from 'react-native'
+import { StyleSheet, Text, View} from 'react-native'
+import { StatusBar } from 'expo-status-bar';
 import React,{useState, useEffect} from 'react'
 import {useSelector,useDispatch} from 'react-redux';
 import { setSifresor,setParmakizi,setnSifresor,setnParmakizi,setGirissifre,setLogoyazi,setNot } from '../redux/ayarlarSlice';
@@ -75,7 +76,6 @@ const Hepsi = () => {
 
   return (
     <NavigationContainer>
-        <StatusBar style='auto'/>
         {
             !yukleniyor ?
             sifresor | parmakizi ?  
@@ -86,6 +86,8 @@ const Hepsi = () => {
             :
             <Yukle />
         }
+
+    <StatusBar style='auto'/>
     </NavigationContainer>
   )
 }
