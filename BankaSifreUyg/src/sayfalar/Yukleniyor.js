@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import React from 'react'
 
 const Yukleniyor = () => {
   return (
-    <View style={styles.disdiv}>
+    <SafeAreaView style={styles.disdiv}>
       <ActivityIndicator size="large" color={'white'}/>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -16,6 +17,8 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'tomato'
+        backgroundColor:'tomato',
+        width:'100%',
+        height:'100%'
     }
 })

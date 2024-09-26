@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, TextInput,Pressable,Alert } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import React, {useEffect, useState} from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -66,7 +67,7 @@ const SifreSor = () => {
     const [girisSifresi, setGirisSifresi] = useState('')
 
   return (
-    <View style={styles.disdiv}>
+    <SafeAreaView style={styles.disdiv}>
       <Text style={{fontSize:30}}>Şifrenizi Giriniz</Text>
       <TextInput 
         style={styles.input}
@@ -81,7 +82,7 @@ const SifreSor = () => {
     <Pressable style={styles.buton} onPress={girisebasti}>
         <Text style={{fontSize:30,color:'white'}}>Giriş</Text>
     </Pressable>
-    </View>
+    </SafeAreaView>
   )
 }
 

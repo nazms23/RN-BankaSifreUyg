@@ -1,4 +1,5 @@
-import { StyleSheet, View,SafeAreaView, ScrollView } from 'react-native'
+import { StyleSheet, View, ScrollView } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import React, {useState} from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'

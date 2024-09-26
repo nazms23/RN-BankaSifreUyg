@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MobilBanka from '../sayfalar/MobilBanka';
@@ -34,5 +33,3 @@ const Uyg = () => {
 }
 
 export default Uyg
-
-const styles = StyleSheet.create({})

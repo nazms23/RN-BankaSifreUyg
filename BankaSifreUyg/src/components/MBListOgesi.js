@@ -95,7 +95,7 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
                     {resimmi & bankaresim != undefined ? 
                     <Image style={styles.bankaresim} source={bankaresim}/> : 
 
-                    <Text>{bankaadi}</Text> 
+                    <Text style={styles.bankatext}>{bankaadi}</Text> 
                     
                     
                     }
@@ -104,7 +104,7 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
 
                 </Pressable>
                 <View style={[styles.sifredisdiv,{display:textgorunurluk}]}>
-                    <Text>{textboxyazi}</Text>
+                    <Text style={styles.sifretext}>{textboxyazi}</Text>
                 </View>
                 <View style={[styles.sifredisdiv,{display:textboxgorunurluk}]}>
                     <TextInput 
@@ -113,7 +113,6 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
                     maxLength={6}
                     value={textboxyazi}
                     onChangeText={textdegisti}
-
                     style={styles.sifreinput}  
                     />
                 </View>
@@ -133,7 +132,7 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
                     <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankadegisti(i.id)} >
                     {resimmi & i.resim != undefined ? 
                     <Image style={styles.bankaresim} source={i.resim}/> : 
-                    <Text>{i.isim}</Text> 
+                    <Text style={styles.bankatext}>{i.isim}</Text> 
                     }
                     </Pressable>)
                   }
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
     disdiv:{
         width:"100%",
         backgroundColor:'lightblue',
-        height:50,
+        height:80,
         marginVertical:2,
         justifyContent:'center',
         alignItems:'center',
@@ -173,7 +172,7 @@ const styles = StyleSheet.create({
         resizeMode:'center'
     },
     sifredisdiv:{
-        flex:5,
+        flex:2,
         justifyContent:'center',
         alignItems:'center'
     },
@@ -199,14 +198,14 @@ const styles = StyleSheet.create({
     bankalardisdiv:{
         width:'100%',
         backgroundColor:'#bcb8e6',
-        height:50
+        height:80
     },
     bankalarscrollview:{
         width:'100%'
     },
     bankalarviewbuton:{
-        width:70,
-        height:50,
+        width:140,
+        height:80,
         justifyContent:'center',
         alignItems:'center',
         borderWidth:1,
@@ -218,5 +217,12 @@ const styles = StyleSheet.create({
         width:'50%',
         height:'80%',
         borderWidth:1,
+        fontSize:30
+    },
+    sifretext:{
+      fontSize:30
+    },
+    bankatext:{
+      fontSize:30
     }
 })

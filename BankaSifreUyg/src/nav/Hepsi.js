@@ -1,6 +1,4 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { StyleSheet, Text, View} from 'react-native'
-import { StatusBar } from 'expo-status-bar';
 import React,{useState, useEffect} from 'react'
 import {useSelector,useDispatch} from 'react-redux';
 import { setSifresor,setParmakizi,setnSifresor,setnParmakizi,setGirissifre,setLogoyazi,setNot } from '../redux/ayarlarSlice';
@@ -86,12 +84,8 @@ const Hepsi = () => {
             :
             <Yukle />
         }
-
-    <StatusBar style='auto'/>
     </NavigationContainer>
   )
 }
 
 export default Hepsi
-
-const styles = StyleSheet.create({})

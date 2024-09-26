@@ -84,6 +84,8 @@ const KBEkle = ({resimmi, bankalar,eklefonk,karttur}) => {
                     await eklemefonk(bankaId,sifre,kartturId)
                     setSifre("")
                     setEklebas(false)
+                    setKartturbas(false)
+                    setBankalarbas(false)
                 }else
                 {
                     Alert.alert('Başarısız', 'Şifre kısmı boş bırakılamaz.', [

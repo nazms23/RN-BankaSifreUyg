@@ -1,12 +1,15 @@
-import { StyleSheet, View,SafeAreaView, ScrollView } from 'react-native'
-import React, {useState} from 'react'
+import { StyleSheet, View, ScrollView } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import React, {useState,useEffect} from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import KBListOgesi from '../components/KBListOgesi'
 import KBEkle from '../components/KBEkle'
+import Yukleniyor from './Yukleniyor'
 
 import {useSelector,useDispatch} from 'react-redux';
 import {KBEkleSlice,KBSil,KBSifreDegis,KBBankaDegis,KBTurDegis, KBNoDegis, KBTarihDegis, KBCvcDegis, KBNotDegis} from '../redux/bilgilerSlice'
+
 
 
 const KrediKart = ({navigation}) => {
@@ -152,13 +155,26 @@ const KrediKart = ({navigation}) => {
     },
   }
 
+
+
+
+  const [yukle, setYukle] = useState(false)
+  useEffect(()=>{
+    setYukle(true)
+  },[])
+
+
+
   return (
     <SafeAreaView style={styles.disdiv}>
       <Header flexx={1} title={"Kredi/Banka Kartı"} ayarlarfonk={fonksiyonlar.ayarlargecisfonk}/>
       <View style={styles.contdis}>
-        <ScrollView style={styles.contscrollvw}>
         {
-          kredikart.map(i => {
+          !yukle && <Yukleniyor/> 
+        }
+        <ScrollView style={[styles.contscrollvw,{display:yukle ? 'flex':'none'}]}>
+        {
+          yukle &&kredikart.map(i => {
             return(
               <KBListOgesi 
                 resimmi={logoyazi} key={i.id} not={not} 
