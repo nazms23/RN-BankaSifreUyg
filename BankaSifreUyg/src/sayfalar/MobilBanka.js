@@ -136,8 +136,9 @@ const MobilBanka = ({navigation}) => {
               )
             })
           }
-          <MbEkle resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle}/>
+             <MbEkle resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle}/>
           </ScrollView>
+       
         </View>
       
       
@@ -160,11 +161,13 @@ const styles = StyleSheet.create({
   },
   contdis:{
     width:'100%',
-    height:'100%',
+    height:'0%',
     justifyContent:'center',
     alignItems:'center',
     flex:10,
-    backgroundColor:'lightred',
+    paddingTop: 20,
+
+    backgroundColor:'#E7E9EA',
   },
   contscrollvw:{
     width:'100%',

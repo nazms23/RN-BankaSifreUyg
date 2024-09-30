@@ -9,11 +9,11 @@ const Header = ({flexx,title,ayarlarfonk}) => {
         <Text style={styles.yazi}>{title}</Text>
       </View>
       
-      <View style={styles.butondiv}>
-        <Pressable style={styles.butondis} onPress={ayarlarfonk}>
-          <Text>Ayarlar</Text>
-        </Pressable>
-      </View>
+    
+      <Pressable style={styles.butondis} onPress={ayarlarfonk}>
+        <Text>Ayarlar</Text>
+      </Pressable>
+   
 
     </SafeAreaView>
   )
@@ -27,31 +27,41 @@ const styles = StyleSheet.create({
     height:'100%',
     justifyContent:'center',
     alignItems:'center',
-    flexDirection:'row'
+    flexDirection:'row',
+    backgroundColor: '#E7E9EA',
+    paddingTop: 10,
+    paddingBottom:15,
   },
   yazidiv:{
     width:"100%",
     height:"100%",
     justifyContent:'center',
     alignItems:'center',
-    backgroundColor:'#555',
+    backgroundColor:'#FFFFFF',
     borderRadius:12,
-    padding:5
-  },
-  butondiv:{
-    flex:1,
-    width:'100%',
-    height:'100%',
-    borderWidth:1,
-    borderRadius:6,
-    backgroundColor:'wheat'
+   
+    marginLeft: 10,
+    marginRight: 10,
+
+    
+ 
+    
+    elevation: 4
+        
 
   },
   butondis:{
+    flex:1,
     width:'100%',
     height:'100%',
+    borderRadius: 12,
+    backgroundColor:'#f1f1f1',
+    marginLeft: 20,
+    marginRight: 10,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    elevation: 4
+    
   },
   textler:{
     width:'95%',

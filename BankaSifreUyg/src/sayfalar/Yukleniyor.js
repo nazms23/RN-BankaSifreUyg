@@ -5,7 +5,9 @@ import React from 'react'
 const Yukleniyor = () => {
   return (
     <SafeAreaView style={styles.disdiv}>
-      <ActivityIndicator size="large" color={'white'}/>
+      <ActivityIndicator size="xlarge" color={'black'}/>
+      <Text style={styles.baslik}>Kartlarınız Yükleniyor</Text>
+     
     </SafeAreaView>
   )
 }
@@ -17,8 +19,11 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'tomato',
+        
         width:'100%',
         height:'100%'
+    },
+    baslik:{
+       padding:20,
     }
 })

@@ -58,7 +58,7 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
           <Pressable style={styles.silbuton} onPress={()=>silmefonk(sifreidsi)} >
             <View style={styles.silbutonresimdiv}>
             <Image
-              source={require('../../assets/iconlar/delete.png')}
+              source={require('../../assets/iconlar/deletered.png')}
               style={styles.silbutonresim}
               />
             </View>
@@ -73,10 +73,10 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
           outputRange: [-20, 0, 0, 1],
         });
         return (
-          <Pressable style={[styles.silbuton,{backgroundColor:"#89c332"}]} onPress={()=>editmodac()} >
+          <Pressable style={[styles.silbuton,{backgroundColor:"#f9f9f9", marginRight: 10,}]} onPress={()=>editmodac()} >
             <View style={styles.silbutonresimdiv}>
             <Image
-              source={require('../../assets/iconlar/edit.png')}
+              source={require('../../assets/iconlar/editgreen.png')}
               style={styles.silbutonresim}
               />
             </View>
@@ -105,6 +105,7 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
                 </Pressable>
                 <View style={[styles.sifredisdiv,{display:textgorunurluk}]}>
                     <Text style={styles.sifretext}>{textboxyazi}</Text>
+                    
                 </View>
                 <View style={[styles.sifredisdiv,{display:textboxgorunurluk}]}>
                     <TextInput 
@@ -114,8 +115,12 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
                     value={textboxyazi}
                     onChangeText={textdegisti}
                     style={styles.sifreinput}  
-                    />
+                    
+                    /> 
+                    
+                 
                 </View>
+                
             </View>
 
            
@@ -149,40 +154,52 @@ export default MBListOgesi
 
 const styles = StyleSheet.create({
     disdiv:{
-        width:"100%",
-        backgroundColor:'lightblue',
+        width:"96.5%",
+        backgroundColor:'#f9f9f9',
         height:80,
-        marginVertical:2,
+        marginVertical:3,
         justifyContent:'center',
         alignItems:'center',
-        flexDirection:'row'
+        flexDirection:'row',
+        marginLeft: 10,
+        marginRight: 10,
+        borderRadius: 12,
+        elevation: 0.5
     },
     bankadisdiv:{
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        borderWidth:1,
-        backgroundColor:'white',
-        width:'100%',
-        height:'100%'
-    },
-    bankaresim:{
+        borderWidth:0,
+        borderRightWidth: 0.5,
+        borderRightColor: '#000',
+        backgroundColor:'#f9f9f9',
         width:'100%',
         height:'100%',
-        resizeMode:'center'
+        borderTopLeftRadius: 12,
+        borderBottomLeftRadius: 12,
+    },
+    bankaresim:{
+        width:'90%',
+        height:'100%',
+        resizeMode:'center',
+      
     },
     sifredisdiv:{
         flex:2,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+       
     },
     silbuton:{
-      backgroundColor:"crimson",
+      backgroundColor:"#f9f9f9",
       borderRadius:15,
-      marginTop:10,
-      borderColor:'black',
-      borderWidth:2,
+      marginLeft:10,
+      marginTop: 3,
+      
+    
       width:'15%',
+      height: '93%',
       justifyContent:'center',
       alignItems:'center',
     },
@@ -192,13 +209,14 @@ const styles = StyleSheet.create({
       resizeMode:'center',
     },
     silbutonresimdiv:{
-      width:"80%",
-      height:"80%",
+      width:"60%",
+      height:"60%",
     },
     bankalardisdiv:{
         width:'100%',
         backgroundColor:'#bcb8e6',
-        height:80
+        height:80,
+   
     },
     bankalarscrollview:{
         width:'100%'
@@ -210,17 +228,29 @@ const styles = StyleSheet.create({
         alignItems:'center',
         borderWidth:1,
         marginHorizontal:2,
-        backgroundColor:'white',
-        borderRadius:5
+        backgroundColor:'#f9f9f9',
+        borderRadius:5,
+      
     },
     sifreinput:{
-        width:'50%',
-        height:'80%',
-        borderWidth:1,
-        fontSize:30
+        paddingRight: 30,
+        paddingLeft: 30,
+        height:'90%',
+        borderWidth:0.5,
+       
+        elevation: 1,
+        fontSize:30,
+        textAlign: 'center',
+        textDecorationLine: 'underline',
+
+        
+        
+        backgroundColor:'#f1f1f1',
+        
     },
     sifretext:{
-      fontSize:30
+      fontSize:30,
+     
     },
     bankatext:{
       fontSize:30
