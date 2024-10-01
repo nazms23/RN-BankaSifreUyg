@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,Pressable,ActivityIndicator } from 'react-native'
+import { StyleSheet, Text,Image, View,Pressable,ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, {useState,useEffect} from 'react'
 import Header from '../components/Header'
@@ -134,18 +134,42 @@ const Ayarlar = ({navigation}) => {
       <View style={styles.secenekler}>
 
       <Pressable style={styles.secenekitem} onPress={()=>{Setbolumler(1)}}>
+        <Image
+          source={require('../../assets/iconlar/secureblue.png')}
+          style={styles.butresim
+
+
+              
+          }
+        />
         <Text style={styles.secenektext}>
           Güvenlik
         </Text>
       </Pressable>
 
       <Pressable style={styles.secenekitem} onPress={()=>{Setbolumler(2)}}>
+      <Image
+          source={require('../../assets/iconlar/viewpink.png')}
+          style={styles.butresim
+
+
+              
+          }
+        />
         <Text style={styles.secenektext}>
           Görünüm
         </Text>
       </Pressable>
 
-      <Pressable style={styles.secenekitem} onPress={()=>{Setbolumler(3)}}>
+      <Pressable style={[styles.secenekitem, {marginRight: 0}]} onPress={()=>{Setbolumler(3)}}>
+        <Image
+          source={require('../../assets/iconlar/infomint.png')}
+          style={styles.butresim
+
+
+              
+          }
+        />
         <Text style={styles.secenektext}>
           Bilgilendirme
         </Text>
@@ -202,7 +226,10 @@ const styles = StyleSheet.create({
   disdiv:{
     flex:1,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    backgroundColor: '#E7E9EA',
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'black',
   },
 
 
@@ -212,7 +239,8 @@ const styles = StyleSheet.create({
     justifyContent:'flex-start',
     alignItems:'center',
     flex:10,
-    backgroundColor:'lightred'
+    backgroundColor:'#E7E9EA',
+   
   },
 
 
@@ -229,28 +257,47 @@ const styles = StyleSheet.create({
 
 
   secenekler:{
-    width:'100%',
+    width:'96.5%',
     height:'100%',
-    justifyContent:'flex-start',
-    alignItems:'center',
-    flex:1,
-    backgroundColor:'lightred',
-    borderWidth:2,
-    flexDirection:'row'
-  },
-  secenekitem:{
-    backgroundColor:'#3b84a1',
-    width:'30%',
-    height:'90%',
     justifyContent:'center',
     alignItems:'center',
-    marginVertical:10,
-    borderRadius:20,
-    marginRight:10
+    flex:2,
+    backgroundColor:'#E7E9EA',
+    borderBottomWidth: 0.5,
+    paddingBottom: 5,
+    paddingTop: 5,
+    flexDirection:'row',
+
+
+  },
+  secenekitem:{
+    backgroundColor:'#f9f9f9',
+    width:'100%',
+    height:'auto',
+    justifyContent:'center',
+    alignItems:'center',
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+
+    borderRadius:12,
+    marginRight: 50,
+   
+    paddingTop: 10,
+    paddingBottom: 10,
+    elevation: 3,
+    
+
   },
   secenektext:{
-    color:'white',
-    fontSize:17
+    color:'black',
+    fontSize:17,
+   
+    
+  },
+  butresim:{
+    width:'30%',
+    height: '40%',
   },
 
 
@@ -258,9 +305,9 @@ const styles = StyleSheet.create({
 
 
   itemdisdiv:{
-    backgroundColor:'#f0679e',
+    backgroundColor:'#E7E9EA',
     width:'100%',
-    height:60,
+    height:'auto',
     flexDirection:'row',
     justifyContent:'space-between',
     alignItems:'center',
@@ -286,9 +333,9 @@ const styles = StyleSheet.create({
   },
   butonlar:{
     width:'100%',
-    height:'100%',
-    flex:1
-
+    height:'auto',
+    flex:1,
+    backgroundColor: 'gray',
   },
   inputlar:{
     borderWidth:1,

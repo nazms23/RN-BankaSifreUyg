@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView,Alert } from 'react-native'
 import React, {useState} from 'react'
+import Animated, {BounceIn, FadeIn, FadeInLeft, FadingTransition, withRepeat}from 'react-native-reanimated';
 
 const KBEkle = ({resimmi, bankalar,eklefonk,karttur}) => {
 
@@ -42,7 +43,15 @@ const KBEkle = ({resimmi, bankalar,eklefonk,karttur}) => {
             setBankalarbas(false)
             setKartturbas(false)
             }}>
-            <Text style={{fontSize:30}}>+</Text>
+             <View style={styles.resimdiv}>
+
+                <Image
+                    source={require('../../assets/iconlar/add2.png')}
+                    style={styles.artibutresim}
+                    />
+
+            </View>
+
         </Pressable>
         <View style={[styles.eklemedis, {display: eklebas? 'flex': 'none'}]} >
             <Pressable style={[styles.bankadisdiv]} onPress={()=>setBankalarbas(!bankalarbas)}>
@@ -93,7 +102,17 @@ const KBEkle = ({resimmi, bankalar,eklefonk,karttur}) => {
                       ]);
                 }
                 }}>
-                <Text>Ekle</Text>
+
+                <View style={styles.resimdiv2}>
+
+                    <Image
+                        source={require('../../assets/iconlar/addgreen.png')}
+                        style={styles.artibutresim}
+                    />
+
+                </View>
+
+
             </Pressable>
         </View>
         <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
@@ -115,6 +134,17 @@ const KBEkle = ({resimmi, bankalar,eklefonk,karttur}) => {
             }
 
             </ScrollView>
+            <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
+                
+                <Image
+                    source={require('../../assets/iconlar/right2.png')}
+                    style={styles.rightresim
+
+
+                        
+                    }
+                />
+            </Animated.View>
         </View>
         <View style={[styles.bankalardisdiv,{display: kartturbas? 'flex':'none'}]}>
             <View style={styles.kartturview}>
@@ -145,38 +175,51 @@ const styles = StyleSheet.create({
         
     },
     artibuton:{
-        width:50,
-        borderWidth:1,
-        backgroundColor:'yellow',
-        height:50,
+        width:80,
+        
+        backgroundColor:'#f9f9f9',
+        elevation: 2,
+        height:80,
         marginVertical:2,
         borderRadius:10,
         justifyContent:'center',
         alignItems:'center',
+        marginLeft: 10,
+        marginTop: 20,
+        marginBottom: 10,
     },
     eklemedis:{
-    width:"100%",
-    backgroundColor:'#9790d6',
-    height:50,
-    marginVertical:2,
-    justifyContent:'center',
-    alignItems:'center',
-    flexDirection:'row'
+        width:"96.5%",
+        backgroundColor:'#f9f9f9',
+        height:80,
+        marginVertical:2,
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'row',
+        marginLeft: 10,
+        marginRight: 10,
+        borderRadius: 12,
 },
 bankadisdiv:{
-    flex:1,
+    flex:2,
     justifyContent:'center',
     alignItems:'center',
-    borderWidth:1,
+    borderRightWidth: 0.5,
     width:'100%',
     height:'100%',
-    backgroundColor:'white',
-    borderRadius:5
+    backgroundColor:'#ffff',
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12,
+    borderColor: 'black',
 },
 bankalardisdiv:{
-    width:'100%',
-    backgroundColor:'#bcb8e6',
-    height:50
+    width:'96.5%',
+        backgroundColor:'#f9f9f9',
+        height: 'auto',
+        marginLeft: 10,
+        marginTop: 5,
+        padding: 10,
+        borderRadius: 12,
 },
 bankaresim:{
     width:'95%',
@@ -188,8 +231,8 @@ sifredisdiv:{
     justifyContent:'center',
     alignItems:'center',
     width:'100%',
-    backgroundColor:'wheat',
-    height:'100%'
+    backgroundColor:'#ffff',
+    height:'100%',
 },
 bankalarscrollview:{
     width:'100%'
@@ -199,29 +242,56 @@ kartturview:{
     flexDirection:'row'
 },
 bankalarviewbuton:{
-    width:70,
-    height:50,
+    width:140,
+    height:80,
     justifyContent:'center',
     alignItems:'center',
-    borderWidth:1,
-    marginHorizontal:2,
+    borderWidth:0.5,
+    marginHorizontal:4,
     backgroundColor:'white',
-    borderRadius:5
+    borderRadius:6
 },
 eklebuton:{
-    flex:1,
-    backgroundColor:'#6dd6b1',
-    width:'100%',
-    height:'100%',
-    justifyContent:'center',
-    alignItems:'center',
-    borderRadius:5
+    flex:1.5,
+        backgroundColor:'#f9f9f9',
+        width:'100%',
+        height:'100%',
+        justifyContent:'center',
+        alignItems:'center',
+        borderRadius:12,
 },
 sifreinput:{
-    width:'97%',
+    paddingLeft: 15,
+    width:'90%',
     height:'80%',
-    borderWidth:1,
-}
+    borderWidth:0.5,
+    fontSize: 20,
+    backgroundColor:'#f9f9f9',
+    borderRadius:6
+},
+right:{
+    width: 30,
+    height: 50,
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: '25%',
+    right: '2%',
+  
+},
+resimdiv:{
+    width: '100%',
+    padding: 15,
+},
+resimdiv2:{
+    width: '100%',
+    padding: 15,
+},
+artibutresim:{
+    width: '100%',
+    height: '100%',
+    
+},
 
 
 })

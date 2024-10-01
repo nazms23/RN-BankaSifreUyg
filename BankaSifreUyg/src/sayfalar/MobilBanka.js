@@ -81,6 +81,7 @@ const MobilBanka = ({navigation}) => {
       resim:undefined
     }
   ])
+ 
   
   const fonksiyonlar = {
     mobilbankgecisfonk: ()=>{
@@ -92,6 +93,8 @@ const MobilBanka = ({navigation}) => {
     ayarlargecisfonk: ()=>{
       navigation.navigate('Ayarlar')
     },
+ 
+    
 
     MBSifreEkle: async (bId,sifre)=>{
       let id = mobilbanka.length > 0 ? mobilbanka[mobilbanka.length-1].id+1 : 1

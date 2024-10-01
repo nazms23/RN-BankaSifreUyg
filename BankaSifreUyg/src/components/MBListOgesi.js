@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
       
     },
     sifredisdiv:{
-        flex:2,
+        flex:3,
         justifyContent:'center',
         alignItems:'center',
        
@@ -237,15 +237,12 @@ const styles = StyleSheet.create({
         paddingLeft: 30,
         height:'90%',
         borderWidth:0.5,
-       
         elevation: 1,
         fontSize:30,
         textAlign: 'center',
         textDecorationLine: 'underline',
-
-        
-        
         backgroundColor:'#f1f1f1',
+        borderRadius:6
         
     },
     sifretext:{

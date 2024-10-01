@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView, Alert, Animated } from 'react-native'
+import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView, Alert } from 'react-native'
 import React, {useState} from 'react'
-import Animated from 'react-native-reanimated';
+import Animated, {BounceIn, FadeIn, FadeInLeft, FadingTransition, withRepeat}from 'react-native-reanimated';
 
 const MbEkle = ({resimmi, bankalar,eklefonk}) => {
 
@@ -116,10 +116,18 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
          
 
             </ScrollView>
-            <Animated.View  style={styles.right}>
+            <Animated.View  
+                entering={FadeInLeft.delay(500, -1)}
+                style={styles.right}
+            >
+                
                 <Image
                     source={require('../../assets/iconlar/right2.png')}
-                    style={styles.rightresim}
+                    style={styles.rightresim
+
+
+                        
+                    }
                 />
             </Animated.View>
             <View>
@@ -241,7 +249,7 @@ const styles = StyleSheet.create({
      
     },
     resimdiv2:{
-        width: '100%',
+        width: '80%',
         padding: 15,
     },
     sifreinput:{
@@ -251,7 +259,7 @@ const styles = StyleSheet.create({
         borderWidth:0.5,
         fontSize: 20,
         backgroundColor:'#f9f9f9',
-  
+        borderRadius: 6,
     
     },
     bankatext:{

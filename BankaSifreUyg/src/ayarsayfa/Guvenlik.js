@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, Pressable, Image, TextInput } from 'react-native'
 import React,{useState,useEffect} from 'react'
-
+import Animated, {BounceIn, FadeIn, FadeInLeft, FadeInUp, FadeOutUp, FadingTransition, withRepeat}from 'react-native-reanimated';
 const Guvenlik = ({fonksiyonlar, gbilgiler}) => {
 
     const fonks = {
@@ -22,8 +22,9 @@ const Guvenlik = ({fonksiyonlar, gbilgiler}) => {
             fonks.apisec()
         }
     }
-
+    
     const [sifresor, setSifresor] = useState(gbilgiler.sifresor)
+    
     const [girisSifresi, setGirisSifresi] = useState(gbilgiler.girisSifresi)
     const [parmakizi, setParmakizi] = useState(gbilgiler.parmakizi)
     const [parmakizivarmi, setParmakizivarmi] = useState(gbilgiler.parmakizivarmi)
@@ -32,20 +33,25 @@ const Guvenlik = ({fonksiyonlar, gbilgiler}) => {
 
 
   return (
-    <ScrollView style={styles.contdis}>
-        <View style={styles.itemdisdiv} >
-            <Text style={[styles.yazilar, styles.sifresoryazi]} >Uygulama Açılışında Şifre</Text>
+    <ScrollView contentContainerStyle={styles.contdis}>
+     
+          <View style={[styles.itemdisdiv, style={   justifyContent:'space-around'}]} >
+              <Text style={[styles.yazilar, styles.sifresoryazi]} >Uygulama Açılışında Şifre</Text>
 
-            <Pressable style={[styles.butonlar]} onPress={()=> fonks.Sifresec()}>
-                <Image 
-                    source={sifresor ? require('../../assets/iconlar/checkdolu.png'):require('../../assets/iconlar/checkbos.png')} 
-                    resizeMode='center'
-                    style={[styles.resimler,styles.sifresorresim]}
-                />
-            </Pressable>
-        </View>
+              <Pressable style={[styles.butonlar]} onPress={()=> fonks.Sifresec()}>
+                  <Image 
+                      source={sifresor ? require('../../assets/iconlar/checkgreen.png'):require('../../assets/iconlar/checkbos4.png')} 
+                      resizeMode='center'
+                      style={[styles.resimler,styles.sifresorresim]}
+                  />
+              </Pressable>
+          </View>
+      
+    
+       
+        
 
-        <View style={[styles.itemdisdiv, {display: sifresor? 'flex':'none'}]} > 
+        <Animated.View entering={FadeInUp}  style={[styles.itemdisdiv, {display: sifresor? 'flex':'none'}]} > 
             <Text style={[styles.yazilar, styles.sifresoryazi]} >Uygulamaya Giriş Şifreniz</Text>
             <TextInput 
                 style={styles.inputlar}
@@ -57,7 +63,7 @@ const Guvenlik = ({fonksiyonlar, gbilgiler}) => {
                 value={girisSifresi.toString()}
                 onChangeText={fonks.Sifredegis}
             />
-        </View>
+        </Animated.View>
 
         <View style={[styles.itemdisdiv,{display: parmakizivarmi? 'flex':'none'}]} >
 
@@ -65,7 +71,7 @@ const Guvenlik = ({fonksiyonlar, gbilgiler}) => {
 
         <Pressable style={[styles.butonlar]} onPress={fonks.Parmakizisec}>
         <Image 
-            source={parmakizi ? require('../../assets/iconlar/checkdolu.png'):require('../../assets/iconlar/checkbos.png')} 
+            source={parmakizi ? require('../../assets/iconlar/checkgreen.png'):require('../../assets/iconlar/checkbos4.png')} 
             resizeMode='center'
             style={[styles.resimler,styles.sifresorresim]}
         />
@@ -81,31 +87,34 @@ export default Guvenlik
 
 const styles = StyleSheet.create({
     contdis:{
-        width:'100%',
+      
+        width:'96.5%',
         height:'100%',
         flex:1,
+       
+       
       },
-    
-
-
-
-    itemdisdiv:{
-        backgroundColor:'#f0679e',
-        width:'100%',
+      itemdisdiv:{
+        backgroundColor:'#f9f9f9',
+        width:'70%',
         height:60,
         flexDirection:'row',
-        justifyContent:'space-between',
+        display:'flex',
+        borderRadius: 6,
+
+        justifyContent: 'space-around',
         alignItems:'center',
-        marginVertical:10
+        marginVertical:10,
+        elevation: 1,
       },
-    
+      
     
     
     
       resimler:{
         width:'100%',
         height:'100%',
-        flex:1
+        flex:2
     
       },
       yazilar:{
@@ -114,18 +123,22 @@ const styles = StyleSheet.create({
         height:'100%',
         textAlign:'center',
         textAlignVertical:'center',
-        flex:1
+        flex: 1,
       },
       butonlar:{
-        width:'100%',
-        height:'100%',
-        flex:1
-    
+        width:'60%',
+        height:'60%',
+        flex: 0.6,
+     
       },
       inputlar:{
-        borderWidth:1,
-        flex:1,
+        borderWidth:0.5,
+        backgroundColor: '#f2f2f2',
+        borderRadius: 6,
         width:'100%',
-        height:'100%'
+        height:'100%',
+        textAlign: 'center',
+        
+        fontSize: 30,
       }
 })

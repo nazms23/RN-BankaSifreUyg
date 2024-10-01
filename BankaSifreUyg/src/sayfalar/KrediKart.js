@@ -229,7 +229,8 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     flex:10,
-    backgroundColor:'lightred',
+    backgroundColor:'#E7E9EA',
+    paddingTop: 20,
   },
   contscrollvw:{
     width:'100%',

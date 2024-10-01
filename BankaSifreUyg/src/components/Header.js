@@ -1,4 +1,4 @@
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { Pressable, SafeAreaView, Image,StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 const Header = ({flexx,title,ayarlarfonk}) => {
@@ -11,7 +11,15 @@ const Header = ({flexx,title,ayarlarfonk}) => {
       
     
       <Pressable style={styles.butondis} onPress={ayarlarfonk}>
-        <Text>Ayarlar</Text>
+        <View style={styles.setbutdis}>
+          <Image
+          source={require('../../assets/iconlar/setting2.png')}
+          style={styles.setbut }
+          />
+        </View>
+      
+     
+    
       </Pressable>
    
 
@@ -51,7 +59,7 @@ const styles = StyleSheet.create({
 
   },
   butondis:{
-    flex:1,
+    flex:0.8,
     width:'100%',
     height:'100%',
     borderRadius: 12,
@@ -70,7 +78,16 @@ const styles = StyleSheet.create({
   yazi:{
     fontSize:20,
     
+  },
+  setbutdis:{
+    width:'50%',
+    height:'70%'
+  },
+  setbut:{
+    width:'100%',
+    height:'100%'
   }
+  
 
 
 

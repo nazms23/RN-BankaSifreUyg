@@ -53,7 +53,5 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     backgroundColor:'#F1F1F1',
   },
-  butontext:{
 
-  }
 })
