@@ -4,13 +4,18 @@ import React from 'react'
 const Footer = ({flexx,mobilfonk,kredifonk}) => {
   return (
     <View style={[styles.disdiv, {flex:flexx}]}>
-      <Pressable style={[styles.butondiv, styles.buton1]} onPress={mobilfonk}>
+      <Pressable style={({pressed}) => [{
+        backgroundColor: pressed ?  "#f9f9f9": '#f1f1f1'
+        }
+        ,styles.butondiv, styles.buton1]} onPress={mobilfonk}>
         <Text style={styles.butontext}>
           Mobil Bankacılık
         </Text>
       </Pressable>
 
-      <Pressable style={[styles.butondiv, styles.buton2]} onPress={kredifonk}>
+      <Pressable  style={({pressed}) => [{
+        backgroundColor: pressed ?  "#f9f9f9": '#f1f1f1'
+        },styles.butondiv, styles.buton2]} onPress={kredifonk}>
       <Text style={styles.butontext}>
         Kredi/Banka Kartı
       </Text>
@@ -39,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     width:"100%",
     height:'100%',
-    backgroundColor:'#f9f9f9',
+ 
     borderRadius:5,
     marginHorizontal:3,
     margin: 10,
@@ -51,7 +56,7 @@ const styles = StyleSheet.create({
   },
   buton2:{
     marginLeft: 10,
-    backgroundColor:'#F1F1F1',
+  
   },
 
 })

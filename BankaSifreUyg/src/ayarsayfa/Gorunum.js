@@ -30,10 +30,14 @@ const Gorunum = ({hersey}) => {
       
         <Text style={styles.headeryaz}>Banka Görünümü</Text>
         <View style={styles.itemdisdiv3}>
-          <Pressable style={ styles.butonlaryazi} onPress={()=>{fonks.logosec()}} >
+          <Pressable style={({pressed}) => [{
+        backgroundColor: pressed ?  "#f9f9f9": '#f1f1f1', borderColor: pressed ?  "green":'transparent'
+        }, styles.butonlaryazi]} onPress={()=>{fonks.logosec()}} >
               <Text style={styles.yazilar}>Logo</Text>
           </Pressable>
-          <Pressable style={styles.butonlaryazi2} onPress={()=>{fonks.yazisec()}}>
+          <Pressable style={({pressed}) => [{
+        backgroundColor: pressed ?  "#f9f9f9": '#f1f1f1', borderColor: pressed ?  "green":'transparent'
+        },styles.butonlaryazi2]} onPress={()=>{fonks.yazisec()}}>
               <Text style={styles.yazilar}>Yazı</Text>
           </Pressable>
         </View>
@@ -168,7 +172,7 @@ const styles = StyleSheet.create({
       width:'100%',
       height:'100%',
       flex: 0.3,
-      backgroundColor:'#f1f1f1',
+     
       borderRadius:15,
       paddingBottom: 30,
       paddingTop: 30,
@@ -176,19 +180,20 @@ const styles = StyleSheet.create({
       paddingLeft: 10,
       elevation: 3,
       borderWidth: 1,
-      borderColor: 'green',
+  
     },
     butonlaryazi2:{
       width:'100%',
       height:'100%',
       flex: 0.3,
-      backgroundColor:'#f1f1f1',
+   
       borderRadius:15,
       paddingBottom: 30,
       paddingTop: 30,
       paddingRight: 10,
       paddingLeft: 10,
       elevation: 3,
+      borderWidth: 1
     
     },
     inputlar:{

@@ -55,7 +55,9 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
           outputRange: [-20, 0, 0, 1],
         });
         return (
-          <Pressable style={styles.silbuton} onPress={()=>silmefonk(sifreidsi)} >
+          <Pressable style={({pressed}) => [{
+            backgroundColor: pressed ?  "#f1f1f1": '#f9f9f9'
+            },styles.silbuton]} onPress={()=>silmefonk(sifreidsi)} >
             <View style={styles.silbutonresimdiv}>
             <Image
               source={require('../../assets/iconlar/deletered.png')}
@@ -73,7 +75,9 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
           outputRange: [-20, 0, 0, 1],
         });
         return (
-          <Pressable style={[styles.silbuton,{backgroundColor:"#f9f9f9", marginRight: 10,}]} onPress={()=>editmodac()} >
+          <Pressable style={({pressed}) => [{
+            backgroundColor: pressed ?  "#f1f1f1": '#f9f9f9'
+            },styles.silbuton,{marginRight: 10,}]} onPress={()=>editmodac()} >
             <View style={styles.silbutonresimdiv}>
             <Image
               source={require('../../assets/iconlar/editgreen.png')}
@@ -192,7 +196,7 @@ const styles = StyleSheet.create({
        
     },
     silbuton:{
-      backgroundColor:"#f9f9f9",
+      
       borderRadius:15,
       marginLeft:10,
       marginTop: 3,

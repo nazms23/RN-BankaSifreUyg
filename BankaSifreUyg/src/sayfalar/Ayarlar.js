@@ -133,7 +133,9 @@ const Ayarlar = ({navigation}) => {
       <Header flexx={1} title={"Ayarlar"} logoyazi={false} ayarlarfonk={fonksiyonlar.ayarlargecisfonk} />
       <View style={styles.secenekler}>
 
-      <Pressable style={styles.secenekitem} onPress={()=>{Setbolumler(1)}}>
+      <Pressable style={({pressed}) => [{
+        backgroundColor: pressed ?  "#f1f1f1": '#f9f9f9'
+        },styles.secenekitem]} onPress={()=>{Setbolumler(1)}}>
         <Image
           source={require('../../assets/iconlar/secureblue.png')}
           style={styles.butresim
@@ -147,7 +149,9 @@ const Ayarlar = ({navigation}) => {
         </Text>
       </Pressable>
 
-      <Pressable style={styles.secenekitem} onPress={()=>{Setbolumler(2)}}>
+      <Pressable style={({pressed}) => [{
+        backgroundColor: pressed ?  "#f1f1f1": '#f9f9f9'
+        },styles.secenekitem]} onPress={()=>{Setbolumler(2)}}>
       <Image
           source={require('../../assets/iconlar/viewpink.png')}
           style={styles.butresim
@@ -161,7 +165,9 @@ const Ayarlar = ({navigation}) => {
         </Text>
       </Pressable>
 
-      <Pressable style={[styles.secenekitem, {marginRight: 0}]} onPress={()=>{Setbolumler(3)}}>
+      <Pressable style={({pressed}) => [{
+        backgroundColor: pressed ?  "#f1f1f1": '#f9f9f9'
+        },styles.secenekitem, {marginRight: 0}]} onPress={()=>{Setbolumler(3)}}>
         <Image
           source={require('../../assets/iconlar/infomint.png')}
           style={styles.butresim
@@ -271,7 +277,7 @@ const styles = StyleSheet.create({
 
   },
   secenekitem:{
-    backgroundColor:'#f9f9f9',
+    
     width:'100%',
     height:'auto',
     justifyContent:'center',

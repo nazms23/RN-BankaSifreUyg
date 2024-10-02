@@ -28,7 +28,9 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
 
   return (
     <View style={[styles.disdiv]}>
-        <Pressable style={[styles.artibuton]} onPress={()=>{
+        <Pressable style={({pressed}) => [{
+        backgroundColor: pressed ?  "#f1f1f1": '#f9f9f9'
+        },styles.artibuton]} onPress={()=>{
             setEklebas(!eklebas)
             setBankalarbas(false)
             }}>
@@ -54,8 +56,8 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
             </Pressable>
 
             <View style={styles.sifredisdiv}>
-                <TextInput 
-                    style={styles.sifreinput}  
+                <TextInput    style={styles.sifreinput}
+                
                     inputMode='numeric'
                     placeholder=' Şifrenizi girin'
                     maxLength={6}
@@ -64,7 +66,10 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
                     onChangeText={setSifre}
                 />
             </View>
-            <Pressable style={styles.eklebuton} onPress={()=>{
+            <Pressable style={({pressed}) => [{
+        backgroundColor: pressed ?  "#f1f1f1": '#f9f9f9'
+        },styles.eklebuton,{borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,}]} onPress={()=>{
                 if(sifre != "")
                 {
                     if(bankaId == 0)
@@ -153,7 +158,7 @@ const styles = StyleSheet.create({
     artibuton:{
         width:80,
         
-        backgroundColor:'#f9f9f9',
+ 
         elevation: 2,
         height:80,
         marginVertical:2,
@@ -240,7 +245,7 @@ const styles = StyleSheet.create({
     },
     eklebuton:{
         flex:1.5,
-        backgroundColor:'#f9f9f9',
+
         width:'100%',
         height:'100%',
         justifyContent:'center',

@@ -153,7 +153,7 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
                     
                     }
                 </Pressable>
-                <Pressable style={styles.bankadisdiv} onPress={()=> editmod && setKartturbas(!kartturbas)} >
+                <Pressable style={[styles.bankadisdiv,{backgroundColor: '#f1f1f1', borderBottomLeftRadius: 0, borderTopLeftRadius: 0, borderLeftWidth: 0}]} onPress={()=> editmod && setKartturbas(!kartturbas)} >
 
                     <Text>{kartturisim}</Text> 
 
@@ -172,9 +172,7 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
                     style={styles.sifreinput}  
                     />
                 </View>
-                <Pressable style={[styles.bankadisdiv,{flex:1.2,         borderTopRightRadius: 12,
-        borderBottomRightRadius: 12, borderRightWidth: 0, borderLeftWidth: 0.5, backgroundColor: '#f1f1f1',   borderTopLeftRadius: 0,
-        borderBottomLeftRadius: 0,}]} onPress={()=>setKartbilgibas(!kartbilgibas)} >
+                <Pressable style={[styles.bankadisdiv,{flex:1.2,borderTopRightRadius: 12,borderBottomRightRadius: 12, borderRightWidth: 0,borderLeftWidth: 0.5,borderTopLeftRadius: 0,borderBottomLeftRadius: 0, backgroundColor: '#f1f1f1',}]}onPress={()=>setKartbilgibas(!kartbilgibas)} >
 
                     <Text>{'Kart\nBilgileri'}</Text> 
 
@@ -223,8 +221,8 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
         
         <View style={[styles.kartbilgileridisdiv,{display: not ? 'flex' : kartbilgibas?'flex':'none'}]}>
 
-            <View style={styles.kartbilgileritemdiv}>
-                <Text style={styles.kartbilgileritext} >Not: </Text>
+            <View style={[styles.kartbilgileritemdiv,{borderBottomWidth: 0}]}>
+                <Text style={[styles.kartbilgileritext,{flex:0.38}]} >Not:</Text>
                 <TextInput 
                     style={[styles.kartbilgitextinput, {display:editmod?'flex':'none'}]}
                     inputMode='text'
@@ -237,8 +235,8 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
                 <Text style={[styles.kartbilgikisimtext,{display: editmod?'none':'flex'}]}>{kartnot}</Text>
             </View>
 
-            <View style={[styles.kartbilgileritemdiv,{display:kartbilgibas?'flex':'none'}]}>
-                <Text style={styles.kartbilgileritext} >No: </Text>
+            <View style={[styles.kartbilgileritemdiv,{display:kartbilgibas?'flex':'none', borderTopWidth: 0.9, marginTop: 1}]}>
+                <Text style={styles.kartbilgileritext} >No:</Text>
                 <TextInput 
                     style={[styles.kartbilgitextinput, {display:editmod?'flex':'none'}]}
                     inputMode='numeric'
@@ -257,7 +255,7 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
             </View>
 
             <View style={[styles.kartbilgileritemdiv,{display:kartbilgibas?'flex':'none'}]}>
-                <Text style={styles.kartbilgileritext}>Tarih: </Text>
+                <Text style={styles.kartbilgileritext}>Tarih:</Text>
                 <TextInput
                 style={[styles.kartbilgitextinput, {display:editmod?'flex':'none'}]}
                 inputMode='numeric'
@@ -274,8 +272,8 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
                 </Pressable>
             </View>
 
-            <View style={[styles.kartbilgileritemdiv,{display:kartbilgibas?'flex':'none'}]}>
-                <Text style={styles.kartbilgileritext}>CVC: </Text>
+            <View style={[styles.kartbilgileritemdiv,{display:kartbilgibas?'flex':'none',borderBottomWidth: 0,}]}>
+                <Text style={styles.kartbilgileritext}>CVC:</Text>
                 <TextInput
                 style={[styles.kartbilgitextinput, {display:editmod?'flex':'none'}]}
                 inputMode='numeric'
@@ -336,11 +334,12 @@ const styles = StyleSheet.create({
     sifredisdiv:{
         flex:2,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+  
     },
     silbuton:{
         backgroundColor:"#f9f9f9",
-        borderRadius:15,
+        borderRadius:12,
         marginLeft:10,
         marginTop: 3,
         
@@ -395,43 +394,67 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 12,
     },
     kartbilgileridisdiv:{
-        width:'100%',
-        backgroundColor:'#85ffd0',
+        width:'96.5%',
+        backgroundColor:'#f9f9f9',
+        marginTop: 5,
+        marginLeft: 10,
+       padding: 5,
+        borderRadius: 12,
         
     },
     kartbilgileritemdiv:{
         width:'100%',
-        justifyContent:'space-between',
+
         flexDirection:'row',
         height:40,
         alignItems:'center',
-        marginVertical:5,
+
+       
+        borderBottomWidth: 0.5,
+        padding: 1,
+  
+      
+
         
     },
     kartbilgileritext:{
         width:'100%',
-        flex:1,
+        height: '100%',
+        flex:0.5,
         fontSize:17,
-        textAlign:'center'
+        textAlign:'left',
+      
     },
     kartbilgitextinput:{
         width:'100%',
-        flex:3,
-        fontSize:17
+        height: '100%',
+        flex:1,
+       
+        fontSize:17,
+       
     },
     kopyalabuton:{
         flex:1,
         width:'100%',
-        height:'100%',
+        height:'90%',
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#a7eb7a'
+        backgroundColor:'#a7eb7a',
+        borderRadius: 6,
+        paddingTop: 5,
+        paddingBottom: 5,
+       
     },
     kartbilgikisimtext:{
         width:'100%',
+        height: '100%',
         flex:3,
+        backgroundColor: '#f9f9f9',
         fontSize:17,
-        textAlign:'center'
+        textAlign:'center',
+     
+    
+        
     },
     
 })
