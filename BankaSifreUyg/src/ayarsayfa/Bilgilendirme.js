@@ -1,52 +1,116 @@
-import { Linking, Pressable, StyleSheet, Text, Image, View } from 'react-native'
+import { Linking, Pressable, StyleSheet,ScrollView, Text, Image, View } from 'react-native'
 import React from 'react'
 
 const Bilgilendirme = () => {
   
   //KAAN BUNU ÜŞENDİM IGSDUYFGSUYFGDSFHUYDF sen yap 0 dan tasarımını
   return (
-    <View style={styles.disdiv}>
+    <ScrollView style={styles.disdiv}>
 
+        
+      <Text style={styles.metin}>
+      <Text style={[{fontSize: 16, fontWeight: 'bold'}]}>Uygulamamızın amacı,</Text> şifrelerinizi güvenli bir şekilde bir arada tutmaktır. Uygulama, şifreleri kaydetmez veya saklamaz; sadece yönetmenize ve hatırlamanıza yardımcı olur. <Text style={styles.span}> Şifrelerinizin güvenliği tamamen size aittir. Uygulamayı silerseniz, şifreleriniz de silinecektir. </Text>
+      </Text>
+      <Text  style={styles.metin}>
+      <Text style={[{fontSize: 16, fontWeight: 'bold'}]}>Uygulamamız tamamen açık kaynak kodludur.</Text> Uygulamamıza katkıda bulunmak isterseniz, Uygulamamızın GitHub sayfasını ziyaret edebilirsiniz. Uygulamamızı geliştirerek ve bağış yaparak katkıda bulunanlar aşağıda yer alacaktır.</Text
       
-    <Text style={styles.metin}>
-    Uygulamamızın amacı, şifrelerinizi güvenli bir şekilde bir arada tutmaktır. Uygulama, şifreleri kaydetmez veya saklamaz; sadece yönetmenize ve hatırlamanıza yardımcı olur. <Text style={styles.span}> Şifrelerinizin güvenliği tamamen size aittir. Uygulamayı silerseniz, şifreleriniz de silinecektir. </Text>
-    </Text>
-    <Text  style={styles.metin}>
-    Uygulamamız tamamen açık kaynak kodludur. Uygulamamıza katkıda bulunmak isterseniz, Uygulamamızın GitHub sayfasını ziyaret edebilirsiniz. Uygulamamızı geliştirerek ve bağış yaparak katkıda bulunanlar aşağıda yer alacaktır.</Text
+    >
+      <Text  style={styles.metin}>
+      <Text style={[{fontSize: 16, fontWeight: 'bold'}]}>Uygulamamız, kullanıcı deneyimini ön planda tuttuğu için reklamsızdır.</Text>  Uygulamamızı beğendiyseniz ve projelerimizde bize maddi olarak destek olmak için bağışta bulunabilirsiniz.</Text>
+      
+      <View  style={styles.uyg}>
+        <Pressable style={styles.linkbut}  onPress={async()=>{
+          await Linking.openURL('https://github.com/nazms23/RN-BankaSifreUyg')
+        }}>
+        <Image 
+            source={require('../../assets/iconlar/github.png')}
+            style={styles.iconlar }
+          /> 
+          <Text  style={styles.metin4}>GitHub</Text>
+          
+        </Pressable>
+        <Pressable style={styles.linkbut}  onPress={async()=>{
+          await Linking.openURL('https://github.com/nazms23/RN-BankaSifreUyg')
+        }}>
+        <Image 
+            source={require('../../assets/iconlar/donate.png')}
+            style={styles.iconlar }
+          /> 
+          <Text  style={styles.metin4}>Papara Bağış</Text>
+          
+        </Pressable>
+      </View>
+      <View style={styles.katki}>
+          <View  style={styles.katkiheader}t>
+            <Text  style={styles.metin1}>Katkıda Bulunanlar
+        
+              
+            </Text>
+            <Image 
+              source={require('../../assets/iconlar/kalp.png')}
+              style={[styles.style, {marginLeft: 10,}]}
+            /> 
+          </View>
+          <View  style={styles.katkialt}>
+            <Text  style={styles.metin8}>İsmi</Text>
+            <Text  style={styles.metin8}>Değeri</Text>
+  
+          </View>
+     
+          <View  style={styles.katkialt2}>
+            <View  style={styles.katkitag}>
+              <Text style={styles.metin3}> Nazım S.</Text>
+              <View style={styles.tagdeger} >
+
+                <View  style={styles.tagalt}>   
+                  <Text style={styles.metin2}> Geliştirici</Text>
+              
+                  <Image 
+                  source={require('../../assets/iconlar/devoloper.png')}
+                  style={[styles.minico]}
+                  /> 
+                </View>
+              </View>
+
+
+
     
-  >
-  <Text  style={styles.metin}>
-  Uygulamamız, kullanıcı deneyimini ön planda tuttuğu için reklamsızdır. Uygulamamızı beğendiyseniz ve projelerimizde bize maddi olarak destek olmak için bağışta bulunabilirsiniz.</Text>
-   
-    <View  style={styles.uyg}>
-      <Pressable style={styles.linkbut}  onPress={async()=>{
-        await Linking.openURL('https://github.com/nazms23/RN-BankaSifreUyg')
-      }}>
-       <Image 
-          source={require('../../assets/iconlar/github.png')}
-          style={styles.iconlar }
-        /> 
-        <Text  style={styles.metin4}>GitHub</Text>
-        
-      </Pressable>
-      <Pressable style={styles.linkbut}  onPress={async()=>{
-        await Linking.openURL('https://github.com/nazms23/RN-BankaSifreUyg')
-      }}>
-       <Image 
-          source={require('../../assets/iconlar/donate.png')}
-          style={styles.iconlar }
-        /> 
-        <Text  style={styles.metin4}>Papara Bağış</Text>
-        
-      </Pressable>
-    </View>
-    <View style={styles.katki}>
-      <Text  style={styles.metin1}>Katkıda bulunanlar</Text>
-      <Text style={styles.metin2}> KAAN1İQ0</Text>
-      <Text style={styles.metin2}>NAZIM</Text>
-      <Text style={styles.metin2}>Gelecekte uygulamayı geliştirmeye yardım edicek olan o yakışıklı/güzel insan</Text>
-    </View>
-  </View>
+            </View>
+          
+
+          </View>
+          <View  style={styles.katkialt2}>
+            <View  style={styles.katkitag}>
+              <Text style={styles.metin3}> Yaşar Kaan V.</Text>
+              <View style={styles.tagdeger} >
+                <View  style={[styles.tagalt,{borderRightWidth: 0.5,paddingRight: 5,}]}>   
+                  <Text style={styles.metin2}> Bağışçı</Text>
+              
+                  <Image 
+                  source={require('../../assets/iconlar/donater.png')}
+                  style={[styles.minico]}
+                  /> 
+                </View>
+                <View  style={[styles.tagalt ,{paddingLeft: 5,}]}>   
+                  <Text style={styles.metin2}> Geliştirici</Text>
+              
+                  <Image 
+                  source={require('../../assets/iconlar/devoloper.png')}
+                  style={[styles.minico]}
+                  /> 
+                </View>
+              </View>
+
+
+
+    
+            </View>
+          
+
+          </View>
+  
+      </View>
+  </ScrollView>
 
   )
 }
@@ -62,7 +126,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginTop: 30,
 
-
+    
   },
   linkbut:{
     width: 100,
@@ -72,7 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: 'top',
     alignItems: 'center',
     borderWidth: 0.5,
-    margin: 20,
+    margin: 10,
     paddingTop: 10,
     paddingBottom: 10,
   }, 
@@ -91,9 +155,9 @@ const styles = StyleSheet.create({
  
 
   metin:{
-    fontSize: 17,  
+    fontSize: 15,  
     lineHeight: 20,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   span:{
 
@@ -102,12 +166,66 @@ const styles = StyleSheet.create({
    
 
   },
+ 
+ 
   katki:{
     backgroundColor: '#f9f9f9',
     borderRadius: 6,
+    padding: 20,
+    marginTop: 10,
 
-    marginTop: 20,
 
+  },
+  katkiheader:{
+    flexDirection: 'row',
+    borderBottomWidth: 0.5,
+
+  },
+  metin1:{
+    fontSize: 20,
+    
+  },
+  metin2:{
+  
+
+  },
+  metin3:{
+    marginLeft: 70,
+
+  },
+  metin8:{
+    fontSize: 15,
+
+  },minico:{
+    marginLeft: 10,
+  },
+  katkialt:{
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 0,
+    marginTop: 5,
+
+  },katkialt2:{
+   
+  },katkitag:{
+    backgroundColor:'#f1f1f1',
+    marginBottom: 5,
+    marginTop: 5,
+    paddingBottom: 10,
+    paddingTop: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 6,
+  },tagalt:{
+    flexDirection: 'row',
+    alignItems: 'center',
+
+  },tagdeger:{
+    flexDirection: 'row',
+    marginRight: 30,
 
   }
 })
