@@ -24,6 +24,9 @@ const SifreSor = () => {
     const girisebasti= ()=>{
         sifrekontrol(girisSifresi)
     }
+    const sifresiniunuttu= ()=>{
+       
+    }
 
 
     const sifrekontrol = (t)=>{
@@ -68,7 +71,7 @@ const SifreSor = () => {
 
   return (
     <SafeAreaView style={styles.disdiv}>
-      <Text style={{fontSize:30}}>Şifrenizi Giriniz</Text>
+      <Text style={styles.text1}>Şifrenizi Giriniz</Text>
       <TextInput 
         style={styles.input}
         inputMode='numeric'
@@ -79,8 +82,13 @@ const SifreSor = () => {
         onChangeText={textgirisi}
         secureTextEntry={true}
       />
-    <Pressable style={styles.buton} onPress={girisebasti}>
-        <Text style={{fontSize:30,color:'white'}}>Giriş</Text>
+    <Pressable style={({pressed}) => [{
+        backgroundColor: pressed ?  "#f1f1f1": '#637C5B'
+        },styles.buton]} onPress={girisebasti}>
+        <Text style={{fontSize:25,color:'white',}}>Giriş Yap</Text>
+    </Pressable>
+    <Pressable style={styles.buton2} onPress={sifresiniunuttu}>
+        <Text style={{fontSize:15,color:'black', textDecorationLine: 'underline'}}>Şifremi unuttum</Text>
     </Pressable>
     </SafeAreaView>
   )
@@ -94,21 +102,48 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
     },
+    text1:{
+        fontSize: 25,
+        marginBottom: 20,
+    },
     input:{
-        fontSize:30,
-        width:'70%',
-        height:60,
-        textAlign:'center',
-        borderWidth:1,
-        marginVertical:20
+        paddingRight: 30,
+        paddingLeft: 30,
+        width:'50%',
+        height: 60,
+        borderWidth:0.5,
+        elevation: 1,
+        fontSize:20,
+        textAlign: 'center',
+
+        backgroundColor:'#f1f1f1',
+        borderRadius:6
     },
     buton:{
         borderWidth:1,
         borderRadius:10,
-        backgroundColor:'#CA3E47',
-        width:100,
+        padding: 10,
+        marginTop: 50,
+  
+        width: '40%',
+        borderColor: '#AEAEAE',
+        
         justifyContent:'center',
         alignItems:'center',
+
+    },
+    buton2:{
+        borderWidth:1,
+        borderRadius:10,
+        padding: 10,
+        bottom: '10%',
+        position: 'absolute',
+        width: '40%',
+        borderColor: '#AEAEAE',
+        
+        justifyContent:'center',
+        alignItems:'center',
+
 
     }
 })
