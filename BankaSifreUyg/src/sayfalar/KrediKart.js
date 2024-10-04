@@ -5,7 +5,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import KBListOgesi from '../components/KBListOgesi'
 import KBEkle from '../components/KBEkle'
-import Yukleniyor from './Yukleniyor'
+import Yukleniyor from '../components/Yukleniyor'
 
 import {useSelector,useDispatch} from 'react-redux';
 import {KBEkleSlice,KBSil,KBSifreDegis,KBBankaDegis,KBTurDegis, KBNoDegis, KBTarihDegis, KBCvcDegis, KBNotDegis} from '../redux/bilgilerSlice'
@@ -81,6 +81,10 @@ const KrediKart = ({navigation}) => {
     }
   ])
   const [kartturu, setKartturu] = useState([
+    {
+      id:-1,
+      isim:"Kart Tür Seç",
+    },
     {
       id:0,
       isim:"Kredi/Banka",

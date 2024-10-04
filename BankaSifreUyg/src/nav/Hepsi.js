@@ -62,7 +62,11 @@ const Hepsi = () => {
             }
             
             // Tüm işlemler bitince yükleniyor sayfasnın kalkması
-            setYukleniyor(false)
+            const s= ()=>{
+                setYukleniyor(false)
+            }
+            setTimeout(s,1000)
+            
         })();
 
   

@@ -92,6 +92,13 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
                             ]);
                         return;
                     }
+                    if(kartturId == -1)
+                        {
+                            Alert.alert('Başarısız', 'Kart Tür Seçmelisiniz.', [
+                                {text: 'Tamam', onPress: () => {return}},
+                                ]);
+                            return;
+                        }
                     await eklemefonk(bankaId,sifre,kartturId)
                     setSifre("")
                     setEklebas(false)
