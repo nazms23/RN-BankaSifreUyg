@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
       marginTop: 3,
       
     
-      width:'15%',
+      width:'20%',
       height: '93%',
       justifyContent:'center',
       alignItems:'center',

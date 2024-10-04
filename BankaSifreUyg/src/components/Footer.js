@@ -1,13 +1,18 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Footer = ({flexx,mobilfonk,kredifonk}) => {
+const Footer = ({hangisi,flexx,mobilfonk,kredifonk}) => {
   return (
     <View style={[styles.disdiv, {flex:flexx}]}>
       <Pressable style={({pressed}) => [{
         backgroundColor: pressed ?  "#f9f9f9": '#f1f1f1'
         }
-        ,styles.butondiv, styles.buton1]} onPress={mobilfonk}>
+        ,styles.butondiv, styles.buton1,
+        {
+          backgroundColor: hangisi == 1 ? "#fff" : '#f1f1f1'
+        }
+        
+        ]} onPress={mobilfonk}>
         <Text style={styles.butontext}>
           Mobil Bankacılık
         </Text>
@@ -15,7 +20,10 @@ const Footer = ({flexx,mobilfonk,kredifonk}) => {
 
       <Pressable  style={({pressed}) => [{
         backgroundColor: pressed ?  "#f9f9f9": '#f1f1f1'
-        },styles.butondiv, styles.buton2]} onPress={kredifonk}>
+        },styles.butondiv, styles.buton2,
+        {
+          backgroundColor: hangisi == 2 ? "#fff" : '#f1f1f1'
+        }]} onPress={kredifonk}>
       <Text style={styles.butontext}>
         Kredi/Banka Kartı
       </Text>

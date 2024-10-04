@@ -2,9 +2,10 @@ import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView, Alert }
 import React, {useState} from 'react'
 import Animated, {BounceIn, FadeIn, FadeInLeft, FadingTransition, withRepeat}from 'react-native-reanimated';
 
-const MbEkle = ({resimmi, bankalar,eklefonk}) => {
+const MbEkle = ({scroolfonk,resimmi, bankalar,eklefonk}) => {
 
     const eklemefonk = eklefonk;
+    const scroolfonks = scroolfonk;
 
     const [eklebas, setEklebas] = useState(false)
 
@@ -31,6 +32,7 @@ const MbEkle = ({resimmi, bankalar,eklefonk}) => {
         <Pressable style={({pressed}) => [{
         backgroundColor: pressed ?  "#f1f1f1": '#f9f9f9'
         },styles.artibuton]} onPress={()=>{
+            scroolfonks()
             setEklebas(!eklebas)
             setBankalarbas(false)
             }}>

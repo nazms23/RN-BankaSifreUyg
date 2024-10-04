@@ -2,9 +2,10 @@ import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView,Alert } 
 import React, {useState} from 'react'
 import Animated, {BounceIn, FadeIn, FadeInLeft, FadingTransition, withRepeat}from 'react-native-reanimated';
 
-const KBEkle = ({resimmi, bankalar,eklefonk,karttur}) => {
+const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
 
     const eklemefonk = eklefonk;
+    const scroolfonks = scroolfonk;
 
     const [eklebas, setEklebas] = useState(false)
 
@@ -39,6 +40,7 @@ const KBEkle = ({resimmi, bankalar,eklefonk,karttur}) => {
   return (
     <View style={[styles.disdiv]}>
         <Pressable style={[styles.artibuton]} onPress={()=>{
+            scroolfonks()
             setEklebas(!eklebas)
             setBankalarbas(false)
             setKartturbas(false)

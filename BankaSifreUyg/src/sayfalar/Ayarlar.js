@@ -177,7 +177,7 @@ const Ayarlar = ({navigation}) => {
           }
         />
         <Text style={styles.secenektext}>
-          Bilgilendirme
+          Bilgi
         </Text>
       </Pressable>
       

@@ -153,6 +153,10 @@ const KrediKart = ({navigation}) => {
     KBNotDegistir:(id,not)=>{
       dispacth(KBNotDegis({id:id,not:not}))
     },
+
+    scrolenasagit:()=>{
+      this.scrollView.scrollToEnd({animated: true})
+    }
   }
 
 
@@ -172,7 +176,7 @@ const KrediKart = ({navigation}) => {
         {
           !yukle && <Yukleniyor/> 
         }
-        <ScrollView style={[styles.contscrollvw,{display:yukle ? 'flex':'none'}]}>
+        <ScrollView style={[styles.contscrollvw,{display:yukle ? 'flex':'none'}]} ref={ref => {this.scrollView = ref}}>
         {
           yukle &&kredikart.map(i => {
             return(
@@ -206,11 +210,11 @@ const KrediKart = ({navigation}) => {
           })
 
         }
-          <KBEkle resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.KBSifreEkle} karttur={kartturu} />
+          <KBEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.KBSifreEkle} karttur={kartturu} />
         </ScrollView>
       </View>
 
-      <Footer flexx={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
+      <Footer flexx={1} hangisi={2} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
     </SafeAreaView>
   )
 }

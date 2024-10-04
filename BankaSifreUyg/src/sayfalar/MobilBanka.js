@@ -5,7 +5,6 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import MBListOgesi from '../components/MBListOgesi'
 import MbEkle from '../components/MbEkle'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {useSelector,useDispatch} from 'react-redux';
 import {MBEkleSlice,MBSil,MBSifreDegis,MBBankaDegis} from '../redux/bilgilerSlice'
@@ -101,7 +100,7 @@ const MobilBanka = ({navigation}) => {
       dispacth(MBEkleSlice({id:id,bankaId:bId,sifre:sifre}))
     },
     MBSifreSil: (bId)=>{
-      dispacth(MBSil({bId}))
+      dispacth(MBSil(bId))
     },
     MBSifreDegistir: (id,text)=>{
       if(text.length == 6)
@@ -112,6 +111,11 @@ const MobilBanka = ({navigation}) => {
     },
     MBBankaDegistir: (id,bId)=>{
       dispacth(MBBankaDegis({id:id,bId:bId}))
+    },
+
+
+    scrolenasagit:()=>{
+      this.scrollView.scrollToEnd({animated: true})
     }
   }
   
@@ -120,10 +124,11 @@ const MobilBanka = ({navigation}) => {
       
         <Header flexx={1} title={"Mobil Bankacılık"} ayarlarfonk={fonksiyonlar.ayarlargecisfonk}/>
         <View style={styles.contdis}>
-          <ScrollView style={styles.contscrollvw}>
+          <ScrollView style={styles.contscrollvw} ref={ref => {this.scrollView = ref}}>
           {
             mobilbanka != undefined &&
             mobilbanka.map(i => {
+              //console.log(i.id)
               return(
                 <MBListOgesi 
                   resimmi={logoyazi} 
@@ -139,9 +144,9 @@ const MobilBanka = ({navigation}) => {
               )
             })
           }
-             <MbEkle resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle}/>
+            <MbEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle} />
           </ScrollView>
-       
+          
         </View>
       
       
@@ -149,7 +154,7 @@ const MobilBanka = ({navigation}) => {
       
     
 
-    <Footer flexx={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
+    <Footer flexx={1} hangisi={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
     </SafeAreaView>
   )
 }
