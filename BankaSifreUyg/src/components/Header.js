@@ -15,7 +15,7 @@ const Header = ({flexx,title,ayarlarfonk}) => {
         },styles.butondis]} onPress={ayarlarfonk}>
         <View style={styles.setbutdis}>
           <Image
-          source={require('../../assets/iconlar/setting2.png')}
+          source={require('../../assets/iconlar/setting.png')}
           style={styles.setbut }
           />
         </View>
