@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView, Alert } from 'react-native'
 import React, {useState} from 'react'
 import Animated, {BounceIn, FadeIn, FadeInLeft, FadingTransition, withRepeat}from 'react-native-reanimated';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const MbEkle = ({scroolfonk,resimmi, bankalar,eklefonk}) => {
 
     const eklemefonk = eklefonk;
@@ -256,8 +256,9 @@ const styles = StyleSheet.create({
      
     },
     resimdiv2:{
-        width: '80%',
-        padding: 15,
+        width: wp('17%'),
+        height: hp('7%'),
+        padding: 5
     },
     sifreinput:{
         paddingLeft: 15,

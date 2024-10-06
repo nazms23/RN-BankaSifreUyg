@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView,Alert } from 'react-native'
 import React, {useState} from 'react'
 import Animated, {BounceIn, FadeIn, FadeInLeft, FadingTransition, withRepeat}from 'react-native-reanimated';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
 
     const eklemefonk = eklefonk;
@@ -156,7 +156,7 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
             </Animated.View>
         </View>
         <View style={[styles.bankalardisdiv,{display: kartturbas? 'flex':'none'}]}>
-            <View style={styles.kartturview}>
+            <ScrollView horizontal={true} style={styles.kartturview}>
 
             {
                 karttur.map((i)=>{
@@ -170,7 +170,18 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
                 })
             }
 
-            </View>
+            </ScrollView>
+            <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
+                
+                <Image
+                    source={require('../../assets/iconlar/right2.png')}
+                    style={styles.rightresim
+
+
+                        
+                    }
+                />
+            </Animated.View>
         </View>
     </View>
   )
@@ -261,17 +272,17 @@ bankalarviewbuton:{
     borderRadius:6
 },
 eklebuton:{
-    flex:1.5,
+    flex:2.2,
         backgroundColor:'#f9f9f9',
-        width:'100%',
-        height:'100%',
+        width: '100%',
+        height: '100%',
         justifyContent:'center',
         alignItems:'center',
         borderRadius:12,
 },
 sifreinput:{
     paddingLeft: 15,
-    width:'90%',
+    width:'80%',
     height:'80%',
     borderWidth:0.5,
     fontSize: 20,
@@ -293,13 +304,15 @@ resimdiv:{
     padding: 15,
 },
 resimdiv2:{
-    width: '100%',
-    padding: 15,
+    width: wp('17%'),
+    height: hp('7%'),
+    padding: 5
 },
 artibutresim:{
+    
     width: '100%',
     height: '100%',
-    
+
 },
 
 

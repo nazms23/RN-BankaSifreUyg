@@ -115,7 +115,7 @@ const MobilBanka = ({navigation}) => {
 
 
     scrolenasagit:()=>{
-      this.scrollView.scrollToEnd({animated: true})
+      this.scrollView1.scrollToEnd({animated: true})
     }
   }
   
@@ -124,7 +124,7 @@ const MobilBanka = ({navigation}) => {
       
         <Header flexx={1} title={"Mobil Bankacılık"} ayarlarfonk={fonksiyonlar.ayarlargecisfonk}/>
         <View style={styles.contdis}>
-          <ScrollView style={styles.contscrollvw} ref={ref => {this.scrollView = ref}}>
+          <ScrollView style={styles.contscrollvw} ref={ref => {this.scrollView1 = ref}}>
           {
             mobilbanka != undefined &&
             mobilbanka.map(i => {

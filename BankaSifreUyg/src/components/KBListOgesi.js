@@ -2,7 +2,7 @@ import { StyleSheet, Text, View,Image,Pressable,ScrollView,TextInput } from 'rea
 import React, {useState} from 'react'
 import {Swipeable,GestureHandlerRootView} from 'react-native-gesture-handler'
 import {setStringAsync} from 'expo-clipboard';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilgileriobj , silfonk, sifredegisfonk , bankadegisfonk , turdegisfonk , bankalar, kartturler , sifreidsi}) => {
 
@@ -300,10 +300,10 @@ export default KBListOgesi
 
 const styles = StyleSheet.create({
     disdiv:{
-        width:"96.5%",
+        width: wp("96.5%"),
         backgroundColor:'#f9f9f9',
-        height:80,
-        marginVertical:3,
+        height: 80,
+        marginVertical:10,
         justifyContent:'center',
         alignItems:'center',
         flexDirection:'row',
@@ -341,11 +341,11 @@ const styles = StyleSheet.create({
         backgroundColor:"#f9f9f9",
         borderRadius:12,
         marginLeft:10,
-        marginTop: 3,
+        marginTop: 10,
         
       
-        width:'20%',
-        height: '93%',
+        width: wp('20%'),
+        height: '80%',
         justifyContent:'center',
         alignItems:'center',
     },
@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
         width:'100%',
 
         flexDirection:'row',
-        height:40,
+        height: hp(6),
         alignItems:'center',
 
        
@@ -420,10 +420,10 @@ const styles = StyleSheet.create({
     kartbilgileritext:{
         width:'100%',
         height: '100%',
-        flex:0.5,
+        flex:1,
         fontSize:17,
         textAlign:'left',
-      
+       
     },
     kartbilgitextinput:{
         width:'100%',

@@ -1,6 +1,6 @@
-import { Pressable, SafeAreaView, Image,StyleSheet, Text, View } from 'react-native'
+import { Pressable, SafeAreaView, Image,StyleSheet, Text, View, Dimensions } from 'react-native'
 import React from 'react'
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const Header = ({flexx,title,ayarlarfonk}) => {
   return (
     <SafeAreaView style={[styles.disdiv, {flex:flexx}]}>
@@ -34,7 +34,7 @@ export default Header
 const styles = StyleSheet.create({
   disdiv:{
     width:'100%',
-    height:'100%',
+    height: '100%',
     justifyContent:'center',
     alignItems:'center',
     flexDirection:'row',
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   yazidiv:{
     width:"100%",
-    height:"100%",
+    height: hp('8%'),
     justifyContent:'center',
     alignItems:'center',
     backgroundColor:'#FFFFFF',
@@ -61,9 +61,9 @@ const styles = StyleSheet.create({
 
   },
   butondis:{
-    flex:0.8,
-    width:'100%',
-    height:'100%',
+    flex:0.9,
+    width: '100%',
+    height: hp('8%'),
     borderRadius: 12,
 
     marginLeft: 20,
@@ -82,12 +82,15 @@ const styles = StyleSheet.create({
     
   },
   setbutdis:{
-    width:'50%',
-    height:'70%'
+    width: '100%',
+
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   setbut:{
-    width:'100%',
-    height:'100%'
+    width: wp(10),
+    height: hp(5)
   }
   
 

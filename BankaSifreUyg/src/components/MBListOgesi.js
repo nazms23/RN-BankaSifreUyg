@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View,Image,Pressable,ScrollView,TextInput } from 'react-native'
 import React, {useState} from 'react'
 import {Swipeable,GestureHandlerRootView} from 'react-native-gesture-handler'
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk , bankadegisfonk , bankalar, sifreidsi}) => {
 
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
       marginTop: 3,
       
     
-      width:'20%',
+      width: wp('20%'),
       height: '93%',
       justifyContent:'center',
       alignItems:'center',
