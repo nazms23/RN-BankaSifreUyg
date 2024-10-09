@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const Footer = ({hangisi,flexx,mobilfonk,kredifonk}) => {
   return (
     <View style={[styles.disdiv, {flex:flexx}]}>
@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     flexDirection:'row',
-    padding: 20,
+    padding: 10,
+    paddingTop: 20,
     paddingBottom: 40,
 
   },
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     width:"100%",
-    height:'100%',
+    height: hp(9),
  
     borderRadius:5,
     marginHorizontal:3,

@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
       },
       itemdisdiv:{
         backgroundColor:'#f9f9f9',
-        width:'70%',
+        width:'99%',
         height:60,
         flexDirection:'row',
         display:'flex',

@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Gorunum from '../ayarsayfa/Gorunum';
 import Guvenlik from '../ayarsayfa/Guvenlik';
 import Bilgilendirme from '../ayarsayfa/Bilgilendirme';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {useSelector,useDispatch} from 'react-redux';
 import {setLogoyazi,setNot} from '../redux/ayarlarSlice';
 
@@ -177,7 +177,7 @@ const Ayarlar = ({navigation}) => {
           }
         />
         <Text style={styles.secenektext}>
-          Bilgi
+          Bilgilendirme
         </Text>
       </Pressable>
       
@@ -278,16 +278,17 @@ const styles = StyleSheet.create({
   },
   secenekitem:{
     
-    width:'100%',
-    height:'auto',
+    width: '100%',
+    height: 'auto',
     justifyContent:'center',
     alignItems:'center',
     display: 'flex',
     flex: 1,
+    marginRight: 10,
     flexDirection: 'column',
 
     borderRadius:12,
-    marginRight: 50,
+    
    
     paddingTop: 10,
     paddingBottom: 10,
@@ -298,7 +299,7 @@ const styles = StyleSheet.create({
   secenektext:{
     color:'black',
     fontSize:17,
-   
+
     
   },
   butresim:{

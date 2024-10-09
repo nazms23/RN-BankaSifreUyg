@@ -51,11 +51,7 @@ const Bilgilendirme = () => {
               style={[styles.style, {marginLeft: 10,}]}
             /> 
           </View>
-          <View  style={styles.katkialt}>
-            <Text  style={styles.metin8}>İsmi</Text>
-            <Text  style={styles.metin8}>Değeri</Text>
-  
-          </View>
+
      
           <View  style={styles.katkialt2}>
             <View  style={styles.katkitag}>
@@ -83,7 +79,7 @@ const Bilgilendirme = () => {
             <View  style={styles.katkitag}>
               <Text style={styles.metin3}> Yaşar Kaan V.</Text>
               <View style={styles.tagdeger} >
-                <View  style={[styles.tagalt,{borderRightWidth: 0.5,paddingRight: 5,}]}>   
+                <View  style={[styles.tagalt,{borderBottomWidth: 0.5,paddingBottom: 5}]}>   
                   <Text style={styles.metin2}> Bağışçı</Text>
               
                   <Image 
@@ -91,7 +87,7 @@ const Bilgilendirme = () => {
                   style={[styles.minico]}
                   /> 
                 </View>
-                <View  style={[styles.tagalt ,{paddingLeft: 5,}]}>   
+                <View  style={[styles.tagalt ,{paddingTop: 5}]}>   
                   <Text style={styles.metin2}> Geliştirici</Text>
               
                   <Image 
@@ -190,7 +186,7 @@ const styles = StyleSheet.create({
 
   },
   metin3:{
-    marginLeft: 70,
+    marginLeft: 5,
 
   },
   metin8:{
@@ -201,7 +197,7 @@ const styles = StyleSheet.create({
   },
   katkialt:{
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginBottom: 0,
     marginTop: 5,
 
@@ -210,10 +206,10 @@ const styles = StyleSheet.create({
   },katkitag:{
     backgroundColor:'#f1f1f1',
     marginBottom: 5,
-    marginTop: 5,
+    marginTop: 10,
     paddingBottom: 10,
     paddingTop: 10,
-    paddingLeft: 5,
+    paddingLeft: 0,
     paddingRight: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -222,10 +218,12 @@ const styles = StyleSheet.create({
   },tagalt:{
     flexDirection: 'row',
     alignItems: 'center',
+ 
+    justifyContent: 'space-between'
 
   },tagdeger:{
-    flexDirection: 'row',
-    marginRight: 30,
+    flexDirection: 'column',
+    marginRight: 10,
 
   }
 })

@@ -15,7 +15,7 @@ const Header = ({flexx,title,ayarlarfonk}) => {
         },styles.butondis]} onPress={ayarlarfonk}>
         <View style={styles.setbutdis}>
           <Image
-          source={require('../../assets/iconlar/setting2.png')}
+          source={require('../../assets/iconlar/setting.png')}
           style={styles.setbut }
           />
         </View>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     backgroundColor: '#E7E9EA',
     paddingTop: 10,
-    paddingBottom:15,
+    paddingBottom:10,
   },
   yazidiv:{
     width:"100%",
