@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View, ScrollView,Keyboard } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, {useState,useEffect} from 'react'
 import Header from '../components/Header'
@@ -8,7 +8,7 @@ import KBEkle from '../components/KBEkle'
 import Yukleniyor from '../components/Yukleniyor'
 
 import {useSelector,useDispatch} from 'react-redux';
-import {KBEkleSlice,KBSil,KBSifreDegis,KBBankaDegis,KBTurDegis, KBNoDegis, KBTarihDegis, KBCvcDegis, KBNotDegis} from '../redux/bilgilerSlice'
+import {KBEkleSlice,KBSil,KBSifreDegis,KBBankaDegis,KBTurDegis, KBNoDegis, KBTarihDegis, KBCvcDegis, KBNotDegis,OncekiSayfaDegis} from '../redux/bilgilerSlice'
 
 
 
@@ -103,9 +103,11 @@ const KrediKart = ({navigation}) => {
   
   const fonksiyonlar = {
     mobilbankgecisfonk: ()=>{
+      dispacth(OncekiSayfaDegis('MobilBanka'))
       navigation.navigate('MobilBanka')
     },
     kredikartgecisfonk: ()=>{
+      dispacth(OncekiSayfaDegis('KrediBanka'))
       navigation.navigate('KrediBanka')
     },
     ayarlargecisfonk: ()=>{
@@ -167,8 +169,12 @@ const KrediKart = ({navigation}) => {
 
 
   const [yukle, setYukle] = useState(false)
+  const [isKlavye, setIsKlavye] = useState(false)
   useEffect(()=>{
     setYukle(true)
+
+    Keyboard.addListener('keyboardDidShow',()=> setIsKlavye(true))
+    Keyboard.addListener('keyboardDidHide',()=> setIsKlavye(false))
   },[])
 
 
@@ -218,7 +224,7 @@ const KrediKart = ({navigation}) => {
         </ScrollView>
       </View>
 
-      <Footer flexx={1} hangisi={2} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
+      <Footer gorunum={isKlavye ? 'none':'flex'} flexx={1} hangisi={2} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
     </SafeAreaView>
   )
 }

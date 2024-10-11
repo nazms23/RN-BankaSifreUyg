@@ -6,7 +6,7 @@ const Yukleniyor = () => {
   return (
     <SafeAreaView style={styles.disdiv}>
       <ActivityIndicator size="xlarge" color={'black'}/>
-      <Text style={styles.baslik}>Kartlarınız Yüklasdasdadeniyor</Text>
+      <Text style={styles.baslik}>Bilgileriniz yükleniyor...</Text>
      
     </SafeAreaView>
   )

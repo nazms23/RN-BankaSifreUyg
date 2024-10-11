@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, TextInput,Pressable,Alert } from 'react-native'
+import { StyleSheet, Text, View, TextInput,Pressable,Alert,BackHandler } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, {useEffect, useState} from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as LocalAuthentication from 'expo-local-authentication';
 
 import {useDispatch } from 'react-redux';
 import { setSifresor,setParmakizi } from '../redux/ayarlarSlice';
@@ -24,9 +25,45 @@ const SifreSor = () => {
     const girisebasti= ()=>{
         sifrekontrol(girisSifresi)
     }
-    const sifresiniunuttu= ()=>{
-       
-    }
+    const sifresiniunuttu= async ()=>{    
+        const dogrulanabiliyomu = await LocalAuthentication.hasHardwareAsync();
+
+        if(!dogrulanabiliyomu)
+            {
+                Alert.alert('Uyarı', 'Telefonunuz şifre sıfırlama işlemi için uygun yeterliliklere sahip değildir.\n Bunun yerine tüm bilgilerinizi sıfırlamak istiyor musunuz?', [
+                    {text: 'Hayır',style:'cancel', onPress: () => {return} },
+                    {text: 'Evet', onPress: async () => {
+                        await AsyncStorage.setItem('ayarlar', JSON.stringify({
+                            sifresor:false,
+                            girissifre:'1111',
+                            parmaksor:false,
+                            not:false,
+                            logoyazi:true
+        
+                        }))
+                        await AsyncStorage.setItem('mobilbanka',JSON.stringify({sifreler:[]}))
+                        await AsyncStorage.setItem('kredikart',JSON.stringify({sifreler:[]}))
+                        BackHandler.exitApp()
+
+                    } },
+                  ]);
+            }else
+            {
+                console.log("Destekleniyo")
+                const parmakdogrula = await LocalAuthentication.authenticateAsync({
+                    promptMessage:"Parmak İzinizi Doğrulayın"
+                    
+                }).then((sonuc)=>{
+                    if(sonuc)
+                    {
+                        dispacth(setParmakizi(false))
+                        dispacth(setSifresor(false))
+                    }
+                })
+    
+                
+            }
+    }   
 
 
     const sifrekontrol = (t)=>{

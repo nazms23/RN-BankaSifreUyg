@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View,Alert } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import * as LocalAuthentication from 'expo-local-authentication';
 
@@ -22,7 +22,12 @@ const Parmakizi = () => {
 
     const desteklemiyorfonk = ()=>{
         console.log("desteklemiyor")
-
+        Alert.alert('Başarısız', 'Telefonunuz desteklemiyor', [
+            {text: 'Tamam', onPress: () => {
+                dispacth(setParmakizi(false))
+                dispacth(setSifresor(false))
+            }},
+          ]);
     }
 
     const parmakizidogrulama = async ()=>{
@@ -35,7 +40,7 @@ const Parmakizi = () => {
         {
             console.log("Destekleniyo")
             const parmakdogrula = await LocalAuthentication.authenticateAsync({
-                promptMessage:"Parmak İzinizi Doğrulayın",
+                promptMessage:"Parmak İzinizi Doğrulayın"
                 
             }).then((sonuc)=>{
                 if(sonuc)

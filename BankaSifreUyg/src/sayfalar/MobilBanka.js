@@ -1,13 +1,14 @@
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View, ScrollView, Keyboard } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import React, {useState} from 'react'
+import React, {useEffect,useState} from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import MBListOgesi from '../components/MBListOgesi'
 import MbEkle from '../components/MbEkle'
+import Yukleniyor from '../components/Yukleniyor'
 
 import {useSelector,useDispatch} from 'react-redux';
-import {MBEkleSlice,MBSil,MBSifreDegis,MBBankaDegis} from '../redux/bilgilerSlice'
+import {MBEkleSlice,MBSil,MBSifreDegis,MBBankaDegis,OncekiSayfaDegis} from '../redux/bilgilerSlice'
 
 
 
@@ -85,9 +86,11 @@ const MobilBanka = ({navigation}) => {
   const fonksiyonlar = {
     mobilbankgecisfonk: ()=>{
       navigation.navigate('MobilBanka')
+      dispacth(OncekiSayfaDegis('MobilBanka'))
     },
     kredikartgecisfonk: ()=>{
       navigation.navigate('KrediBanka')
+      dispacth(OncekiSayfaDegis('KrediBanka'))
     },
     ayarlargecisfonk: ()=>{
       navigation.navigate('Ayarlar')
@@ -118,17 +121,31 @@ const MobilBanka = ({navigation}) => {
       this.scrollView1.scrollToEnd({animated: true})
     }
   }
+
+  const [yukle, setYukle] = useState(false)
+  const [isKlavye, setIsKlavye] = useState(false)
+  useEffect(()=>{
+    setYukle(true)
+
+    Keyboard.addListener('keyboardDidShow',()=> setIsKlavye(true))
+    Keyboard.addListener('keyboardDidHide',()=> setIsKlavye(false))
+
+
+
+
+  },[])
   
   return (
     <SafeAreaView style={styles.disdiv}>
       
         <Header flexx={1} title={"Mobil Bankacılık"} ayarlarfonk={fonksiyonlar.ayarlargecisfonk}/>
         <View style={styles.contdis}>
+        {
+          !yukle && <Yukleniyor/> 
+        }
           <ScrollView style={styles.contscrollvw} ref={ref => {this.scrollView1 = ref}}>
           {
-            mobilbanka != undefined &&
-            mobilbanka.map(i => {
-              //console.log(i.id)
+            yukle && mobilbanka.map(i => {
               return(
                 <MBListOgesi 
                   resimmi={logoyazi} 
@@ -154,7 +171,7 @@ const MobilBanka = ({navigation}) => {
       
     
 
-    <Footer flexx={1} hangisi={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
+    <Footer gorunum={isKlavye ? 'none':'flex'} flexx={1} hangisi={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
     </SafeAreaView>
   )
 }

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,Image,Pressable,ScrollView,TextInput } from 'react-native'
+import { StyleSheet, Text, View,Image,Pressable,ScrollView,TextInput,Alert } from 'react-native'
 import React, {useState} from 'react'
 import {Swipeable,GestureHandlerRootView} from 'react-native-gesture-handler'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -57,7 +57,12 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
         return (
           <Pressable style={({pressed}) => [{
             backgroundColor: pressed ?  "#f1f1f1": '#f9f9f9'
-            },styles.silbuton]} onPress={()=>silmefonk(sifreidsi)} >
+            },styles.silbuton]} onPress={()=>{
+              Alert.alert('Uyarı', 'Silmek istediğinize emin misiniz?', [
+                {text: 'Hayır', style:'cancel', onPress: () => {return},},
+                {text: 'Evet', onPress: () => silmefonk(sifreidsi)},
+              ]);
+              }} >
             <View style={styles.silbutonresimdiv}>
             <Image
               source={require('../../assets/iconlar/deletered.png')}

@@ -1,4 +1,4 @@
-import { StyleSheet, Text,Image, View,Pressable,ActivityIndicator } from 'react-native'
+import { StyleSheet, Text,Image, View,Pressable,ActivityIndicator,Keyboard } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, {useState,useEffect} from 'react'
 import Header from '../components/Header'
@@ -15,6 +15,8 @@ import {setLogoyazi,setNot} from '../redux/ayarlarSlice';
 
 const Ayarlar = ({navigation}) => {
   const dispacth = useDispatch()
+  const {oncekisayfa} = useSelector(s=> s.bilgi)
+
 
   // Kullanılan tüm fonksiyonlar
   const fonksiyonlar = {
@@ -28,7 +30,7 @@ const Ayarlar = ({navigation}) => {
     },
     //Ayarlar sayfasına geçiş
     ayarlargecisfonk: ()=>{
-      navigation.navigate('Ayarlar')
+      navigation.navigate(oncekisayfa)
     },
     //Değişen ayarların kaydedilmesi
     //-> Ayarlardaki sistemle mobilbankacılık ve kart bilgileri kısmının sistemi aynı değil
@@ -106,6 +108,7 @@ const Ayarlar = ({navigation}) => {
 
   const {nsifresor,nparmakizi,girissifre,not,logoyazi} = useSelector(s=> s.ayar)
 
+  const [isKlavye, setIsKlavye] = useState(false)
   useEffect(()=>{
     (async ()=>{
       //Telefonun parmak izi destekleyip desteklemediği kontrolü
@@ -123,6 +126,9 @@ const Ayarlar = ({navigation}) => {
 
       //Yükleniyor sayfasının kapanması
       setYukleniyor(false);
+
+    Keyboard.addListener('keyboardDidShow',()=> setIsKlavye(true))
+    Keyboard.addListener('keyboardDidHide',()=> setIsKlavye(false))
     })();
   },[]);
   
@@ -220,7 +226,7 @@ const Ayarlar = ({navigation}) => {
 
       </View>
 
-      <Footer flexx={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
+      <Footer gorunum={isKlavye ? 'none':'flex'} flexx={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
 
     </SafeAreaView>
   )

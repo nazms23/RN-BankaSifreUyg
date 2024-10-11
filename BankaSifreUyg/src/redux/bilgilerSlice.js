@@ -4,7 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   mobilbanka: [], // mobil bankacılık şifre bilgileri
-  kredikart:[] //kart bilgisi şifre bilgileri
+  kredikart:[], //kart bilgisi şifre bilgileri
+  oncekisayfa:'MobilBanka' // MobilBanka - KrediBanka
 }
 
 //Mobil bankacılık yapılan değişiklikleri asyncstorage'ye kaydetme
@@ -84,10 +85,15 @@ const bilgilerSlice = createSlice({
     KBNotDegis: (state,action)=>{
       state.kredikart.find(i=>i.id == action.payload.id).kartnot = action.payload.not
       KBkaydet(state.kredikart)
+    },
+
+
+    OncekiSayfaDegis: (state,action)=>{
+      state.oncekisayfa = action.payload
     }
   }
 });
 
-export const {setKredikart,setMobilbanka,MBEkleSlice,MBSil,MBSifreDegis,MBBankaDegis,KBEkleSlice,KBSil,KBSifreDegis,KBBankaDegis,KBTurDegis,KBNoDegis,KBTarihDegis,KBCvcDegis,KBNotDegis} = bilgilerSlice.actions
+export const {setKredikart,setMobilbanka,MBEkleSlice,MBSil,MBSifreDegis,MBBankaDegis,KBEkleSlice,KBSil,KBSifreDegis,KBBankaDegis,KBTurDegis,KBNoDegis,KBTarihDegis,KBCvcDegis,KBNotDegis,OncekiSayfaDegis} = bilgilerSlice.actions
 
 export default bilgilerSlice.reducer

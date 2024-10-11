@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,Image,Pressable,ScrollView,TextInput } from 'react-native'
+import { StyleSheet, Text, View,Image,Pressable,ScrollView,TextInput,Alert } from 'react-native'
 import React, {useState} from 'react'
 import {Swipeable,GestureHandlerRootView} from 'react-native-gesture-handler'
 import {setStringAsync} from 'expo-clipboard';
@@ -104,7 +104,12 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
           outputRange: [-20, 0, 0, 1],
         });
         return (
-          <Pressable style={styles.silbuton} onPress={()=>silmefonk(sifreidsi)} >
+          <Pressable style={styles.silbuton} onPress={()=>{
+            Alert.alert('Uyarı', 'Silmek istediğinize emin misiniz?', [
+                {text: 'Hayır', style:'cancel', onPress: () => {return},},
+                {text: 'Evet', onPress: () => silmefonk(sifreidsi)},
+              ]);
+            }} >
             <View style={styles.silbutonresimdiv}>
             <Image
               source={require('../../assets/iconlar/deletered.png')}
