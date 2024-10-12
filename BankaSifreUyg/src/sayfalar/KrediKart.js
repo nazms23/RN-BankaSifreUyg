@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView,Keyboard } from 'react-native'
+import { StyleSheet, View,FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, {useState,useEffect} from 'react'
 import Header from '../components/Header'
@@ -82,19 +82,19 @@ const KrediKart = ({navigation}) => {
   ])
   const [kartturu, setKartturu] = useState([
     {
-      id:-1,
+      id:0,
       isim:"Kart Tür Seç",
     },
     {
-      id:0,
+      id:1,
       isim:"Kredi/Banka",
     },
     {
-      id:1,
+      id:2,
       isim:"Kredi"
     },
     {
-      id:2,
+      id:3,
       isim:"Banka"
     }
   ])
@@ -161,7 +161,7 @@ const KrediKart = ({navigation}) => {
     },
 
     scrolenasagit:()=>{
-      this.scrollView.scrollToEnd({animated: true})
+      this.flatlistref2.scrollToEnd({animated: true})
     }
   }
 
@@ -169,12 +169,8 @@ const KrediKart = ({navigation}) => {
 
 
   const [yukle, setYukle] = useState(false)
-  const [isKlavye, setIsKlavye] = useState(false)
   useEffect(()=>{
     setYukle(true)
-
-    Keyboard.addListener('keyboardDidShow',()=> setIsKlavye(true))
-    Keyboard.addListener('keyboardDidHide',()=> setIsKlavye(false))
   },[])
 
 
@@ -186,45 +182,45 @@ const KrediKart = ({navigation}) => {
         {
           !yukle && <Yukleniyor/> 
         }
-        <ScrollView style={[styles.contscrollvw,{display:yukle ? 'flex':'none'}]} ref={ref => {this.scrollView = ref}}>
         {
-          yukle &&kredikart.map(i => {
-            return(
-              <KBListOgesi 
-                resimmi={logoyazi} key={i.id} not={not} 
-                sifreidsi={i.id} resim={bankalar.find(v=> v.id == i.bankaId).resim} 
-                bankaad={bankalar.find(v=> v.id == i.bankaId).isim} 
-                kartturu={kartturu.find(v=> v.id == i.ktur).isim} 
-                sifre={i.sifre} bId={bankalar.find(v=> v.id == i.bankaId).id} 
-                kartbilgileriobj={{
-                  kartno: i.kartnumara ,
-                  tarih: i.karttarih,
-                  cvc: i.kartcvc,
-                  kartnot: i.kartnot,
-                  degisfonklar: {
-                    nodegis:fonksiyonlar.KBNoDegistir,
-                    tarihdegis:fonksiyonlar.KBTarihDegistir,
-                    cvcdegis:fonksiyonlar.KBCvcDegistir,
-                    notdegis:fonksiyonlar.KBNotDegistir
-                  }
-                }}
-                silfonk={fonksiyonlar.KBSifreSil} 
-                sifredegisfonk={fonksiyonlar.KBSifreDegistir} 
-                bankadegisfonk={fonksiyonlar.KBBankaDegistir} 
-                turdegisfonk={fonksiyonlar.KBTurDegistir} 
-                bankalar={bankalar} 
-                kartturler={kartturu} 
-                
-                />
-            )
-          })
-
+          yukle && 
+          <FlatList
+          ref={ref => {this.flatlistref2 = ref}}
+          data={kredikart}
+          renderItem={({item})=>
+          <KBListOgesi 
+          resimmi={logoyazi} key={item.id} not={not} 
+          sifreidsi={item.id}
+          kartturu={kartturu.find(v=> v.id == item.ktur).isim} 
+          sifre={item.sifre} bId={item.bankaId} 
+          kartbilgileriobj={{
+            kartno: item.kartnumara ,
+            tarih: item.karttarih,
+            cvc: item.kartcvc,
+            kartnot: item.kartnot,
+            degisfonklar: {
+              nodegis:fonksiyonlar.KBNoDegistir,
+              tarihdegis:fonksiyonlar.KBTarihDegistir,
+              cvcdegis:fonksiyonlar.KBCvcDegistir,
+              notdegis:fonksiyonlar.KBNotDegistir
+            }
+          }}
+          silfonk={fonksiyonlar.KBSifreSil} 
+          sifredegisfonk={fonksiyonlar.KBSifreDegistir} 
+          bankadegisfonk={fonksiyonlar.KBBankaDegistir} 
+          turdegisfonk={fonksiyonlar.KBTurDegistir} 
+          bankalar={bankalar} 
+          kartturler={kartturu} 
+          
+          />}
+          keyExtractor={i=>i.id}
+          style={{width:'100%',height:'100%'}}
+          ListFooterComponent={<KBEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.KBSifreEkle} karttur={kartturu} />}
+          />
         }
-          <KBEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.KBSifreEkle} karttur={kartturu} />
-        </ScrollView>
       </View>
 
-      {!isKlavye && <Footer flexx={1} hangisi={2} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />}
+      <Footer flexx={1} hangisi={2} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
       
     </SafeAreaView>
   )

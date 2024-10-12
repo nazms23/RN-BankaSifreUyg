@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView,Alert } from 'react-native'
+import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView,Alert,FlatList } from 'react-native'
 import React, {useState} from 'react'
 import Animated, {BounceIn, FadeIn, FadeInLeft, FadingTransition, withRepeat}from 'react-native-reanimated';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -126,22 +126,18 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
         </View>
         <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
             <ScrollView horizontal={true} style={styles.bankalarscrollview}>
-
-            {
-                bankalar.map((i)=>{
-                    if(i.id != 0)
-                    {
-                        return(
-                        <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankaustubas(i.id)} >
-                        {resimmi & i.resim != undefined ? 
-                        <Image style={styles.bankaresim} source={i.resim}/> : 
-                        <Text>{i.isim}</Text> 
-                        }
-                        </Pressable>)
-                    }
-                })
-            }
-
+            <FlatList
+            data={bankalar}
+            renderItem={({item})=>item.isim != 'Seç' &&(
+                <Pressable style={[styles.bankalarviewbuton]} key={item.id} onPress={()=>bankaustubas(item.id)} >
+                {resimmi & item.resim != undefined ? 
+                <Image style={styles.bankaresim} source={item.resim}/> : 
+                <Text>{item.isim}</Text> 
+                }
+                </Pressable>)}
+            horizontal={true}
+            
+            />
             </ScrollView>
             <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
                 
@@ -157,18 +153,18 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
         </View>
         <View style={[styles.bankalardisdiv,{display: kartturbas? 'flex':'none'}]}>
             <ScrollView horizontal={true} style={styles.kartturview}>
+            <FlatList
+            data={karttur}
+            renderItem={({item})=>item.isim != 'Kart Tür Seç'&&(
+                <Pressable style={[styles.bankalarviewbuton]} key={item.id} onPress={()=>kartturustubas(item.id)} >
 
-            {
-                karttur.map((i)=>{
-                    return(
-                <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>kartturustubas(i.id)} >
-
-                <Text>{i.isim}</Text> 
+                <Text>{item.isim}</Text> 
                 
                 </Pressable>
-                    )
-                })
-            }
+                    )}
+            horizontal={true}
+            keyExtractor={i=>i.id}
+            />
 
             </ScrollView>
             <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>

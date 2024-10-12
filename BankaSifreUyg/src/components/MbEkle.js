@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView, Alert } from 'react-native'
+import { StyleSheet, Text, View, Image,TextInput, Pressable, Alert,FlatList } from 'react-native'
 import React, {useState} from 'react'
 import Animated, {BounceIn, FadeIn, FadeInLeft, FadingTransition, withRepeat}from 'react-native-reanimated';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -58,7 +58,8 @@ const MbEkle = ({scroolfonk,resimmi, bankalar,eklefonk}) => {
             </Pressable>
 
             <View style={styles.sifredisdiv}>
-                <TextInput    style={styles.sifreinput}
+                <TextInput    
+                    style={styles.sifreinput}
                 
                     inputMode='numeric'
                     placeholder=' Şifrenizi girin'
@@ -104,26 +105,19 @@ const MbEkle = ({scroolfonk,resimmi, bankalar,eklefonk}) => {
             </Pressable>
         </View>
         <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
-            <ScrollView horizontal={true} style={styles.bankalarscrollview}>
-
-            {
-                bankalar.map((i)=>{
-                    if(i.id != 0)
-                    {
-                        return(
-                        <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankaustubas(i.id)} >
-                        {resimmi & i.resim != undefined ? 
-                        <Image style={styles.bankaresim} source={i.resim}/> : 
-                        <Text style={styles.bankatext}>{i.isim}</Text> 
-                        }
-                        </Pressable>)
-                    }
-                })
-            }
-         
-
-            </ScrollView>
-            <Animated.View  
+            <FlatList
+            data={bankalar}
+            renderItem={({item})=>item.isim != 'Seç' && (
+                <Pressable style={[styles.bankalarviewbuton]} key={item.id} onPress={()=>bankaustubas(item.id)} >
+                {resimmi & item.resim != undefined ? 
+                <Image style={styles.bankaresim} source={item.resim}/> : 
+                <Text style={styles.bankatext}>{item.isim}</Text> 
+                }
+                </Pressable>)}
+            horizontal={true}
+            keyExtractor={item=>item.id}
+            />
+            <Animated.View
                 entering={FadeInLeft.delay(500, -1)}
                 style={styles.right}
             >

@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View,Image,Pressable,ScrollView,TextInput,Alert } from 'react-native'
+import { StyleSheet, Text, View,Image,Pressable,TextInput,Alert,FlatList } from 'react-native'
 import React, {useState} from 'react'
 import {Swipeable,GestureHandlerRootView} from 'react-native-gesture-handler'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk , bankadegisfonk , bankalar, sifreidsi}) => {
+const MBListOgesi = ({resimmi,sifre,bId, silfonk, sifredegisfonk , bankadegisfonk , bankalar, sifreidsi}) => {
 
     const silmefonk = silfonk;
     const sifredegis = sifredegisfonk
@@ -12,8 +12,8 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
     const [bankalarbas, setBankalarbas] = useState(false)
     const [editmod, setEditmod] = useState(false)
 
-    const [bankaresim, setBankaresim] = useState(resim)
-    const [bankaadi, setBankaadi] = useState(bankaad)
+    const [bankaresim, setBankaresim] = useState(bankalar.find(v=> v.id == bId).resim)
+    const [bankaadi, setBankaadi] = useState(bankalar.find(v=> v.id == bId).isim)
 
     const [textboxgorunurluk, settextboxgorunurluk] = useState("none")
     const [textgorunurluk, settextgorunurluk] = useState("flex")
@@ -136,24 +136,20 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
 
     </Swipeable>
     <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
-            <ScrollView horizontal={true} style={styles.bankalarscrollview}>
-
-            {
-                bankalar.map((i)=>{
-                  if(i.id != 0)
-                  {
-                    return(
-                    <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankadegisti(i.id)} >
-                    {resimmi & i.resim != undefined ? 
-                    <Image style={styles.bankaresim} source={i.resim}/> : 
-                    <Text style={styles.bankatext}>{i.isim}</Text> 
-                    }
-                    </Pressable>)
-                  }
-                })
-            }
-
-            </ScrollView>
+  
+      <FlatList
+      data={bankalar}
+      horizontal={true}
+      renderItem={({item})=>item.isim != 'Seç' &&(
+        <Pressable style={[styles.bankalarviewbuton]} key={item.id} onPress={()=>bankadegisti(item.id)} >
+        {resimmi & item.resim != undefined ? 
+        <Image style={styles.bankaresim} source={item.resim}/> : 
+        <Text style={styles.bankatext}>{item.isim}</Text> 
+        }
+        </Pressable>)}
+      
+      keyExtractor={item=>item.id}
+      />
         </View>
     </GestureHandlerRootView>
   )
