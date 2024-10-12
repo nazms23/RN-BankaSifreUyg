@@ -226,7 +226,8 @@ const Ayarlar = ({navigation}) => {
 
       </View>
 
-      <Footer gorunum={isKlavye ? 'none':'flex'} flexx={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
+      {!isKlavye && <Footer flexx={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />}
+      
 
     </SafeAreaView>
   )

@@ -1,9 +1,9 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-const Footer = ({gorunum,hangisi,flexx,mobilfonk,kredifonk}) => {
+const Footer = ({hangisi,flexx,mobilfonk,kredifonk}) => {
   return (
-    <View style={[styles.disdiv, {flex:flexx,display:gorunum}]}>
+    <View style={[styles.disdiv, {flex:flexx}]}>
       <Pressable style={({pressed}) => [{
         backgroundColor: pressed ?  "#f9f9f9": '#f1f1f1'
         }

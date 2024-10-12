@@ -224,7 +224,8 @@ const KrediKart = ({navigation}) => {
         </ScrollView>
       </View>
 
-      <Footer gorunum={isKlavye ? 'none':'flex'} flexx={1} hangisi={2} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
+      {!isKlavye && <Footer flexx={1} hangisi={2} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />}
+      
     </SafeAreaView>
   )
 }
