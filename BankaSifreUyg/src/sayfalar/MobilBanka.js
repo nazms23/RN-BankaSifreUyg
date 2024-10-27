@@ -141,6 +141,7 @@ const MobilBanka = ({navigation}) => {
         }
 
         {
+        
         yukle &&
         <FlatList
         ref={ref => {this.flatlistref1 = ref}}
@@ -161,7 +162,6 @@ const MobilBanka = ({navigation}) => {
         keyExtractor={item=>item.id}
         ListFooterComponent={<MbEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle} />}
         />
-        
         } 
         </View>
       

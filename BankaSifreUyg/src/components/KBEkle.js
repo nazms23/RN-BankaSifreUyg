@@ -125,7 +125,6 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
             </Pressable>
         </View>
         <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
-            <ScrollView horizontal={true} style={styles.bankalarscrollview}>
             <FlatList
             data={bankalar}
             renderItem={({item})=>item.isim != 'Seç' &&(
@@ -138,7 +137,6 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
             horizontal={true}
             
             />
-            </ScrollView>
             <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
                 
                 <Image
@@ -152,7 +150,6 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
             </Animated.View>
         </View>
         <View style={[styles.bankalardisdiv,{display: kartturbas? 'flex':'none'}]}>
-            <ScrollView horizontal={true} style={styles.kartturview}>
             <FlatList
             data={karttur}
             renderItem={({item})=>item.isim != 'Kart Tür Seç'&&(
@@ -165,8 +162,6 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
             horizontal={true}
             keyExtractor={i=>i.id}
             />
-
-            </ScrollView>
             <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
                 
                 <Image
