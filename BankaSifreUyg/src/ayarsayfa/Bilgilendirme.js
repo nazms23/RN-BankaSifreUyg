@@ -40,7 +40,7 @@ const Bilgilendirme = () => {
           
         </Pressable>
       </View>
-      <View style={styles.katki}>
+      <View style={[styles.katki,{marginBottom: 50}]}>
           <View  style={styles.katkiheader}t>
             <Text  style={styles.metin1}>Katkıda Bulunanlar
         
@@ -75,6 +75,7 @@ const Bilgilendirme = () => {
           
 
           </View>
+          
           <View  style={styles.katkialt2}>
             <View  style={styles.katkitag}>
               <Text style={styles.metin3}> Yaşar Kaan V.</Text>
@@ -99,12 +100,29 @@ const Bilgilendirme = () => {
 
 
 
+              </View>
+          </View>
+          <View  style={styles.katkialt2}>
+            <View  style={styles.katkitag}>
+              <Text style={styles.metin3}> BabaPro3169</Text>
+              <View style={styles.tagdeger} >
+                <View  style={[styles.tagalt,{}]}>   
+                  <Text style={styles.metin2}> Bağışçı</Text>
+              
+                  <Image 
+                  source={require('../../assets/iconlar/donater.png')}
+                  style={[styles.minico]}
+                  /> 
+                </View>
+      
+              </View>
+
+
+
     
             </View>
-          
 
-          </View>
-  
+        </View>
       </View>
   </ScrollView>
 
