@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 20,
     paddingBottom: 40,
-    
 
   },
   butondiv:{
