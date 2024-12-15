@@ -139,15 +139,6 @@ const MobilBanka = ({navigation}) => {
     <SafeAreaView style={styles.disdiv}>
       
         <Header flexx={1} title={"Mobil Bankacılık"} ayarlarfonk={fonksiyonlar.ayarlargecisfonk}/>
-       
-          <View style={styles.guide}>
-
-          </View>
-          <View style={styles.guidear}>
-
-          </View>
- 
-    
         <View style={styles.contdis}>
         {
           !yukle && <Yukleniyor/> 
@@ -210,16 +201,6 @@ const MobilBanka = ({navigation}) => {
 export default MobilBanka
 
 const styles = StyleSheet.create({
- 
-  guide:{
-    backgroundColor: '#928f9070',
-    width: 100,
-    height: 100,
-    borderRadius: 12,
-    position: 'absolute',
-    zIndex: 2,
-    top: 50,
-  },
   disdiv:{
     flex:1,
     justifyContent:'center',
