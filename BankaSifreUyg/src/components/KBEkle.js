@@ -126,6 +126,10 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
         </View>
         <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            <ScrollView horizontal={true} style={styles.bankalarscrollview}>
+>>>>>>> parent of b59e6cb (yeni icon)
             <FlatList
             data={bankalar}
             renderItem={({item})=>item.isim != 'Seç' &&(
@@ -138,6 +142,7 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
             horizontal={true}
             
             />
+<<<<<<< HEAD
 =======
             <ScrollView horizontal={true} style={styles.bankalarscrollview}>
 
@@ -158,6 +163,9 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
 
             </ScrollView>
 >>>>>>> parent of 298d589 (flatliste geçildi)
+=======
+            </ScrollView>
+>>>>>>> parent of b59e6cb (yeni icon)
             <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
                 
                 <Image
@@ -172,6 +180,10 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
         </View>
         <View style={[styles.bankalardisdiv,{display: kartturbas? 'flex':'none'}]}>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            <ScrollView horizontal={true} style={styles.kartturview}>
+>>>>>>> parent of b59e6cb (yeni icon)
             <FlatList
             data={karttur}
             renderItem={({item})=>item.isim != 'Kart Tür Seç'&&(
@@ -193,6 +205,7 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
             horizontal={true}
             keyExtractor={i=>i.id}
             />
+<<<<<<< HEAD
 =======
                     )
                 })
@@ -200,6 +213,10 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
 
             </ScrollView>
 >>>>>>> parent of 298d589 (flatliste geçildi)
+=======
+
+            </ScrollView>
+>>>>>>> parent of b59e6cb (yeni icon)
             <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
                 
                 <Image
