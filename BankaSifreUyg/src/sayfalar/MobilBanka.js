@@ -1,4 +1,4 @@
-import { StyleSheet, View,FlatList,Text } from 'react-native'
+import { StyleSheet, View, ScrollView, Keyboard } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, {useEffect,useState} from 'react'
 import Header from '../components/Header'
@@ -118,13 +118,17 @@ const MobilBanka = ({navigation}) => {
 
 
     scrolenasagit:()=>{
-      this.flatlistref1.scrollToEnd({animated: true})
+      this.scrollView1.scrollToEnd({animated: true})
     }
   }
 
   const [yukle, setYukle] = useState(false)
+  const [isKlavye, setIsKlavye] = useState(false)
   useEffect(()=>{
     setYukle(true)
+
+    Keyboard.addListener('keyboardDidShow',()=> setIsKlavye(true))
+    Keyboard.addListener('keyboardDidHide',()=> setIsKlavye(false))
 
 
 
@@ -148,6 +152,7 @@ const MobilBanka = ({navigation}) => {
         {
           !yukle && <Yukleniyor/> 
         }
+<<<<<<< HEAD
 
         {
         
@@ -158,27 +163,45 @@ const MobilBanka = ({navigation}) => {
         data={mobilbanka}
         renderItem={({item})=>
           <MBListOgesi  
+=======
+          <ScrollView style={styles.contscrollvw} ref={ref => {this.scrollView1 = ref}}>
+          {
+            yukle && mobilbanka.map(i => {
+              return(
+                <MBListOgesi 
+>>>>>>> parent of 298d589 (flatliste geçildi)
                   resimmi={logoyazi} 
-                  key={item.id} 
-                  sifreidsi={item.id} 
-                  sifre={item.sifre} 
-                  bId={item.bankaId} 
+                  key={i.id} 
+                  sifreidsi={i.id} 
+                  resim={bankalar.find(v=> v.id == i.bankaId).resim} 
+                  bankaad={bankalar.find(v=> v.id == i.bankaId).isim} 
+                  sifre={i.sifre} bId={bankalar.find(v=> v.id == i.bankaId).id} 
                   silfonk={fonksiyonlar.MBSifreSil} sifredegisfonk={fonksiyonlar.MBSifreDegistir} 
                   bankadegisfonk={fonksiyonlar.MBBankaDegistir} 
                   bankalar={bankalar} 
+<<<<<<< HEAD
           />
         }
         keyExtractor={item=>item.id}
         ListFooterComponent={<MbEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle} />}
         />
         } 
+=======
+                />
+              )
+            })
+          }
+            <MbEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle} />
+          </ScrollView>
+          
+>>>>>>> parent of 298d589 (flatliste geçildi)
         </View>
       
       
       
       
     
-        <Footer flexx={1} hangisi={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />
+        {!isKlavye && <Footer flexx={1} hangisi={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />}
     
     </SafeAreaView>
   )
