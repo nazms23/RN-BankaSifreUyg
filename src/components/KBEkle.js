@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView,Alert } from 'react-native'
-import React, {useState} from 'react'
-import Animated, {BounceIn, FadeIn, FadeInLeft, FadingTransition, withRepeat}from 'react-native-reanimated';
+import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView,Alert,FlatList } from 'react-native'
+import React, {useMemo, useState} from 'react'
+import Animated, {BounceIn, FadeIn, FadeInLeft,}from 'react-native-reanimated';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
-
+    console.log("kb ekle")
     const eklemefonk = eklefonk;
     const scroolfonks = scroolfonk;
 
@@ -36,6 +36,10 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
         setKartturbas(false)
     }
 
+    const fdsf = async ()=>{
+        await scroolfonk()
+    }
+
 
   return (
     <View style={[styles.disdiv]}>
@@ -56,7 +60,10 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
 
         </Pressable>
         <View style={[styles.eklemedis, {display: eklebas? 'flex': 'none'}]} >
-            <Pressable style={[styles.bankadisdiv]} onPress={()=>setBankalarbas(!bankalarbas)}>
+            <Pressable style={[styles.bankadisdiv]} onPress={()=>{
+                setBankalarbas(!bankalarbas);
+                scroolfonks();
+                }}>
                 
                 {resimmi & defresim != undefined ? 
                 <Image style={styles.bankaresim} source={defresim}/> : 
@@ -65,7 +72,10 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
                 }
             </Pressable>
 
-            <Pressable style={[styles.bankadisdiv,{marginLeft:2}]} onPress={()=>setKartturbas(!kartturbas)}>
+            <Pressable style={[styles.bankadisdiv,{marginLeft:2}]} onPress={()=>{
+                setKartturbas(!kartturbas);
+                scroolfonks();
+                }}>
 
                 <Text>{defkartturisim}</Text> 
 
@@ -77,7 +87,7 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
                     inputMode='numeric'
                     placeholder='Şifreniz'
                     maxLength={4}
-
+                    onPressIn={fdsf}
                     value={sifre}
                     onChangeText={setSifre}
                 />
@@ -125,47 +135,17 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
             </Pressable>
         </View>
         <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            <ScrollView horizontal={true} style={styles.bankalarscrollview}>
->>>>>>> parent of b59e6cb (yeni icon)
             <FlatList
-            data={bankalar}
-            renderItem={({item})=>item.isim != 'Seç' &&(
-                <Pressable style={[styles.bankalarviewbuton]} key={item.id} onPress={()=>bankaustubas(item.id)} >
-                {resimmi & item.resim != undefined ? 
-                <Image style={styles.bankaresim} source={item.resim}/> : 
-                <Text>{item.isim}</Text> 
-                }
-                </Pressable>)}
-            horizontal={true}
-            
-            />
-<<<<<<< HEAD
-=======
-            <ScrollView horizontal={true} style={styles.bankalarscrollview}>
-
-            {
-                bankalar.map((i)=>{
-                    if(i.id != 0)
-                    {
-                        return(
-                        <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankaustubas(i.id)} >
-                        {resimmi & i.resim != undefined ? 
-                        <Image style={styles.bankaresim} source={i.resim}/> : 
-                        <Text>{i.isim}</Text> 
-                        }
-                        </Pressable>)
+                data={bankalar}
+                renderItem={({item})=>item.isim != 'Seç' &&(
+                    <Pressable style={[styles.bankalarviewbuton]} key={item.id} onPress={()=>bankaustubas(item.id)} >
+                    {resimmi & item.resim != undefined ? 
+                    <Image style={styles.bankaresim} source={item.resim}/> : 
+                    <Text>{item.isim}</Text> 
                     }
-                })
-            }
-
-            </ScrollView>
->>>>>>> parent of 298d589 (flatliste geçildi)
-=======
-            </ScrollView>
->>>>>>> parent of b59e6cb (yeni icon)
+                    </Pressable>)}
+                horizontal={true}
+            />
             <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
                 
                 <Image
@@ -179,55 +159,35 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
             </Animated.View>
         </View>
         <View style={[styles.bankalardisdiv,{display: kartturbas? 'flex':'none'}]}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            <ScrollView horizontal={true} style={styles.kartturview}>
->>>>>>> parent of b59e6cb (yeni icon)
             <FlatList
-            data={karttur}
-            renderItem={({item})=>item.isim != 'Kart Tür Seç'&&(
-                <Pressable style={[styles.bankalarviewbuton]} key={item.id} onPress={()=>kartturustubas(item.id)} >
-=======
-            <ScrollView horizontal={true} style={styles.kartturview}>
->>>>>>> parent of 298d589 (flatliste geçildi)
+                data={karttur}
+                renderItem={({item})=>item.isim != 'Kart Tür Seç'&&(
+                        <ScrollView horizontal={true} style={styles.kartturview}>
+                        {
+                            karttur.map((i)=>{
+                            return(
+                                <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>kartturustubas(i.id)} >
 
-            {
-                karttur.map((i)=>{
-                    return(
-                <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>kartturustubas(i.id)} >
-
-                <Text>{i.isim}</Text> 
-                
-                </Pressable>
-<<<<<<< HEAD
-                    )}
-            horizontal={true}
-            keyExtractor={i=>i.id}
-            />
-<<<<<<< HEAD
-=======
-                    )
-                })
-            }
-
-            </ScrollView>
->>>>>>> parent of 298d589 (flatliste geçildi)
-=======
-
-            </ScrollView>
->>>>>>> parent of b59e6cb (yeni icon)
-            <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
-                
-                <Image
-                    source={require('../../assets/iconlar/right2.png')}
-                    style={styles.rightresim
-
-
-                        
-                    }
+                                    <Text>{i.isim}</Text> 
+                                </Pressable>
+                            )})
+                        }
+                        </ScrollView>
+                        )}
+                horizontal={true}
+                keyExtractor={i=>i.id}
                 />
-            </Animated.View>
+                <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
+                    
+                    <Image
+                        source={require('../../assets/iconlar/right2.png')}
+                        style={styles.rightresim
+
+
+                            
+                        }
+                    />
+                </Animated.View>
         </View>
     </View>
   )

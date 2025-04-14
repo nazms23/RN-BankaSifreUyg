@@ -5,8 +5,8 @@ import React from 'react'
 const Yukleniyor = () => {
   return (
     <SafeAreaView style={styles.disdiv}>
-      <ActivityIndicator size="xlarge" color={'black'}/>
-      <Text style={styles.baslik}>Bilgileriniz yükleniyor...</Text>
+      <ActivityIndicator size="large" color={'black'}/>
+      <Text style={styles.baslik}>Kartlarınız Yükleniyor</Text>
      
     </SafeAreaView>
   )

@@ -8,7 +8,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Gorunum from '../ayarsayfa/Gorunum';
 import Guvenlik from '../ayarsayfa/Guvenlik';
 import Bilgilendirme from '../ayarsayfa/Bilgilendirme';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {useSelector,useDispatch} from 'react-redux';
 import {setLogoyazi,setNot} from '../redux/ayarlarSlice';
 

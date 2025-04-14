@@ -3,12 +3,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import React, {useEffect,useState} from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import MBListOgesi from '../components/MBListOgesi'
+const MBListOgesi = React.lazy(() => import('../components/MBListOgesi'))
 import MbEkle from '../components/MbEkle'
 import Yukleniyor from '../components/Yukleniyor'
 
 import {useSelector,useDispatch} from 'react-redux';
 import {MBEkleSlice,MBSil,MBSifreDegis,MBBankaDegis,OncekiSayfaDegis} from '../redux/bilgilerSlice'
+import { LegendList } from '@legendapp/list'
 
 
 
@@ -82,15 +83,17 @@ const MobilBanka = ({navigation}) => {
     }
   ])
  
-  
+  let scrollView1;
+
   const fonksiyonlar = {
     mobilbankgecisfonk: ()=>{
-      navigation.navigate('MobilBanka')
-      dispacth(OncekiSayfaDegis('MobilBanka'))
+      /* navigation.navigate('MobilBanka')
+      dispacth(OncekiSayfaDegis('MobilBanka')) */
     },
     kredikartgecisfonk: ()=>{
-      navigation.navigate('KrediBanka')
       dispacth(OncekiSayfaDegis('KrediBanka'))
+      setYukle(false);
+      navigation.navigate('KrediBanka')
     },
     ayarlargecisfonk: ()=>{
       navigation.navigate('Ayarlar')
@@ -118,12 +121,13 @@ const MobilBanka = ({navigation}) => {
 
 
     scrolenasagit:()=>{
-      this.scrollView1.scrollToEnd({animated: true})
+      scrollView1.scrollToEnd({animated: true})
     }
   }
 
   const [yukle, setYukle] = useState(false)
   const [isKlavye, setIsKlavye] = useState(false)
+
   useEffect(()=>{
     setYukle(true)
 
@@ -143,49 +147,33 @@ const MobilBanka = ({navigation}) => {
         {
           !yukle && <Yukleniyor/> 
         }
-<<<<<<< HEAD
 
         {
         yukle &&
-        <FlatList
-        ref={ref => {this.flatlistref1 = ref}}
-        style={{width:'100%',height:'100%'}}
-        data={mobilbanka}
-        renderItem={({item})=>
+        <LegendList
+          style={{width:'96.5%',height:'auto'}}
+          data={mobilbanka}
+          renderItem={({item})=>
           <MBListOgesi  
-=======
-          <ScrollView style={styles.contscrollvw} ref={ref => {this.scrollView1 = ref}}>
-          {
-            yukle && mobilbanka.map(i => {
-              return(
-                <MBListOgesi 
->>>>>>> parent of 298d589 (flatliste geçildi)
-                  resimmi={logoyazi} 
-                  key={i.id} 
-                  sifreidsi={i.id} 
-                  resim={bankalar.find(v=> v.id == i.bankaId).resim} 
-                  bankaad={bankalar.find(v=> v.id == i.bankaId).isim} 
-                  sifre={i.sifre} bId={bankalar.find(v=> v.id == i.bankaId).id} 
-                  silfonk={fonksiyonlar.MBSifreSil} sifredegisfonk={fonksiyonlar.MBSifreDegistir} 
-                  bankadegisfonk={fonksiyonlar.MBBankaDegistir} 
-                  bankalar={bankalar} 
-<<<<<<< HEAD
-          />
-        }
-        keyExtractor={item=>item.id}
-        ListFooterComponent={<MbEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle} />}
+                    
+                    resimmi={logoyazi} 
+                    key={item.id} 
+                    sifreidsi={item.id} 
+                    resim={bankalar.find(v=> v.id == item.bankaId)?.resim} 
+                    bankaad={bankalar.find(v=> v.id == item.bankaId)?.isim} 
+                    sifre={item.sifre} bId={bankalar.find(v=> v.id == item.bankaId)?.id} 
+                    silfonk={fonksiyonlar.MBSifreSil} sifredegisfonk={fonksiyonlar.MBSifreDegistir} 
+                    bankadegisfonk={fonksiyonlar.MBBankaDegistir} 
+                    bankalar={bankalar} 
+            />}
+          estimatedItemSize={10}
+          ListFooterComponent={<MbEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle} />}
+          keyExtractor={item=>item.id}
+          ref={ref => {scrollView1 = ref}}
         />
-        
         } 
-=======
-                />
-              )
-            })
-          }
-            <MbEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle} />
-          </ScrollView>
-          
->>>>>>> parent of 298d589 (flatliste geçildi)
+        
+
         </View>
       
       
@@ -209,8 +197,9 @@ const styles = StyleSheet.create({
   contdis:{
     width:'100%',
     height:'0%',
-    justifyContent:'center',
+    justifyContent:'flex-start',
     alignItems:'center',
+    flexDirection:'column',
     flex:10,
     paddingTop: 20,
 

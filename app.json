@@ -1,13 +1,14 @@
 {
   "expo": {
-    "name": "BankaSifreUyg",
-    "slug": "BankaSifreUyg",
+    "name": "BankaSifreUygV3",
+    "slug": "BankaSifreUygV3",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,16 +19,10 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.xlouy.BankaSifreUyg"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "38a41d26-ae6b-41b5-9e11-a1f41c4a6a54"
-      }
     }
   }
 }

@@ -1,5 +1,6 @@
-import { StyleSheet, View, ScrollView,Keyboard } from 'react-native'
+import { StyleSheet, View,Keyboard } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+
 import React, {useState,useEffect} from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -10,7 +11,7 @@ import Yukleniyor from '../components/Yukleniyor'
 import {useSelector,useDispatch} from 'react-redux';
 import {KBEkleSlice,KBSil,KBSifreDegis,KBBankaDegis,KBTurDegis, KBNoDegis, KBTarihDegis, KBCvcDegis, KBNotDegis,OncekiSayfaDegis} from '../redux/bilgilerSlice'
 
-
+import { LegendList } from '@legendapp/list'
 
 const KrediKart = ({navigation}) => {
   const dispacth = useDispatch()
@@ -98,17 +99,15 @@ const KrediKart = ({navigation}) => {
       isim:"Banka"
     }
   ])
-
-
-  
+  let scrollView1;
   const fonksiyonlar = {
     mobilbankgecisfonk: ()=>{
       dispacth(OncekiSayfaDegis('MobilBanka'))
       navigation.navigate('MobilBanka')
     },
     kredikartgecisfonk: ()=>{
-      dispacth(OncekiSayfaDegis('KrediBanka'))
-      navigation.navigate('KrediBanka')
+      /* dispacth(OncekiSayfaDegis('KrediBanka'))
+      navigation.navigate('KrediBanka') */
     },
     ayarlargecisfonk: ()=>{
       navigation.navigate('Ayarlar')
@@ -161,11 +160,9 @@ const KrediKart = ({navigation}) => {
     },
 
     scrolenasagit:()=>{
-      this.scrollView.scrollToEnd({animated: true})
+      scrollView1.scrollToEnd({animated: true})
     }
   }
-
-
 
 
   const [yukle, setYukle] = useState(false)
@@ -176,8 +173,7 @@ const KrediKart = ({navigation}) => {
     Keyboard.addListener('keyboardDidShow',()=> setIsKlavye(true))
     Keyboard.addListener('keyboardDidHide',()=> setIsKlavye(false))
   },[])
-
-
+  
 
   return (
     <SafeAreaView style={styles.disdiv}>
@@ -186,21 +182,24 @@ const KrediKart = ({navigation}) => {
         {
           !yukle && <Yukleniyor/> 
         }
-        <ScrollView style={[styles.contscrollvw,{display:yukle ? 'flex':'none'}]} ref={ref => {this.scrollView = ref}}>
+
         {
-          yukle &&kredikart.map(i => {
-            return(
+          yukle &&
+          <LegendList
+            style={{width:'96.5%',height:'auto'}}
+            data={kredikart}
+            renderItem={({item})=>
               <KBListOgesi 
-                resimmi={logoyazi} key={i.id} not={not} 
-                sifreidsi={i.id} resim={bankalar.find(v=> v.id == i.bankaId).resim} 
-                bankaad={bankalar.find(v=> v.id == i.bankaId).isim} 
-                kartturu={kartturu.find(v=> v.id == i.ktur).isim} 
-                sifre={i.sifre} bId={bankalar.find(v=> v.id == i.bankaId).id} 
+                resimmi={logoyazi} key={item.id} not={not} 
+                sifreidsi={item.id} resim={bankalar.find(v=> v.id == item.bankaId).resim} 
+                bankaad={bankalar.find(v=> v.id == item.bankaId).isim} 
+                kartturu={kartturu.find(v=> v.id == item.ktur).isim} 
+                sifre={item.sifre} bId={bankalar.find(v=> v.id == item.bankaId).id} 
                 kartbilgileriobj={{
-                  kartno: i.kartnumara ,
-                  tarih: i.karttarih,
-                  cvc: i.kartcvc,
-                  kartnot: i.kartnot,
+                  kartno: item.kartnumara ,
+                  tarih: item.karttarih,
+                  cvc: item.kartcvc,
+                  kartnot: item.kartnot,
                   degisfonklar: {
                     nodegis:fonksiyonlar.KBNoDegistir,
                     tarihdegis:fonksiyonlar.KBTarihDegistir,
@@ -215,13 +214,15 @@ const KrediKart = ({navigation}) => {
                 bankalar={bankalar} 
                 kartturler={kartturu} 
                 
-                />
-            )
-          })
+                />}
+            estimatedItemSize={10}
+            ListFooterComponent={<KBEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.KBSifreEkle} karttur={kartturu} />}
+            keyExtractor={item=>item.id}
+            ref={ref => {scrollView1 = ref}}
 
-        }
-          <KBEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.KBSifreEkle} karttur={kartturu} />
-        </ScrollView>
+          />
+        } 
+        
       </View>
 
       {!isKlavye && <Footer flexx={1} hangisi={2} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />}

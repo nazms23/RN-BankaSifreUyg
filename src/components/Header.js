@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E7E9EA',
     paddingTop: 10,
     paddingBottom:10,
+    shadowColor: "#000000",
   },
   yazidiv:{
     width:"100%",

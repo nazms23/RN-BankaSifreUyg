@@ -145,6 +145,7 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
     }
 
   return (
+    
     <GestureHandlerRootView>
         <Swipeable renderLeftActions={renderLeftActions} renderRightActions={renderRightActions}>
 
@@ -224,7 +225,7 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
             </View>
         </View>
         
-        <View style={[styles.kartbilgileridisdiv,{display: not ? 'flex' : kartbilgibas?'flex':'none'}]}>
+        <View style={[styles.kartbilgileridisdiv,{display: (not & kartnot.trim() != "") ? 'flex' : kartbilgibas?'flex':'none'}]}>
 
             <View style={[styles.kartbilgileritemdiv,{borderBottomWidth: 0}]}>
                 <Text style={[styles.kartbilgileritext,{flex:0.38}]} >Not:</Text>
