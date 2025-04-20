@@ -1,4 +1,4 @@
-import { StyleSheet, View,Keyboard } from 'react-native'
+import { StyleSheet, View,Keyboard,FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import React, {useState,useEffect} from 'react'
@@ -185,7 +185,7 @@ const KrediKart = ({navigation}) => {
 
         {
           yukle &&
-          <LegendList
+          <FlatList
             style={{width:'96.5%',height:'auto'}}
             data={kredikart}
             renderItem={({item})=>

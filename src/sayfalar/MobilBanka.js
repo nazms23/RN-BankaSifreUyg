@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView, Keyboard } from 'react-native'
+import { StyleSheet, View, ScrollView, Keyboard, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, {useEffect,useState} from 'react'
 import Header from '../components/Header'
@@ -150,12 +150,11 @@ const MobilBanka = ({navigation}) => {
 
         {
         yukle &&
-        <LegendList
+        <FlatList
           style={{width:'96.5%',height:'auto'}}
           data={mobilbanka}
           renderItem={({item})=>
           <MBListOgesi  
-                    
                     resimmi={logoyazi} 
                     key={item.id} 
                     sifreidsi={item.id} 
