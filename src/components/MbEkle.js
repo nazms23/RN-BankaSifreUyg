@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView, Alert,FlatList } from 'react-native'
+import { StyleSheet, Text, View, Image,TextInput, Pressable, Alert,FlatList } from 'react-native'
 import React, {useState} from 'react'
-import Animated, {BounceIn, FadeIn, FadeInLeft, FadingTransition, withRepeat}from 'react-native-reanimated';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+const BankaList = React.lazy(()=> import("../components/BankaList"));
+
 const MbEkle = ({scroolfonk,resimmi, bankalar,eklefonk}) => {
 
     const eklemefonk = eklefonk;
@@ -27,10 +28,7 @@ const MbEkle = ({scroolfonk,resimmi, bankalar,eklefonk}) => {
 
     const bankalarbasfonk = (deger) =>{
         setBankalarbas(deger);
-
-
         scroolfonks();
-
     }
 
 
@@ -115,34 +113,7 @@ const MbEkle = ({scroolfonk,resimmi, bankalar,eklefonk}) => {
         }
         {
             eklebas &&
-            <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
-                <FlatList
-                data={bankalar}
-                renderItem={({item})=>item.isim != 'Seç' && (
-                    <Pressable style={[styles.bankalarviewbuton]} key={item.id} onPress={()=>bankaustubas(item.id)} >
-                    {resimmi & item.resim != undefined ? 
-                    <Image style={styles.bankaresim} source={item.resim}/> : 
-                    <Text style={styles.bankatext}>{item.isim}</Text> 
-                    }
-                    </Pressable>)}
-                horizontal={true}
-                keyExtractor={item=>item.id}
-                />
-                <Animated.View
-                    entering={FadeInLeft.delay(500, -1)}
-                    style={styles.right}
-                >
-                    
-                    <Image
-                        source={require('../../assets/iconlar/right2.png')}
-                        style={styles.rightresim
-    
-    
-                            
-                        }
-                    />
-                </Animated.View>
-            </View>
+            <BankaList bankalarbas={bankalarbas} bankalar={bankalar} bankaustubas={bankaustubas} resimmi={resimmi} />
         }
         
     </View>
@@ -206,21 +177,10 @@ const styles = StyleSheet.create({
      
         
     },
-    bankalardisdiv:{
-        width:'96.5%',
-        backgroundColor:'#f9f9f9',
-        height: 'auto',
-        marginLeft: 10,
-        marginTop: 5,
-        padding: 10,
-        borderRadius: 12,
-        
-    },
     bankaresim:{
         width:'95%',
         height:'95%',
         resizeMode:'center',
-    
     },
     sifredisdiv:{
         flex:5,
@@ -233,16 +193,6 @@ const styles = StyleSheet.create({
     bankalarscrollview:{
         width:'100%'
         
-    },
-    bankalarviewbuton:{
-        width:140,
-        height:80,
-        justifyContent:'center',
-        alignItems:'center',
-        borderWidth:0.5,
-        marginHorizontal:4,
-        backgroundColor:'white',
-        borderRadius:6
     },
     eklebuton:{
         flex:1.5,
@@ -271,20 +221,5 @@ const styles = StyleSheet.create({
     },
     bankatext:{
         fontSize: 30
-    },
-    right:{
-        width: 30,
-        height: 50,
-        display: 'flex',
-        justifyContent: 'center',
-        position: 'absolute',
-        top: '25%',
-        right: '2%',
-      
-    },
-    rightresim:{
-        width: '100%',
-        height: '100%',
-    },
-
+    }
 })

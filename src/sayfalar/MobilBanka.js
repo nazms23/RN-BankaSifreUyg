@@ -1,10 +1,10 @@
-import { StyleSheet, View, ScrollView, Keyboard } from 'react-native'
+import { StyleSheet, View, Keyboard } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import React, {useEffect,useState} from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import React, {useCallback, useEffect,useState} from 'react'
+const Header = React.lazy(()=> import('../components/Header'));
+const Footer = React.lazy(()=> import('../components/Footer'));
 const MBListOgesi = React.lazy(() => import('../components/MBListOgesi'))
-import MbEkle from '../components/MbEkle'
+import MbEkle from '../components/MbEkle';
 import Yukleniyor from '../components/Yukleniyor'
 
 import {useSelector,useDispatch} from 'react-redux';
@@ -20,68 +20,7 @@ const MobilBanka = ({navigation}) => {
 
   const {mobilbanka} = useSelector(s=>s.bilgi)
 
-  const [bankalar, setBankalar] = useState([
-    {
-      id:0,
-      isim:"Seç",
-      resim:undefined
-    },
-    {
-      id:1,
-      isim:"Akbank",
-      resim:require('../../assets/bankalar/Akbank.png')
-    },
-    {
-      id:2,
-      isim:"Ziraat",
-      resim:require('../../assets/bankalar/Ziraat.png')
-    },
-    {
-      id:3,
-      isim:"Halkbank",
-      resim:require('../../assets/bankalar/Halkbank.png')
-    },
-    {
-      id:4,
-      isim:"VakıfBank",
-      resim:require('../../assets/bankalar/Vakif.png')
-    },
-    {
-      id:5,
-      isim:"İş Bankası",
-      resim:require('../../assets/bankalar/isbankasi.png')
-    },
-    {
-      id:6,
-      isim:"Yapı Kredi",
-      resim:require('../../assets/bankalar/yapikredi.png')
-    },
-    {
-      id:7,
-      isim:"DenizBank",
-      resim:require('../../assets/bankalar/denizbank.png')
-    },
-    {
-      id:8,
-      isim:"Garanti BBVA",
-      resim:require('../../assets/bankalar/garanti.png')
-    },
-    {
-      id:9,
-      isim:"ING",
-      resim:require('../../assets/bankalar/ingbank.png')
-    },
-    {
-      id:10,
-      isim:"QNB FinansBank",
-      resim:require('../../assets/bankalar/finansbank.png')
-    },
-    {
-      id:11,
-      isim:"Diğer",
-      resim:undefined
-    }
-  ])
+  const {bankalar} = useSelector(s=> s.genel)
  
   let scrollView1;
 
@@ -90,21 +29,19 @@ const MobilBanka = ({navigation}) => {
       /* navigation.navigate('MobilBanka')
       dispacth(OncekiSayfaDegis('MobilBanka')) */
     },
-    kredikartgecisfonk: ()=>{
+    kredikartgecisfonk: useCallback(()=>{
       dispacth(OncekiSayfaDegis('KrediBanka'))
       setYukle(false);
       navigation.navigate('KrediBanka')
-    },
-    ayarlargecisfonk: ()=>{
+    }),
+    ayarlargecisfonk: useCallback(()=>{
       navigation.navigate('Ayarlar')
-    },
+    }),
  
-    
-
-    MBSifreEkle: async (bId,sifre)=>{
+    MBSifreEkle: useCallback(async (bId,sifre)=>{
       let id = mobilbanka.length > 0 ? mobilbanka[mobilbanka.length-1].id+1 : 1
       dispacth(MBEkleSlice({id:id,bankaId:bId,sifre:sifre}))
-    },
+    }),
     MBSifreSil: (bId)=>{
       dispacth(MBSil(bId))
     },
@@ -130,13 +67,8 @@ const MobilBanka = ({navigation}) => {
 
   useEffect(()=>{
     setYukle(true)
-
     Keyboard.addListener('keyboardDidShow',()=> setIsKlavye(true))
     Keyboard.addListener('keyboardDidHide',()=> setIsKlavye(false))
-
-
-
-
   },[])
   
   return (
@@ -154,32 +86,25 @@ const MobilBanka = ({navigation}) => {
           style={{width:'96.5%',height:'auto'}}
           data={mobilbanka}
           renderItem={({item})=>
-          <MBListOgesi  
-                    
-                    resimmi={logoyazi} 
-                    key={item.id} 
-                    sifreidsi={item.id} 
-                    resim={bankalar.find(v=> v.id == item.bankaId)?.resim} 
-                    bankaad={bankalar.find(v=> v.id == item.bankaId)?.isim} 
-                    sifre={item.sifre} bId={bankalar.find(v=> v.id == item.bankaId)?.id} 
-                    silfonk={fonksiyonlar.MBSifreSil} sifredegisfonk={fonksiyonlar.MBSifreDegistir} 
-                    bankadegisfonk={fonksiyonlar.MBBankaDegistir} 
-                    bankalar={bankalar} 
-            />}
+            <MBListOgesi
+              resimmi={logoyazi} 
+              key={item.id} 
+              sifreidsi={item.id} 
+              resim={bankalar.find(v=> v.id == item.bankaId)?.resim} 
+              bankaad={bankalar.find(v=> v.id == item.bankaId)?.isim} 
+              sifre={item.sifre} bId={bankalar.find(v=> v.id == item.bankaId)?.id} 
+              silfonk={fonksiyonlar.MBSifreSil} sifredegisfonk={fonksiyonlar.MBSifreDegistir} 
+              bankadegisfonk={fonksiyonlar.MBBankaDegistir} 
+              bankalar={bankalar} 
+            />
+          }
           estimatedItemSize={10}
           ListFooterComponent={<MbEkle scroolfonk={fonksiyonlar.scrolenasagit} resimmi={logoyazi} bankalar={bankalar} eklefonk={fonksiyonlar.MBSifreEkle} />}
           keyExtractor={item=>item.id}
           ref={ref => {scrollView1 = ref}}
         />
-        } 
-        
-
+        }
         </View>
-      
-      
-      
-      
-    
         {!isKlavye && <Footer flexx={1} hangisi={1} mobilfonk={fonksiyonlar.mobilbankgecisfonk} kredifonk={fonksiyonlar.kredikartgecisfonk} />}
     
     </SafeAreaView>

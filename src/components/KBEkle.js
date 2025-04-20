@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, Image,TextInput, Pressable, ScrollView,Alert,FlatList } from 'react-native'
 import React, {useMemo, useState} from 'react'
-import Animated, {BounceIn, FadeIn, FadeInLeft,}from 'react-native-reanimated';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+const BankaList = React.lazy(()=> import("../components/BankaList"));
+const KartList = React.lazy(()=> import("../components/KartList"));
 const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
     console.log("kb ekle")
     const eklemefonk = eklefonk;
@@ -123,72 +124,15 @@ const KBEkle = ({scroolfonk,resimmi, bankalar,eklefonk,karttur}) => {
                 }}>
 
                 <View style={styles.resimdiv2}>
-
                     <Image
                         source={require('../../assets/iconlar/addgreen.png')}
                         style={styles.artibutresim}
                     />
-
                 </View>
-
-
             </Pressable>
         </View>
-        <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
-            <FlatList
-                data={bankalar}
-                renderItem={({item})=>item.isim != 'Seç' &&(
-                    <Pressable style={[styles.bankalarviewbuton]} key={item.id} onPress={()=>bankaustubas(item.id)} >
-                    {resimmi & item.resim != undefined ? 
-                    <Image style={styles.bankaresim} source={item.resim}/> : 
-                    <Text>{item.isim}</Text> 
-                    }
-                    </Pressable>)}
-                horizontal={true}
-            />
-            <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
-                
-                <Image
-                    source={require('../../assets/iconlar/right2.png')}
-                    style={styles.rightresim
-
-
-                        
-                    }
-                />
-            </Animated.View>
-        </View>
-        <View style={[styles.bankalardisdiv,{display: kartturbas? 'flex':'none'}]}>
-            <FlatList
-                data={karttur}
-                renderItem={({item})=>item.isim != 'Kart Tür Seç'&&(
-                        <ScrollView horizontal={true} style={styles.kartturview}>
-                        {
-                            karttur.map((i)=>{
-                            return(
-                                <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>kartturustubas(i.id)} >
-
-                                    <Text>{i.isim}</Text> 
-                                </Pressable>
-                            )})
-                        }
-                        </ScrollView>
-                        )}
-                horizontal={true}
-                keyExtractor={i=>i.id}
-                />
-                <Animated.View  entering={FadeInLeft.delay(300)} style={styles.right}>
-                    
-                    <Image
-                        source={require('../../assets/iconlar/right2.png')}
-                        style={styles.rightresim
-
-
-                            
-                        }
-                    />
-                </Animated.View>
-        </View>
+        <BankaList bankalarbas={bankalarbas} bankalar={bankalar} bankaustubas={bankaustubas} resimmi={resimmi} />
+        <KartList kartturbas={kartturbas} karttur={karttur} kartturustubas={kartturustubas} />
     </View>
   )
 }
@@ -225,101 +169,61 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         borderRadius: 12,
-},
-bankadisdiv:{
-    flex:2,
-    justifyContent:'center',
-    alignItems:'center',
-    borderRightWidth: 0.5,
-    width:'100%',
-    height:'100%',
-    backgroundColor:'#ffff',
-    borderTopLeftRadius: 12,
-    borderBottomLeftRadius: 12,
-    borderColor: 'black',
-},
-bankalardisdiv:{
-    width:'96.5%',
-        backgroundColor:'#f9f9f9',
-        height: 'auto',
-        marginLeft: 10,
-        marginTop: 5,
-        padding: 10,
-        borderRadius: 12,
-},
-bankaresim:{
-    width:'95%',
-    height:'95%',
-    resizeMode:'center'
-},
-sifredisdiv:{
-    flex:5,
-    justifyContent:'center',
-    alignItems:'center',
-    width:'100%',
-    backgroundColor:'#ffff',
-    height:'100%',
-},
-bankalarscrollview:{
-    width:'100%'
-},
-kartturview:{
-    width:'100%',
-    flexDirection:'row'
-},
-bankalarviewbuton:{
-    width:140,
-    height:80,
-    justifyContent:'center',
-    alignItems:'center',
-    borderWidth:0.5,
-    marginHorizontal:4,
-    backgroundColor:'white',
-    borderRadius:6
-},
-eklebuton:{
-    flex:2.2,
-        backgroundColor:'#f9f9f9',
-        width: '100%',
-        height: '100%',
+    },
+    bankadisdiv:{
+        flex:2,
         justifyContent:'center',
         alignItems:'center',
-        borderRadius:12,
-},
-sifreinput:{
-    paddingLeft: 15,
-    width:'80%',
-    height:'80%',
-    borderWidth:0.5,
-    fontSize: 20,
-    backgroundColor:'#f9f9f9',
-    borderRadius:6
-},
-right:{
-    width: 30,
-    height: 50,
-    display: 'flex',
-    justifyContent: 'center',
-    position: 'absolute',
-    top: '25%',
-    right: '2%',
-  
-},
-resimdiv:{
-    width: '100%',
-    padding: 15,
-},
-resimdiv2:{
-    width: wp('17%'),
-    height: hp('7%'),
-    padding: 5
-},
-artibutresim:{
-    
-    width: '100%',
-    height: '100%',
-
-},
-
-
+        borderRightWidth: 0.5,
+        width:'100%',
+        height:'100%',
+        backgroundColor:'#ffff',
+        borderTopLeftRadius: 12,
+        borderBottomLeftRadius: 12,
+        borderColor: 'black',
+    },
+    bankaresim:{
+        width:'95%',
+        height:'95%',
+        resizeMode:'center'
+    },
+    sifredisdiv:{
+        flex:5,
+        justifyContent:'center',
+        alignItems:'center',
+        width:'100%',
+        backgroundColor:'#ffff',
+        height:'100%',
+    },
+    eklebuton:{
+        flex:2.2,
+            backgroundColor:'#f9f9f9',
+            width: '100%',
+            height: '100%',
+            justifyContent:'center',
+            alignItems:'center',
+            borderRadius:12,
+    },
+    sifreinput:{
+        paddingLeft: 15,
+        width:'80%',
+        height:'80%',
+        borderWidth:0.5,
+        fontSize: 20,
+        backgroundColor:'#f9f9f9',
+        borderRadius:6
+    },
+    resimdiv:{
+        width: '100%',
+        padding: 15,
+    },
+    resimdiv2:{
+        width: wp('17%'),
+        height: hp('7%'),
+        padding: 5
+    },
+    artibutresim:{
+        width: '100%',
+        height: '100%',
+    },
 })

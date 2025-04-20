@@ -2,6 +2,7 @@ import { StyleSheet, Text, View,Image,Pressable,ScrollView,TextInput,Alert } fro
 import React, {useState} from 'react'
 import {Swipeable,GestureHandlerRootView} from 'react-native-gesture-handler'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+const BankaList = React.lazy(()=> import("../components/BankaList"));
 
 const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk , bankadegisfonk , bankalar, sifreidsi}) => {
 
@@ -74,87 +75,53 @@ const MBListOgesi = ({resimmi, resim, bankaad,sifre,bId, silfonk, sifredegisfonk
         );
       };
   
-      renderRightActions = (progress, dragX) => {
-        const trans = dragX.interpolate({
-          inputRange: [0, 50, 100, 101],
-          outputRange: [-20, 0, 0, 1],
-        });
-        return (
-          <Pressable style={({pressed}) => [{
-            backgroundColor: pressed ?  "#f1f1f1": '#f9f9f9'
-            },styles.silbuton,{marginRight: 10,}]} onPress={()=>editmodac()} >
-            <View style={styles.silbutonresimdiv}>
-            <Image
-              source={require('../../assets/iconlar/editgreen.png')}
-              style={styles.silbutonresim}
-              />
-            </View>
-          </Pressable>
-         
-        );
-      };
+    renderRightActions = (progress, dragX) => {
+      const trans = dragX.interpolate({
+        inputRange: [0, 50, 100, 101],
+        outputRange: [-20, 0, 0, 1],
+      });
+      return (
+        <Pressable style={({pressed}) => [{
+          backgroundColor: pressed ?  "#f1f1f1": '#f9f9f9'
+          },styles.silbuton,{marginRight: 10,}]} onPress={()=>editmodac()} >
+          <View style={styles.silbutonresimdiv}>
+          <Image
+            source={require('../../assets/iconlar/editgreen.png')}
+            style={styles.silbutonresim}
+            />
+          </View>
+        </Pressable>
+        
+      );
+    };
 
 
   return (
     <GestureHandlerRootView>
-        <Swipeable renderLeftActions={renderLeftActions} renderRightActions={renderRightActions}>
-
-            <View style={styles.disdiv}>
-                <Pressable style={styles.bankadisdiv} onPress={()=> editmod && setBankalarbas(!bankalarbas)} >
-                    {resimmi & bankaresim != undefined ? 
-                    <Image style={styles.bankaresim} source={bankaresim}/> : 
-
-                    <Text style={styles.bankatext}>{bankaadi}</Text> 
-                    
-                    
-                    }
-
-                    
-
-                </Pressable>
-                <View style={[styles.sifredisdiv,{display:textgorunurluk}]}>
-                    <Text style={styles.sifretext}>{textboxyazi}</Text>
-                    
-                </View>
-                <View style={[styles.sifredisdiv,{display:textboxgorunurluk}]}>
-                    <TextInput 
-                    inputMode='numeric'
-                    placeholder='Şifreniz'
-                    maxLength={6}
-                    value={textboxyazi}
-                    onChangeText={textdegisti}
-                    style={styles.sifreinput}  
-                    
-                    /> 
-                    
-                 
-                </View>
-                
+      <Swipeable renderLeftActions={renderLeftActions} renderRightActions={renderRightActions}>
+        <View style={styles.disdiv}>
+            <Pressable style={styles.bankadisdiv} onPress={()=> editmod && setBankalarbas(!bankalarbas)} >
+                {resimmi & bankaresim != undefined ? 
+                  <Image style={styles.bankaresim} source={bankaresim}/> : 
+                  <Text style={styles.bankatext}>{bankaadi}</Text>
+                }
+            </Pressable>
+            <View style={[styles.sifredisdiv,{display:textgorunurluk}]}>
+                <Text style={styles.sifretext}>{textboxyazi}</Text>
             </View>
-
-           
-
-    </Swipeable>
-    <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
-            <ScrollView horizontal={true} style={styles.bankalarscrollview}>
-
-            {
-                bankalar.map((i)=>{
-                  if(i.id != 0)
-                  {
-                    return(
-                    <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankadegisti(i.id)} >
-                    {resimmi & i.resim != undefined ? 
-                    <Image style={styles.bankaresim} source={i.resim}/> : 
-                    <Text style={styles.bankatext}>{i.isim}</Text> 
-                    }
-                    </Pressable>)
-                  }
-                })
-            }
-
-            </ScrollView>
+            <View style={[styles.sifredisdiv,{display:textboxgorunurluk}]}>
+                <TextInput 
+                  inputMode='numeric'
+                  placeholder='Şifreniz'
+                  maxLength={6}
+                  value={textboxyazi}
+                  onChangeText={textdegisti}
+                  style={styles.sifreinput}  
+                /> 
+            </View>
         </View>
+      </Swipeable>
+      <BankaList bankalarbas={bankalarbas} bankalar={bankalar} bankaustubas={bankadegisti} resimmi={resimmi} />
     </GestureHandlerRootView>
   )
 }

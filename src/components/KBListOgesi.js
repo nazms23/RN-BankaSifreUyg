@@ -3,6 +3,8 @@ import React, {useState} from 'react'
 import {Swipeable,GestureHandlerRootView} from 'react-native-gesture-handler'
 import {setStringAsync} from 'expo-clipboard';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+const BankaList = React.lazy(()=> import("../components/BankaList"));
+const KartList = React.lazy(()=> import("../components/KartList"));
 
 const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilgileriobj , silfonk, sifredegisfonk , bankadegisfonk , turdegisfonk , bankalar, kartturler , sifreidsi}) => {
 
@@ -121,24 +123,23 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
         );
       };
   
-      renderRightActions = (progress, dragX) => {
-        const trans = dragX.interpolate({
-          inputRange: [0, 50, 100, 101],
-          outputRange: [-20, 0, 0, 1],
-        });
-        return (
-          <Pressable style={[styles.silbuton,{backgroundColor:"#f9f9f9", marginRight: 10}]} onPress={()=>editmodac()} >
-            <View style={styles.silbutonresimdiv}>
-            <Image
-              source={require('../../assets/iconlar/editgreen.png')}
-              style={styles.silbutonresim}
-              />
-            </View>
-          </Pressable>
-         
-        );
-      };
-
+    renderRightActions = (progress, dragX) => {
+    const trans = dragX.interpolate({
+        inputRange: [0, 50, 100, 101],
+        outputRange: [-20, 0, 0, 1],
+    });
+    return (
+        <Pressable style={[styles.silbuton,{backgroundColor:"#f9f9f9", marginRight: 10}]} onPress={()=>editmodac()} >
+        <View style={styles.silbutonresimdiv}>
+        <Image
+            source={require('../../assets/iconlar/editgreen.png')}
+            style={styles.silbutonresim}
+            />
+        </View>
+        </Pressable>
+        
+    );
+    };
 
     const kopyala = async (t)=>{
         await setStringAsync(t)
@@ -153,16 +154,11 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
                 <Pressable style={styles.bankadisdiv} onPress={()=> editmod && setBankalarbas(!bankalarbas)} >
                     {resimmi & bankaresim != undefined ? 
                     <Image style={styles.bankaresim} source={bankaresim}/> : 
-
                     <Text>{bankaadi}</Text> 
-                    
-                    
                     }
                 </Pressable>
                 <Pressable style={[styles.bankadisdiv,{backgroundColor: '#f1f1f1', borderBottomLeftRadius: 0, borderTopLeftRadius: 0, borderLeftWidth: 0}]} onPress={()=> editmod && setKartturbas(!kartturbas)} >
-
                     <Text>{kartturisim}</Text> 
-
                 </Pressable>
                 <View style={[styles.sifredisdiv,{display:textgorunurluk}]}>
                     <Text>{textboxyazi}</Text>
@@ -174,7 +170,6 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
                     maxLength={4}
                     value={textboxyazi}
                     onChangeText={textdegisti}
-
                     style={styles.sifreinput}  
                     />
                 </View>
@@ -184,46 +179,9 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
 
                 </Pressable>
             </View>
-
-           
-
-    </Swipeable>
-        <View style={[styles.bankalardisdiv,{display: bankalarbas? 'flex':'none'}]}>
-            <ScrollView horizontal={true} style={styles.bankalarscrollview}>
-
-            {
-                bankalar.map((i)=>{
-                    if(i.id != 0)
-                    {
-                        return(
-                        <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>bankadegisti(i.id)} >
-                        {resimmi & i.resim != undefined ? 
-                        <Image style={styles.bankaresim} source={i.resim}/> : 
-                        <Text>{i.isim}</Text> 
-                        }
-                        </Pressable>)
-                    }
-                })
-            }
-
-            </ScrollView>
-        </View>
-
-        <View style={[styles.bankalardisdiv,{display: kartturbas? 'flex':'none'}]}>
-            <View style={styles.kartturview}>
-            {
-                kartturler.map((i)=>{
-                    return(
-                <Pressable style={[styles.bankalarviewbuton]} key={i.id} onPress={()=>turdegisti(i.id)} >
-
-                <Text>{i.isim}</Text> 
-                
-                </Pressable>
-                    )
-                })
-            }
-            </View>
-        </View>
+        </Swipeable>
+        <BankaList bankalarbas={bankalarbas} bankalar={bankalar} bankaustubas={bankadegisti} resimmi={resimmi} />
+        <KartList kartturbas={kartturbas} karttur={kartturler} kartturustubas={turdegisti} />
         
         <View style={[styles.kartbilgileridisdiv,{display: (not & kartnot.trim() != "") ? 'flex' : kartbilgibas?'flex':'none'}]}>
 
@@ -253,11 +211,12 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
                 />
 
                 <Text style={[styles.kartbilgikisimtext,{display: editmod?'none':'flex'}]}>{kartno}</Text>
-
-
-                <Pressable style={styles.kopyalabuton} onPress={()=>{kopyala(kartno)}} >
+                {
+                    !editmod ?
+                    <Pressable style={styles.kopyalabuton} onPress={()=>{kopyala(kartno)}} >
                     <Text>Kopyala</Text>    
-                </Pressable>
+                    </Pressable> : null
+                }
             </View>
 
             <View style={[styles.kartbilgileritemdiv,{display:kartbilgibas?'flex':'none'}]}>
@@ -272,10 +231,12 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
                 />
 
                 <Text style={[styles.kartbilgikisimtext,{display: editmod?'none':'flex'}]}>{tarih}</Text>
-
-                <Pressable style={styles.kopyalabuton} onPress={()=>{kopyala(tarih)}} >
+                {
+                    !editmod ?
+                    <Pressable style={styles.kopyalabuton} onPress={()=>{kopyala(tarih)}} >
                     <Text>Kopyala</Text>    
-                </Pressable>
+                    </Pressable>: null
+                }
             </View>
 
             <View style={[styles.kartbilgileritemdiv,{display:kartbilgibas?'flex':'none',borderBottomWidth: 0,}]}>
@@ -290,10 +251,12 @@ const KBListOgesi = ({resimmi,not, resim, bankaad, kartturu ,sifre,bId, kartbilg
                 />
 
                 <Text style={[styles.kartbilgikisimtext,{display: editmod?'none':'flex'}]}>{CVC}</Text>
-
-                <Pressable style={styles.kopyalabuton} onPress={()=>{kopyala(CVC)}} >
+                {
+                    !editmod ?
+                    <Pressable style={styles.kopyalabuton} onPress={()=>{kopyala(CVC)}} >
                     <Text>Kopyala</Text>    
-                </Pressable>
+                    </Pressable>: null
+                }
             </View>
 
         </View>
